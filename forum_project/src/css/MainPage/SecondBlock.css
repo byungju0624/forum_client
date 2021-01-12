@@ -1,10 +1,11 @@
 .second {
   margin-left: 20%;
   margin-right: 20%;
-  height: 100vh;
+  height: 115vh;
   color: black;
   background: white;
-  font-weight: bold;
+	font-weight: bold;
+	font-size: 130%;
 
   border-bottom: 2px solid black;
 }
