@@ -1,1 +1,35 @@
+.third_block {
+  margin-left: 20%;
+  margin-right: 20%;
+}
 
+.regist_box {
+  display: flex;
+  margin-top: 17%;
+}
+
+.regist_text {
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-display: flex;
+  margin-top: 20%;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-size: 200%;
+}
+
+.regist_text:hover {
+  transform: scale(1.1);
+}
+
+.regist_text:hover:after {
+  content: " →";
+}
+
+.s_text {
+  color: black;
+  background: white;
+
+  font-size: 120%;
+}
