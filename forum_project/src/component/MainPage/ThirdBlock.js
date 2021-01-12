@@ -1,10 +1,5 @@
-import '../../css/MainPage/ThirdBlock.css';
-
 function ThirdBlock() {
-  return (
-    <div className="App">
-    </div>
-  );
+  return <div className="first">ThirdBlock</div>;
 }
 
 export default ThirdBlock;

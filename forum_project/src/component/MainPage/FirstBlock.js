@@ -1,10 +1,7 @@
-import '../../css/MainPage/FirstBlock.css';
+import "../../css/MainPage/FirstBlock.css";
 
 function FirstBlock() {
-  return (
-    <div className="App">
-    </div>
-  );
+  return <div className="first">firstBlock</div>;
 }
 
 export default FirstBlock;
