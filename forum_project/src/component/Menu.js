@@ -9,6 +9,7 @@ import Guide from '../component/Guide/Guide'
 import Project from '../component/Project/Project'
 import Regist from '../component/Regist/Regist'
 import MyPage from '../component/MyPage/MyPage'
+import ProjectDetail from '../component/Project/ProjectDetail'
 
 function Menu(props) {
 
@@ -44,6 +45,7 @@ function Menu(props) {
 					<Route exact path="/project" component={Project}/>
 					<Route exact path="/regist" component={Regist}/>
 					<Route exact path="/mypage" component={MyPage}/>
+          <Route exact path="/projectDetail" component={ProjectDetail}/>
 				</Switch>
     </div>
 		</Router>
