@@ -9,22 +9,22 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [menu, setMenu] = useState(1);
-  const selected = React.createContext(1);
+  const [menu, setMenu] = useState(0);
+  /*const login = React.createContext(false)
+	const selected = React.createContext(1)*/
+
+  console.log("현재 선택된 버튼은 다음과 같습니다." + menu);
 
   return (
     <div className="App">
-      <selected.Provider>
-        <Router>
-          <Menu></Menu>
-          <Switch>
-            <Route exact path="/" component={MainPage} />
-            <Route exact path="/guide" component={Guide} />
-            <Route exact path="/project" component={Project} />
-            <Route exact path="/mypage" component={MyPage} />
-          </Switch>
-        </Router>
-      </selected.Provider>
+      <Router>
+        <Menu
+          login={login}
+          setLogin={setLogin}
+          menu={menu}
+          setMenu={setMenu}
+        ></Menu>
+      </Router>
     </div>
   );
 }
