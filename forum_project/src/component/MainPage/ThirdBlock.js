@@ -7,7 +7,7 @@ function ThirdBlock() {
 				<div className="regist_text">
 					프로젝트 등록하기
 				</div>
-				<img className="regist_img" src="image/regist.png"></img>
+				<img src="image/regist.png"></img>
 			</div>
     </div>
   );
