@@ -9,7 +9,7 @@ import Guide from "../component/Guide/Guide";
 import Project from "../component/Project/Project";
 import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
-
+import ProjectDetail from "../component/Project/ProjectDetail";
 function Menu(props) {
   /*
 	let ClickMenu = (number) => {
@@ -58,6 +58,7 @@ function Menu(props) {
                 프로젝트 열람
               </span>
             </Link>
+
             <Link
               to="/regist"
               style={{ textDecoration: "none", color: "black" }}
@@ -74,10 +75,12 @@ function Menu(props) {
           </nav>
           <img className="login_image" src="image/login.png"></img>
         </header>
+        <Link to="/projectdetail"></Link>
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/guide" component={Guide} />
           <Route exact path="/project" component={Project} />
+          <Route exact path="/projectdetail" component={ProjectDetail} />
           <Route exact path="/regist" component={Regist} />
           <Route exact path="/mypage" component={MyPage} />
         </Switch>

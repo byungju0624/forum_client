@@ -1,0 +1,24 @@
+.projectDetail {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 80vh;
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-size: 130%;
+
+  border-bottom: 2px solid black;
+}
+.projectEx {
+  display: flex;
+  justify-content: row;
+}
+.projectEx > .text {
+  padding-top: 0;
+  padding-left: 20px;
+  text-align: center;
+}
+.projectEx > img {
+  width: 50%;
+  border-radius: 16px;
+}
