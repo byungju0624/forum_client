@@ -1,67 +1,38 @@
-.App-header {
-    display: flex;
-	justify-content: space-between;
+header {
+	margin-left: 20%;
+	margin-right: 20%;
+	height: 10vh;
+	color: black;
+	background: white;
+	font-weight: bold;
+	font-size: 100%;
+	display: flex;
+	justify-content: flex-start;
 	align-items: center;
+  }
+  .App-header {
 	border-bottom: 2px solid black;
-}
-
-.logo {
-	font-size: 20px;
-}
-
-.logo:hover {
-	transform: scale(2.0);
-}
-
-.nav {
+  }
+  .logo:hover {
+	transform: scale(1.1);
+  }
+  .nav {
 	margin-left: 15%;
 	/*margin-right: ;*/
-    width: 80%;
-}
-
-.menu {
-	display: flex;
-	list-style: none;
-	padding-left: 0;
-}
-
-.menu li {
+	width: 60%;
+  }
+  .menu {
 	font-size: 20px;
-	padding: 8px 12px;
-}
-
-.menu li:hover {
+	margin-right: 15%;
+  }
+  .menu:hover {
 	text-decoration: overline underline;
 	text-underline-position: under;
-}
-
-.login {
-	width: 40px;
-    height: 40px;
-}
-
-.login:hover {
+  }
+  .login_image {
+	width: 64px;
+	height: 64px;
+  }
+  .login_image:hover {
 	transform: rotate(30deg);
-}
-
-@media screen and (max-width: 768px) {
-	.App-header {
-		flex-direction: column;
-		align-items: center
-	}
-
-	.logo {
-		flex-direction: column;
-		align-items: flex-start;
-	}
-
-	.menu {
-		flex-direction: column;
-		align-items: center
-	}
-
-	.login {
-		flex-direction: column;
-		align-items: center;
-	}
-}
+  }
