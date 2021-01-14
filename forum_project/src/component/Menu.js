@@ -36,16 +36,20 @@ function Menu(props) {
 					<Link to="/regist" style={{textDecoration:'none', color:'black'}}>
 						<span className="menu" onClick={()=>{props.setMenu(3)}}>프로젝트 등록</span>
 					</Link>
+          
 				</nav>
+        
 				<img className="login_image" src='image/login.png'></img>
       </header>
+      <Link to="/projectdetail"></Link>
 			<Switch>
 					<Route exact path="/" component={MainPage}/>
 					<Route exact path="/guide" component={Guide}/>
 					<Route exact path="/project" component={Project}/>
+          <Route exact path="/projectdetail" component={ProjectDetail}/>
 					<Route exact path="/regist" component={Regist}/>
 					<Route exact path="/mypage" component={MyPage}/>
-          <Route exact path="/projectDetail" component={ProjectDetail}/>
+         
 				</Switch>
     </div>
 		</Router>
