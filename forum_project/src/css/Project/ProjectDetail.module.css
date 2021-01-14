@@ -1,0 +1,53 @@
+.projectDetail {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 100vh;
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-size: 130%;
+
+  border-bottom: 2px solid black;
+}
+.header {
+  display: flex;
+}
+.header > h2 {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.projectEx {
+  display: flex;
+  justify-content: row;
+}
+.projectEx > .text {
+  padding-top: 0;
+  padding-left: 20px;
+  text-align: center;
+}
+.projectEx > img {
+  width: 50%;
+  border-radius: 16px;
+}
+.explain {
+  height: 35vh;
+}
+.btn {
+  /* height: 10vh; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.btn > span > button {
+  padding: 20px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 130%;
+}
+.btn > span > button:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}

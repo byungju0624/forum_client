@@ -1,61 +1,61 @@
 .first_block {
-	margin-left: 20%;
-	margin-right: 20%;
-	height: 140vh;
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 140vh;
 }
 
-.slogan{
-	margin-top: 10%;
-	display: flex;
-	justify-content: space-around;
-	color: black;
+.slogan {
+  margin-top: 10%;
+  display: flex;
+  justify-content: space-around;
+  color: black;
   background: white;
-	font-weight: bold;
-	font-size: 250%;
+  font-weight: bold;
+  font-size: 250%;
 }
 
-.slogan_text{
-	margin-top: 5%;
+.slogan_text {
+  margin-top: 5%;
 }
 
-.summary{
-	display: flex;
-	justify-content: space-around;
-	text-align: center;
-	border-bottom: 2px solid black;
+.summary {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  border-bottom: 2px solid black;
 }
 
-.summary_block{
-	width: 30%;
-	margin-left: 3%;
-	margin-right: 5%;
-	margin-bottom: 10%;
+.summary_block {
+  width: 30%;
+  margin-left: 3%;
+  margin-right: 5%;
+  margin-bottom: 10%;
 }
 
-.summary_img{
-	width: 128px;
+.summary_img {
+  width: 128px;
   height: 128px;
 }
 
-.summary_text{
-	margin-top: 10%;
-	color: black;
+.summary_text {
+  margin-top: 10%;
+  color: black;
   background: white;
-	font-weight: bold;
-	font-size: 200%;
-	margin-bottom: 5%;	
+  font-weight: bold;
+  font-size: 200%;
+  margin-bottom: 5%;
 }
 
-.summary_text:hover{
-	transform: scale(1.1);
+.summary_text:hover {
+  transform: scale(1.1);
 }
 
-.summary_text:hover:after{
-	content: " →";
+.summary_text:hover:after {
+  content: " →";
 }
 
-.s_text{
-	color: black;
+.s_text {
+  color: black;
   background: white;
-	font-size: 120%;
+  font-size: 120%;
 }
