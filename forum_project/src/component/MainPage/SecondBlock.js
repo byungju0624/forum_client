@@ -39,7 +39,7 @@ export default class ThirdBlock extends Component {
         <h2>프로젝트 열람</h2>
         <Slider {...settings}>
           {photos.map((photo) => {
-            return <img src={photo.url}></img>;
+            return <img src={photo.url} className="img"></img>;
           })}
         </Slider>
       </div>
