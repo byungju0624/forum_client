@@ -1,12 +1,10 @@
 import { useState } from 'react';
 import '../../css/Guide/Guide.css';  
 import { firestore } from "../../firebase";
+import { storage} from "../../firebase";
 
 function Guide() {
 
-	/*const [projectData, updateData] = useState({
-		객체넣기 -> ...spray로 뿌려주어야 함 
-	})*/
 	const [comment, setComment] = useState("");
 	const [finish, setFinish] = useState(false);
 	const [host, setHost] = useState("");
@@ -17,9 +15,18 @@ function Guide() {
 	const [skill, setSkilled] = useState([]);
 	const [term, setTerm] = useState("");
 	
-	
+	//하나의 기술 문자열을 담기 위한 샅애
 	const [eachSkill, setEachSkill] = useState("");
 
+	//이미지를 받기 위해 필요한 상태
+	const [getImage, setGetImage] = useState("")
+
+	//이미지를 업로드 하기 위한 상태들
+	const allInputs = {imgUrl : ''}
+	const [imageAsFile, setImageAsFile] = useState('')
+	const [imageAsUrl, setImageAsUrl] = useState(allInputs)
+
+	console.log(imageAsFile)
 
 	let readDatabase = () =>{//데이터베이스 read
 		firestore.collection("project").doc("떡상가즈아").get().then(function (data) {
@@ -69,6 +76,42 @@ function Guide() {
 		}
 	}
 
+	let handleImageAsFile = (e) => {
+		const image = e.target.files[0]
+		setImageAsFile(imageFile => (image))
+	}
+
+	let handleFireBaseUpload = e => {
+		e.preventDefault()
+		console.log('이미지 업로드를 시작합니다')
+		if(imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+    }
+    const uploadTask = storage.ref(`/project/${imageAsFile.name}`).put(imageAsFile)
+		//나중에 저 project 부분을 아이디로 바꾸자
+		uploadTask.on('state_changed', 
+    (snapShot) => {
+      console.log(snapShot)
+    }, (err) => {
+      console.log(err)
+    }, () => {
+      storage.ref('images').child(imageAsFile.name).getDownloadURL()
+       .then(fireBaseUrl => {
+         setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+       })
+    })
+	}
+
+	let getFireBaseImage = (image) => {
+		storage.ref('project').child(`${image}.png`).getDownloadURL().then((url) => {
+			setGetImage(url)
+		}).catch((error) => {
+			console.log('이미지를 받아오지 못했습니다.')
+		})
+	}
+
+	getFireBaseImage('kurt')
+
   return (
     <div className="Guide">
       가이드가 나와야 합니다.
@@ -91,6 +134,15 @@ function Guide() {
 			</div>
 			<div>
 				<button onClick={createDatabase}>데이터베이스에 등록하기</button>
+			</div>
+			<div>
+				<form onSubmit={handleFireBaseUpload}>
+					<input type="file" accept="image/png          " onChange={handleImageAsFile}/>
+					<button>이미지 업로드</button>
+				</form>
+			</div>
+			<div>
+				<img src={getImage}/>
 			</div>
 		</div>
   );
