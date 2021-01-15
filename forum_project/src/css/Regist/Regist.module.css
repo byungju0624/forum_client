@@ -1,0 +1,40 @@
+.regist {
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 115vh;
+    color: black;
+    background: white;
+    font-weight: bold;
+    font-size: 130%;
+  
+    border-bottom: 2px solid black;
+  }
+
+.input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 20px;
+}
+.stack {
+  font-size: medium;
+  padding-left: 10px;
+}
+
+.btn {
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.btn > span > button {
+  padding: 20px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 130%;
+}
+.btn > span > button:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
