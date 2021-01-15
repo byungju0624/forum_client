@@ -1,15 +1,69 @@
+<<<<<<< HEAD
 .ProjectDetail {
   margin-left: 20%;
   margin-right: 20%;
   height: 80vh;
+=======
+.projectDetail {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 100vh;
+>>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
   color: black;
   background: white;
   font-weight: bold;
   font-size: 130%;
+<<<<<<< HEAD
 }
 
 .text {
+=======
+
+  border-bottom: 2px solid black;
+}
+.header {
+  display: flex;
+}
+.header > h2 {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.projectEx {
+  display: flex;
+  justify-content: row;
+}
+.projectEx > .text {
+>>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
   padding-top: 0;
   padding-left: 20px;
   text-align: center;
 }
+<<<<<<< HEAD
+=======
+.projectEx > img {
+  width: 50%;
+  border-radius: 16px;
+}
+.explain {
+  height: 35vh;
+}
+.btn {
+  /* height: 10vh; */
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.btn > span > button {
+  padding: 20px;
+  border-radius: 16px;
+  font-weight: bold;
+  font-size: 130%;
+}
+.btn > span > button:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+}
+>>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
