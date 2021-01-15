@@ -29,8 +29,8 @@ export default class ThirdBlock extends Component {
     const settings = {
       dots: true,
       infinite: true,
-      slidesToShow: 1,
-      slidesToScroll: 1,
+      slidesToShow: 2,
+      slidesToScroll: 2,
       arrow: true,
       className: "slides",
     };
