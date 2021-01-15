@@ -1,120 +1,120 @@
 import { useState } from 'react';
 import '../../css/Guide/Guide.css';  
-// import { firestore } from "../../firebase";
-// import { storage} from "../../firebase";
+import { firestore } from "../../firebase";
+import { storage} from "../../firebase";
+//import styles from "../Regist/Regist.module.css"; 
 
 function Guide() {
 
-	// const [comment, setComment] = useState("");
-	// const [finish, setFinish] = useState(false);
-	// const [host, setHost] = useState("");
-	// const [image, setImage] = useState("");
-	// const [name, setName] = useState("");
-	// const [party, setParty] = useState(0);
-	// const [signed, setSigned] = useState(0);
-	// const [skill, setSkilled] = useState([]);
-	// const [term, setTerm] = useState("");
+	const [comment, setComment] = useState("");
+	const [finish, setFinish] = useState(false);
+	const [host, setHost] = useState("");
+	const [image, setImage] = useState("");
+	const [name, setName] = useState("");
+	const [party, setParty] = useState(0);
+	const [signed, setSigned] = useState(0);
+	const [skill, setSkilled] = useState([]);
+	const [term, setTerm] = useState("");
 	
-	// //하나의 기술 문자열을 담기 위한 샅애
-	// const [eachSkill, setEachSkill] = useState("");
+	//하나의 기술 문자열을 담기 위한 샅애
+	const [eachSkill, setEachSkill] = useState("");
 
-	// //이미지를 받기 위해 필요한 상태
-	// const [getImage, setGetImage] = useState("")
+	//이미지를 받기 위해 필요한 상태
+	const [getImage, setGetImage] = useState("")
 
-	// //이미지를 업로드 하기 위한 상태들
-	// const allInputs = {imgUrl : ''}
-	// const [imageAsFile, setImageAsFile] = useState('')
-	// const [imageAsUrl, setImageAsUrl] = useState(allInputs)
+	//이미지를 업로드 하기 위한 상태들
+	const allInputs = {imgUrl : ''}
+	const [imageAsFile, setImageAsFile] = useState('')
+	const [imageAsUrl, setImageAsUrl] = useState(allInputs)
 
-	// console.log(imageAsFile)
+	console.log(imageAsFile)
 
-	// let readDatabase = () =>{//데이터베이스 read
-	// 	firestore.collection("project").doc("떡상가즈아").get().then(function (data) {
-	// 		if(data){
-	// 			console.log("데이터베이스에 접속을 하였습니다.")
-	// 			console.log("부처님처럼의 정보는 다음과 같습니다 : "+JSON.stringify(data.data()))
-	// 		}else{
-	// 			console.log("문서가 존재하지 않습니다")
-	// 		}
-	// 	}).catch(function(err){
-	// 		console.log("발생한 에러는 다음과 같습니다 : "+err)
-	// 	})
-	// }
+	let readDatabase = () =>{//데이터베이스 read
+		firestore.collection("project").doc("떡상가즈아").get().then(function (data) {
+			if(data){
+				console.log("데이터베이스에 접속을 하였습니다.")
+				console.log("부처님처럼의 정보는 다음과 같습니다 : "+JSON.stringify(data.data()))
+			}else{
+				console.log("문서가 존재하지 않습니다")
+			}
+		}).catch(function(err){
+			console.log("발생한 에러는 다음과 같습니다 : "+err)
+		})
+	}
 
-	// let createDatabase = () => {
-	// 	firestore.collection("project").doc(name).get().then(function(docName){
-	// 		if(docName.data() !== undefined){
-	// 		  alert("중복된 프로젝트명입니다. 다른 프로젝트 이름을 정해주세요")
-	// 		}else{
-	// 			firestore.collection("project").doc(name).set({
-	// 				'comment' : comment,
-	// 				'finish' : finish,
-	// 				'name' : name,
-	// 				'party' : party,
-	// 				'signed' : signed,
-	// 				'skill' : skill,
-	// 				'term' : term 
-	// 			}).then(function(){
-	// 				console.log("등록성공")
-	// 			}).catch(function(error){
-	// 				console.log("다음과 같은 에러가 발생했습니다 : "+error)
-	// 			})
-	// 		}
-	// 	})
-	// }
+	let createDatabase = () => {
+		firestore.collection("project").doc(name).get().then(function(docName){
+			if(docName.data() !== undefined){
+			  alert("중복된 프로젝트명입니다. 다른 프로젝트 이름을 정해주세요")
+			}else{
+				firestore.collection("project").doc(name).set({
+					'comment' : comment,
+					'finish' : finish,
+					'name' : name,
+					'party' : party,
+					'signed' : signed,
+					'skill' : skill,
+					'term' : term 
+				}).then(function(){
+					console.log("등록성공")
+				}).catch(function(error){
+					console.log("다음과 같은 에러가 발생했습니다 : "+error)
+				})
+			}
+		})
+	}
 
-	// let skillbutton = () => {
-	// 	if(skill.length > 2){
-	// 		alert("기술 스택은 3개까지만 넣을 수 있어용~")
-	// 	}else{
-	// 		if(skill.includes(eachSkill.toLowerCase())===false){
-	// 			setSkilled(skill.concat(eachSkill.toLowerCase()))
-	// 			setTerm("")
-	// 		}else{
-	// 			alert("중복된 기술이에용~")
-	// 		}
-	// 	}
-	// }
+	let skillbutton = () => {
+		if(skill.length > 2){
+			alert("기술 스택은 3개까지만 넣을 수 있어용~")
+		}else{
+			if(skill.includes(eachSkill.toLowerCase())===false){
+				setSkilled(skill.concat(eachSkill.toLowerCase()))
+				setTerm("")
+			}else{
+				alert("중복된 기술이에용~")
+			}
+		}
+	}
 
-	// let handleImageAsFile = (e) => {
-	// 	const image = e.target.files[0]
-	// 	setImageAsFile(imageFile => (image))
-	// }
+	let handleImageAsFile = (e) => {
+		const image = e.target.files[0]
+		setImageAsFile(imageFile => (image))
+	}
 
-	// let handleFireBaseUpload = e => {
-	// 	e.preventDefault()
-	// 	console.log('이미지 업로드를 시작합니다')
-	// 	if(imageAsFile === '') {
-  //     console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
-  //   }
-  //   const uploadTask = storage.ref(`/project/${imageAsFile.name}`).put(imageAsFile)
-	// 	//나중에 저 project 부분을 아이디로 바꾸자
-	// 	uploadTask.on('state_changed', 
-  //   (snapShot) => {
-  //     console.log(snapShot)
-  //   }, (err) => {
-  //     console.log(err)
-  //   }, () => {
-  //     storage.ref('images').child(imageAsFile.name).getDownloadURL()
-  //      .then(fireBaseUrl => {
-  //        setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-  //      })
-  //   })
-	// }
+	let handleFireBaseUpload = e => {
+		e.preventDefault()
+		console.log('이미지 업로드를 시작합니다')
+		if(imageAsFile === '') {
+      console.error(`not an image, the image file is a ${typeof(imageAsFile)}`)
+    }
+    const uploadTask = storage.ref(`/project/${imageAsFile.name}`).put(imageAsFile)
+		//나중에 저 project 부분을 아이디로 바꾸자
+		uploadTask.on('state_changed', 
+    (snapShot) => {
+      console.log(snapShot)
+    }, (err) => {
+      console.log(err)
+    }, () => {
+      storage.ref('images').child(imageAsFile.name).getDownloadURL()
+       .then(fireBaseUrl => {
+         setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+       })
+    })
+	}
 
-	// let getFireBaseImage = (image) => {
-	// 	storage.ref('project').child(`${image}.png`).getDownloadURL().then((url) => {
-	// 		setGetImage(url)
-	// 	}).catch((error) => {
-	// 		console.log('이미지를 받아오지 못했습니다.')
-	// 	})
-	// }
+	let getFireBaseImage = (image) => {
+		storage.ref('project').child(`${image}.png`).getDownloadURL().then((url) => {
+			setGetImage(url)
+		}).catch((error) => {
+			console.log('이미지를 받아오지 못했습니다.')
+		})
+	}
 
-	// getFireBaseImage('kurt')
+	getFireBaseImage('kurt')
 
   return (
-    <div className="Guide">
-      가이드가 나와야 합니다.
+    <div className="Regist">
 			<div>
 				<button onClick={()=>{readDatabase()}}>파이어베이스 데이터 받아오기</button>
 			</div>

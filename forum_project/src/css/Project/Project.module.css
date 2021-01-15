@@ -1,34 +1,11 @@
 .project {
   margin-left: 20%;
   margin-right: 20%;
-<<<<<<< HEAD
-  height: 115vh;
-=======
   height: 85vh;
->>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
   color: black;
   background: white;
   font-weight: bold;
   font-size: 130%;
-<<<<<<< HEAD
-  border-bottom: 2px solid black;
-}
-
-.wrapper {
-  position: relative;
-}
-
-.photo {
-  width: 35vh;
-  height: 30vh;
-  border-radius: 16px;
-  overflow: hidden;
-  cursor: pointer;
-  position: relative;
-}
-
-.photo:hover {
-=======
   padding-top: 20px;
   border-bottom: 2px solid black;
 }
@@ -53,28 +30,10 @@
   border-radius: 16px;
 }
 .card :hover {
->>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
   opacity: 0.4;
   transition: 0.5s;
 }
 
-<<<<<<< HEAD
-/*
-.viewBtn {
-  position: absolute;
-  display: none;
-  top: 80%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
-  border-radius: 7px;
-}
-
-.photo:hover + .viewBtn {
-  display: block;
-}
-*/
-=======
 .card_img {
   /* position: absolute; */
   top: 0;
@@ -101,17 +60,12 @@ li {
   border-radius: 16px;
 } */
 
->>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
 .slides .slick-prev,
 .slides .slick-next {
   /* position: relative; */
   top: 50%;
   z-index: 1;
   display: "block";
-<<<<<<< HEAD
-=======
-
->>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
   height: 100%;
 }
 .slick-prev:before,
@@ -124,14 +78,6 @@ li {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-<<<<<<< HEAD
-.slides {
-  position: relative;
-}
-.slides .slick-prev {
-  left: -7.5vh;
-}
-=======
 
 .slides {
   position: relative;
@@ -141,7 +87,6 @@ li {
   left: -7.5vh;
 }
 
->>>>>>> 21d15f7158949d328d3511231b28beb3d67a5d9c
 .slides .slick-next {
   right: -4vh;
 }
