@@ -10,12 +10,34 @@ import Project from "../component/Project/Project";
 import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
-function Menu(props) {
-  /*
-	let ClickMenu = (number) => {
-		const selected = useContext(selected)      //useContext는 조회하는 역할을 한다.
-		selected(number)
-	}*/
+import firebase from "firebase/app";
+import auth from "firebase/auth";           //이게 있어야 오류가 안난다
+
+function Menu(props) {	
+
+	let provider = new firebase.auth.GoogleAuthProvider();
+	
+	let googleLogin = () => {
+		firebase.auth().signInWithPopup(provider).then(function(result){
+			let token = result.credential.accessToken;
+			let user = result.user;
+			props.setLogin(true);
+		}).catch(function(error){
+			let errorCode = error.code;
+			let errorMessage = error.message;
+			let email = error.email;
+			let credential = error.credential;
+		})
+	}
+
+	let googleLogout = () => {
+		firebase.auth().signOut().then(function() {
+			props.setLogin(false)
+			console.log("로그아웃을 성공적으로 실시함")
+		}).catch(function(error) {
+			// An error happened.
+		});
+	}
 
   return (
     <Router>
@@ -72,8 +94,39 @@ function Menu(props) {
                 프로젝트 등록
               </span>
             </Link>
+
+						{props.login === true ? 
+						<Link
+              to="/mypage"
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              <span
+                className="menu"
+                onClick={() => {
+                  props.setMenu(4);
+                }}
+              >
+                프로젝트 관리
+              </span>
+            </Link>
+						:
+              <span
+                className="menu"
+                onClick={() => {
+									props.setMenu(4);
+									alert("먼저 로그인을 해주세요")
+                }}
+              >
+                프로젝트 관리
+              </span>
+						}
           </nav>
-          <img className="login_image" src="image/login.png"></img>
+					{
+						props.login === false ? 
+						<img className="login_image" src="image/login.png" onClick={googleLogin}></img> :
+						<img className="login_image" src="image/signed.png" onClick={googleLogout}></img>
+					}
+          
         </header>
         <Link to="/projectdetail"></Link>
         <Switch>

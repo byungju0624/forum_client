@@ -63,6 +63,7 @@ function Guide() {
 		})
 	}
 
+
 	let skillbutton = () => {
 		if(skill.length > 2){
 			alert("기술 스택은 3개까지만 넣을 수 있어용~")
@@ -95,9 +96,19 @@ function Guide() {
     }, (err) => {
       console.log(err)
     }, () => {
-      storage.ref('images').child(imageAsFile.name).getDownloadURL()
+      storage.ref('project').child(imageAsFile.name).getDownloadURL()
        .then(fireBaseUrl => {
-         setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+				 setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
+				 //이 밑으로 이미지를 넣어보자
+				 console.log("유알엘이 뭔지 확인해볼거야"+fireBaseUrl)
+				 console.log("사진이름이 뭔지 확인해볼거야"+imageAsFile.name)
+				 firestore.collection("project").doc(imageAsFile.name).update({
+					 image : fireBaseUrl
+				 }).then(function(){
+					 console.log('파이어베이스 업데이트 완료 이미지 url 파이어스토어에 업로드')
+				 }).catch(function (err){
+					 alert(err)
+				 })
        })
     })
 	}

@@ -9,11 +9,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [menu, setMenu] = useState(0);
-  /*const login = React.createContext(false)
-	const selected = React.createContext(1)*/
-
-  console.log("현재 선택된 버튼은 다음과 같습니다." + menu);
+	const [menu, setMenu] = useState(0);
+	
+  console.log("로그인 상태는 다음과 같습니다" + login);
 
   return (
     <div className="App">
@@ -30,9 +28,3 @@ function App() {
 }
 
 export default App;
-
-/*
-Reute.js
-/ = {}
-/guide = {}
-*/
