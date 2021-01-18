@@ -43,6 +43,7 @@ function Menu(props) {
 		firebase.auth().signOut().then(function() {
 			props.setLogin(false)
 			console.log("로그아웃을 성공적으로 실시함")
+			window.location.reload();
 		}).catch(function(error) {
 			// An error happened.
 		});
