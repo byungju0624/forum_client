@@ -1,0 +1,28 @@
+.header {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 125vh;
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-size: 130%;
+  /* border-bottom: 2px solid black; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 23vh;
+}
+.first {
+  border-bottom: 2px dotted gray;
+  padding-left: 20px;
+}
+.second {
+  border-bottom: 2px dotted gray;
+  padding-left: 20px;
+}
+.third {
+  padding-left: 20px;
+}
+.header > div > video {
+  width: 70vh;
+}

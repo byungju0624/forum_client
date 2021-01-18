@@ -12,21 +12,30 @@ import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
 import firebase from "firebase/app";
 import auth from "firebase/auth";           //이게 있어야 오류가 안난다
+import { firestore } from "../firebase";
 
-function Menu(props) {	
+function Menu(props) {
 
 	let provider = new firebase.auth.GoogleAuthProvider();
 	
 	let googleLogin = () => {
-		firebase.auth().signInWithPopup(provider).then(function(result){
-			let token = result.credential.accessToken;
-			let user = result.user;
-			props.setLogin(true);
-		}).catch(function(error){
-			let errorCode = error.code;
-			let errorMessage = error.message;
-			let email = error.email;
-			let credential = error.credential;
+		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
+			let provider = new firebase.auth.GoogleAuthProvider()
+			firebase.auth().onAuthStateChanged((user) => {
+				if(user){
+					console.log("로그인이 되어 있습니다")
+				}else{
+					firebase.auth().signInWithPopup(provider).then(()=>{
+						props.setLogin(true);
+						console.log("로그인")
+					}).catch((error) => {
+						let errorCode = error.code;
+						let errorMessage = error.message;
+						let email = error.email;
+						let credential = error.credential;
+					})
+				}
+			})
 		})
 	}
 
@@ -81,6 +90,7 @@ function Menu(props) {
               </span>
             </Link>
 
+						{props.login === true ?
             <Link
               to="/regist"
               style={{ textDecoration: "none", color: "black" }}
@@ -94,7 +104,17 @@ function Menu(props) {
                 프로젝트 등록
               </span>
             </Link>
-
+						:
+							<span
+								className="menu"
+								onClick={() => {
+									props.setMenu(3)
+									alert("먼저 로그인을 해주세요")
+								}}
+							>
+								프로젝트 등록
+							</span>
+						}
 						{props.login === true ? 
 						<Link
               to="/mypage"
