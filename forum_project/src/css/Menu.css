@@ -20,8 +20,8 @@ header {
 }
 
 .nav {
-	margin-left: 12%;
-	margin-right: 7%;
+  margin-left: 12%;
+  margin-right: 7%;
   /*margin-right: ;*/
   width: 60%;
 }
@@ -43,4 +43,5 @@ header {
 
 .login_image:hover {
   transform: rotate(30deg);
+  cursor: pointer;
 }

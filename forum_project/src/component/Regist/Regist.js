@@ -1,5 +1,5 @@
 import styles from "../../css/Regist/Regist.module.css";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { firestore } from "../../firebase";
 import { storage } from "../../firebase";
 import firebase from "firebase/app";
@@ -23,53 +23,64 @@ function Regist() {
   //이미지를 업로드 하기 위한 상태들
   let allInputs = { imgUrl: "" };
   const [imageAsFile, setImageAsFile] = useState("");
-	const [imageAsUrl, setImageAsUrl] = useState(allInputs);
-	
+  const [imageAsUrl, setImageAsUrl] = useState(allInputs);
 
-
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			console.log(user.displayName)
-			console.log(user.email)
-			setHost(user.email)
-		} else {
-			console.log("유저 없는 뎁쇼")
-		}
-	});
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      console.log(user.displayName);
+      console.log(user.email);
+      setHost(user.email);
+    } else {
+      console.log("유저 없는 뎁쇼");
+    }
+  });
 
   let createDatabase = async () => {
-		let result = await handleFireBaseUpload();                                               //여기서 일단 이미지를 올린다.
-		if(result === false){                                                                    //2차 안전장치
-			console.log("이미지를 올리지 않아서 아무 일도 안생길 거임")
-	  }else{
-			firestore.collection("project").doc(name).get().then(function(docName){
-				if(docName.data() !== undefined){
-					alert("중복된 프로젝트명입니다. 다른 프로젝트 이름을 정해주세요")
-					window.location.reload();
-				}else if((name+'.png') !== imageAsFile.name){
-					alert("프로젝트 이름과 이미지 파일은 이름이 같아야 합니다.")
-					window.location.reload();
-				}else{
-					firestore.collection("project").doc(name).set({
-						'host' : host,
-						'comment' : comment,
-						'finish' : finish,
-						'name' : name,
-						'party' : party,
-						'signed' : signed,
-						'skill' : skill,
-						'term' : term,
-						'image' : imageAsFile.name
-					}).then(function(){
-						alert("프로젝트 등록에 성공했습니다")
-						window.location.reload();
-					}).catch(function(error){
-						console.log("다음과 같은 에러가 발생했습니다 : "+error)
-				  })
-			  }
-		  })
-		}
-	}
+    let result = await handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
+    if (result === false) {
+      //2차 안전장치
+      console.log("이미지를 올리지 않아서 아무 일도 안생길 거임");
+    } else if (!comment || finish || !name || !party || !eachSkill) {
+      alert("모든 항목은 필수입니다");
+      window.location.reload();
+    } else {
+      firestore
+        .collection("project")
+        .doc(name)
+        .get()
+        .then(function (docName) {
+          if (docName.data() !== undefined) {
+            alert("중복된 프로젝트명입니다. 다른 프로젝트 이름을 정해주세요");
+            window.location.reload();
+          } else if (name + ".png" !== imageAsFile.name) {
+            alert("프로젝트 이름과 이미지 파일은 이름이 같아야 합니다.");
+            window.location.reload();
+          } else {
+            firestore
+              .collection("project")
+              .doc(name)
+              .set({
+                host: host,
+                comment: comment,
+                finish: finish,
+                name: name,
+                party: party,
+                signed: signed,
+                skill: skill,
+                term: term,
+                image: imageAsFile.name,
+              })
+              .then(function () {
+                alert("프로젝트 등록에 성공했습니다");
+                window.location.reload();
+              })
+              .catch(function (error) {
+                console.error("다음과 같은 에러가 발생했습니다 : " + error);
+              });
+          }
+        });
+    }
+  };
 
   let skillbutton = () => {
     if (skill.length > 2) {
@@ -77,7 +88,6 @@ function Regist() {
     } else {
       if (skill.includes(eachSkill.toLowerCase()) === false) {
         setSkilled(skill.concat(eachSkill.toLowerCase()));
-        setTerm("");
       } else {
         alert("중복된 기술이에용~");
       }
@@ -85,37 +95,49 @@ function Regist() {
   };
 
   let handleImageAsFile = (e) => {
-		e.preventDefault();
-		const reader = new FileReader();
-		const image = e.target.files[0];
-		reader.onloadend = () => {
-			setImageAsFile(image);
-			setImageAsUrl(reader.result)
-		}
-    reader.readAsDataURL(image)
+    e.preventDefault();
+    const reader = new FileReader();
+    const image = e.target.files[0];
+    reader.onloadend = () => {
+      setImageAsFile(image);
+      setImageAsUrl(reader.result);
+    };
+    reader.readAsDataURL(image);
   };
 
-  let handleFireBaseUpload = e => {
-		if(imageAsFile === '') {
-			alert(`이미지 파일을 올려 주세요!!!`)
-			return false;
-		}else{
-			console.log('이미지 업로드를 시작합니다')
-			const uploadTask = storage.ref(`/project/${imageAsFile.name}`).put(imageAsFile)
-			uploadTask.on('state_changed', 
-			(snapShot) => {
-				console.log(snapShot)
-			}, (err) => {
-				console.log(err)
-			}, () => {
-				storage.ref('project').child(imageAsFile.name).getDownloadURL()
-				.then(fireBaseUrl => {
-					setImageAsUrl(prevObject => ({...prevObject, imgUrl: fireBaseUrl}))
-				})
-			})
-		return true;
-		}
-	}
+  let handleFireBaseUpload = (e) => {
+    if (imageAsFile === "") {
+      alert(`이미지 파일을 올려 주세요!!!`);
+      return false;
+    } else {
+      console.log("이미지 업로드를 시작합니다");
+      const uploadTask = storage
+        .ref(`/project/${imageAsFile.name}`)
+        .put(imageAsFile);
+      uploadTask.on(
+        "state_changed",
+        (snapShot) => {
+          console.log(snapShot);
+        },
+        (err) => {
+          console.log(err);
+        },
+        () => {
+          storage
+            .ref("project")
+            .child(imageAsFile.name)
+            .getDownloadURL()
+            .then((fireBaseUrl) => {
+              setImageAsUrl((prevObject) => ({
+                ...prevObject,
+                imgUrl: fireBaseUrl,
+              }));
+            });
+        }
+      );
+      return true;
+    }
+  };
 
   return (
     <div className={styles.regist}>
@@ -139,7 +161,14 @@ function Regist() {
             </form>
           </div>
           <div>
-            { (imageAsFile !== "") ? <img src={imageAsUrl}/> : <span>png 파일을 선택해주세요. 파일의 이름은 프로젝트의 이름과 동일해야 합니다.</span>}
+            {imageAsFile !== "" ? (
+              <img src={imageAsUrl} style={{ width: "100%" }} />
+            ) : (
+              <span>
+                png 파일을 선택해주세요. 파일의 이름은 프로젝트의 이름과
+                동일해야 합니다.
+              </span>
+            )}
           </div>
         </span>
         <span>
@@ -181,10 +210,10 @@ function Regist() {
                 기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
               </li>
               <li>
-                기술스택1 : <div style={{ width: "50%" }}>{skill[1]}</div>
+                기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div>
               </li>
               <li>
-                기술스택1 : <div style={{ width: "50%" }}>{skill[2]}</div>
+                기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div>
               </li>
             </div>
           </div>

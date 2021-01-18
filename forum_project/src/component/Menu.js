@@ -11,42 +11,52 @@ import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
 import firebase from "firebase/app";
-import auth from "firebase/auth";           //이게 있어야 오류가 안난다
+import auth from "firebase/auth"; //이게 있어야 오류가 안난다
 import { firestore } from "../firebase";
 
 function Menu(props) {
+  let provider = new firebase.auth.GoogleAuthProvider();
 
-	let provider = new firebase.auth.GoogleAuthProvider();
-	
-	let googleLogin = () => {
-		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(() => {
-			let provider = new firebase.auth.GoogleAuthProvider()
-			firebase.auth().onAuthStateChanged((user) => {
-				if(user){
-					console.log("로그인이 되어 있습니다")
-				}else{
-					firebase.auth().signInWithPopup(provider).then(()=>{
-						props.setLogin(true);
-						console.log("로그인")
-					}).catch((error) => {
-						let errorCode = error.code;
-						let errorMessage = error.message;
-						let email = error.email;
-						let credential = error.credential;
-					})
-				}
-			})
-		})
-	}
+  let googleLogin = () => {
+    firebase
+      .auth()
+      .setPersistence(firebase.auth.Auth.Persistence.SESSION)
+      .then(() => {
+        let provider = new firebase.auth.GoogleAuthProvider();
+        firebase.auth().onAuthStateChanged((user) => {
+          if (user) {
+            console.log("로그인이 되어 있습니다");
+          } else {
+            firebase
+              .auth()
+              .signInWithPopup(provider)
+              .then(() => {
+                props.setLogin(true);
+                console.log("로그인");
+              })
+              .catch((error) => {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                let email = error.email;
+                let credential = error.credential;
+              });
+          }
+        });
+      });
+  };
 
-	let googleLogout = () => {
-		firebase.auth().signOut().then(function() {
-			props.setLogin(false)
-			console.log("로그아웃을 성공적으로 실시함")
-		}).catch(function(error) {
-			// An error happened.
-		});
-	}
+  let googleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        props.setLogin(false);
+        console.log("로그아웃을 성공적으로 실시함");
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  };
 
   return (
     <Router>
@@ -90,63 +100,70 @@ function Menu(props) {
               </span>
             </Link>
 
-						{props.login === true ?
-            <Link
-              to="/regist"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            {props.login === true ? (
+              <Link
+                to="/regist"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <span
+                  className="menu"
+                  onClick={() => {
+                    props.setMenu(3);
+                  }}
+                >
+                  프로젝트 등록
+                </span>
+              </Link>
+            ) : (
               <span
                 className="menu"
                 onClick={() => {
                   props.setMenu(3);
+                  alert("먼저 로그인을 해주세요");
                 }}
               >
                 프로젝트 등록
               </span>
-            </Link>
-						:
-							<span
-								className="menu"
-								onClick={() => {
-									props.setMenu(3)
-									alert("먼저 로그인을 해주세요")
-								}}
-							>
-								프로젝트 등록
-							</span>
-						}
-						{props.login === true ? 
-						<Link
-              to="/mypage"
-              style={{ textDecoration: "none", color: "black" }}
-            >
+            )}
+            {props.login === true ? (
+              <Link
+                to="/mypage"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <span
+                  className="menu"
+                  onClick={() => {
+                    props.setMenu(4);
+                  }}
+                >
+                  프로젝트 관리
+                </span>
+              </Link>
+            ) : (
               <span
                 className="menu"
                 onClick={() => {
                   props.setMenu(4);
+                  alert("먼저 로그인을 해주세요");
                 }}
               >
                 프로젝트 관리
               </span>
-            </Link>
-						:
-              <span
-                className="menu"
-                onClick={() => {
-									props.setMenu(4);
-									alert("먼저 로그인을 해주세요")
-                }}
-              >
-                프로젝트 관리
-              </span>
-						}
+            )}
           </nav>
-					{
-						props.login === false ? 
-						<img className="login_image" src="image/login.png" onClick={googleLogin}></img> :
-						<img className="login_image" src="image/signed.png" onClick={googleLogout}></img>
-					}
-          
+          {props.login === false ? (
+            <img
+              className="login_image"
+              src="image/login.png"
+              onClick={googleLogin}
+            ></img>
+          ) : (
+            <img
+              className="login_image"
+              src="image/signed.png"
+              onClick={googleLogout}
+            ></img>
+          )}
         </header>
         <Link to="/projectdetail"></Link>
         <Switch>
