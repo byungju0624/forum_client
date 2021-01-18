@@ -1,6 +1,7 @@
 import styles from "../../css/Guide/Guide.module.css";
 
 function Guide() {
+	
   return (
     <div className={styles.header}>
       <div className={styles.first}>
