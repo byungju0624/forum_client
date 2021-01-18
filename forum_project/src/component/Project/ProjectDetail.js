@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router";
 import styles from "../../css/Project/ProjectDetail.module.css";
 import { useHistory } from "react-router-dom";
-const ProjectDetail = (props) => {
+const ProjectDetail = () => {
   const location = useLocation();
   const photo = location.state.photo;
   const name = location.state.name;

@@ -20,14 +20,15 @@ header {
 }
 
 .nav {
-  margin-left: 15%;
+	margin-left: 12%;
+	margin-right: 7%;
   /*margin-right: ;*/
   width: 60%;
 }
 
 .menu {
   font-size: 20px;
-  margin-right: 15%;
+  margin-right: 8%;
 }
 
 .menu:hover {
