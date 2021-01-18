@@ -2,10 +2,11 @@ import { useState } from 'react';
 import '../../css/Guide/Guide.css';  
 import { firestore } from "../../firebase";
 import { storage} from "../../firebase";
-//import styles from "../Regist/Regist.module.css"; 
+import styles from "../../css/Regist/Regist.module.css"; 
+import { useHistory } from "react-router-dom"; 
 
-function Guide() {
-
+function Regist() {
+  
 	const [comment, setComment] = useState("");
 	const [finish, setFinish] = useState(false);
 	const [host, setHost] = useState("");
@@ -14,7 +15,8 @@ function Guide() {
 	const [party, setParty] = useState(0);
 	const [signed, setSigned] = useState(0);
 	const [skill, setSkilled] = useState([]);
-	const [term, setTerm] = useState("");
+  const [term, setTerm] = useState("");
+  const history = useHistory(); 
 	
 	//하나의 기술 문자열을 담기 위한 샅애
 	const [eachSkill, setEachSkill] = useState("");
@@ -114,38 +116,73 @@ function Guide() {
 	getFireBaseImage('kurt')
 
   return (
-    <div className="Regist">
-			<div>
-				<button onClick={()=>{readDatabase()}}>파이어베이스 데이터 받아오기</button>
-			</div>
-			<div>
-				<p>프로젝트 요약 : <input type="text" value={comment} onChange={e=>setComment(e.target.value)}></input></p>
-				<p>프로젝트 이름 : <input type="text" value={name} onChange={e=>setName(e.target.value)}></input></p>
-				<p>모집인원 : <input type="number" value={party} onChange={e=>setParty(e.target.value)}></input></p>
-				<p>현재 등록 인원 : <input type="number" value={signed} onChange={e=>setSigned(e.target.value)}></input></p>
-				<p>프로젝트 기간 : <input type="date" value={term} onChange={e=>setTerm(e.target.value)}></input></p>
-			</div>
-			<div>
-				기술 스택 : <input type="text" value={eachSkill} onChange={e=>setEachSkill(e.target.value)}></input>
-				<button onClick={skillbutton}>클릭</button>
-				<p>기술스택1 : {skill[0]}</p>
-				<p>기술스택1 : {skill[1]}</p> 
-				<p>기술스택1 : {skill[2]}</p>  
-			</div>
-			<div>
-				<button onClick={createDatabase}>데이터베이스에 등록하기</button>
-			</div>
-			<div>
-				<form onSubmit={handleFireBaseUpload}>
-					<input type="file" accept="image/png          " onChange={handleImageAsFile}/>
-					<button>이미지 업로드</button>
-				</form>
-			</div>
-			<div>
-				<img src={getImage}/>
-			</div>
-		</div>
+    <div className={styles.regist}>
+      <div className={styles.projectint}>
+        <span>
+          <p>
+            프로젝트 이름 :{" "}
+            <input type="text" value={comment} onChange={(e) => setComment(e.target.value)}
+            ></input>
+          </p>
+          <div>
+            <form onSubmit={handleFireBaseUpload}>
+              <input type="file" accept="image/png/jpg" onChange={handleImageAsFile}/>
+              <button>이미지 업로드</button>
+            </form>
+          </div>
+          <div>
+            <img src={getImage} />
+          </div>
+        </span>
+        <span>
+          <p>
+            모집인원 :{" "}
+            <input type="number" value={party} onChange={(e) => setParty(e.target.value)}></input>
+          </p>
+          <p>
+            현재 등록 인원 :{" "}
+            <input type="number" value={signed} onChange={(e) => setSigned(e.target.value)}></input>
+          </p>
+          <p>
+            프로젝트 기간 :{" "}
+            <input type="date" value={term} onChange={(e) => setTerm(e.target.value)}></input>
+          </p>
+
+          <div>
+            기술 스택 :{" "}
+            <input type="text" value={eachSkill} onChange={(e) => setEachSkill(e.target.value)}></input>
+            <button onClick={skillbutton}>클릭</button>
+            <div className={styles.teckstack}>
+              <li>
+                기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
+              </li>
+              <li>
+                기술스택1 : <div style={{ width: "50%" }}>{skill[1]}</div>
+              </li>
+              <li>
+                기술스택1 : <div style={{ width: "50%" }}>{skill[2]}</div>
+              </li>
+            </div>
+          </div>
+        </span>
+      </div>
+
+      <p>
+        프로젝트 개요 :{" "}
+        <div style={{ paddingTop: "20px" }}>
+          <textarea type="text" value={name} onChange={(e) => setName(e.target.value)} style={{ width: "50vh", height: "15vh" }}></textarea>
+        </div>
+      </p>
+      <div className={styles.registbtn}>
+        <span>
+          <button onClick={createDatabase}>등록하기</button>
+        </span>
+        <span style={{ paddingLeft: "20px" }}>
+          <button onClick={() => history.push("/")}>취소</button>
+        </span>
+      </div>
+    </div>
   );
 }
 
-export default Guide;
+export default Regist;
