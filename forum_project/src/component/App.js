@@ -7,22 +7,22 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 function App() {
   const [login, setLogin] = useState(false);
-	const [menu, setMenu] = useState(0);
+  const [menu, setMenu] = useState(0);
 
-	firebase.auth().onAuthStateChanged(function(user) {
-		if (user) {
-			setLogin(true)
-		} else {
-			setLogin(false)
-		}
-	});
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      setLogin(true);
+    } else {
+      setLogin(false);
+    }
+  });
 
   return (
     <div className="App">
       <Router>
         <Menu
-					login={login}
-					setLogin={setLogin}
+          login={login}
+          setLogin={setLogin}
           menu={menu}
           setMenu={setMenu}
         ></Menu>
