@@ -45,30 +45,23 @@ function Menu(props) {
       });
   };
 
-  let googleLogout = () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(function () {
-        props.setLogin(false);
-        console.log("로그아웃을 성공적으로 실시함");
-      })
-      .catch(function (error) {
-        // An error happened.
-      });
-  };
+	let googleLogout = () => {
+		firebase.auth().signOut().then(function() {
+			props.setLogin(false)
+			console.log("로그아웃을 성공적으로 실시함")
+			window.location.reload();
+		}).catch(function(error) {
+			// An error happened.
+		});
+	}
+
 
   return (
     <Router>
       <div className="App">
         <header className="App-header">
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-            <h1
-              className="logo"
-              onClick={() => {
-                props.setMenu(0);
-              }}
-            >
+            <h1 className="logo">
               플젝하쉴?!
             </h1>
           </Link>
@@ -77,12 +70,7 @@ function Menu(props) {
               to="/guide"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <span
-                className="menu"
-                onClick={() => {
-                  props.setMenu(1);
-                }}
-              >
+              <span className="menu">
                 가이드
               </span>
             </Link>
@@ -92,9 +80,6 @@ function Menu(props) {
             >
               <span
                 className="menu"
-                onClick={() => {
-                  props.setMenu(2);
-                }}
               >
                 프로젝트 열람
               </span>
@@ -107,9 +92,6 @@ function Menu(props) {
               >
                 <span
                   className="menu"
-                  onClick={() => {
-                    props.setMenu(3);
-                  }}
                 >
                   프로젝트 등록
                 </span>
@@ -118,7 +100,6 @@ function Menu(props) {
               <span
                 className="menu"
                 onClick={() => {
-                  props.setMenu(3);
                   alert("먼저 로그인을 해주세요");
                 }}
               >
@@ -132,9 +113,6 @@ function Menu(props) {
               >
                 <span
                   className="menu"
-                  onClick={() => {
-                    props.setMenu(4);
-                  }}
                 >
                   프로젝트 관리
                 </span>
@@ -143,7 +121,6 @@ function Menu(props) {
               <span
                 className="menu"
                 onClick={() => {
-                  props.setMenu(4);
                   alert("먼저 로그인을 해주세요");
                 }}
               >
@@ -158,11 +135,15 @@ function Menu(props) {
               onClick={googleLogin}
             ></img>
           ) : (
+						<Link
+						to="/"
+						>
             <img
               className="login_image"
               src="image/signed.png"
               onClick={googleLogout}
             ></img>
+						</Link>
           )}
         </header>
         <Link to="/projectdetail"></Link>
@@ -179,48 +160,5 @@ function Menu(props) {
   );
 }
 
-export default Menu;
+export default React.memo(Menu);
 
-/*
-
-import { useContext } from 'react';
-import '../css/Menu.css';
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import React from 'react'
-import login from '../component/App'
-import selected from '../component/App'
-import MainPage from '../component/MainPage/MainPage';
-import Guide from '../component/Guide/Guide'
-import Project from '../component/Project/Project'
-import MyPage from '../component/MyPage/MyPage'
-
-function Menu(props) {
-
-
-  return (
-		<Router>
-    <div className="App">
-      <header className="App-header">
-        <h1 className="logo">플젝하쉴?!</h1>
-				<nav className="nav">
-					<Link to="/guide">
-						<span className="menu" onClick={()=>{props.setMenu(1)}}>가이드</span>
-					</Link>
-					<span className="menu" onClick={()=>{props.setMenu(2)}}>프로젝트 열람</span>
-					<span className="menu" onClick={()=>{props.setMenu(3)}}>프로젝트 등록</span>
-				</nav>
-				<img className="login_image" src='image/login.png'></img>
-      </header>
-			<Switch>
-					<Route exact path="/" component={MainPage}/>
-					<Route exact path="/guide" component={Guide}/>
-					<Route exact path="/project" component={Project}/>
-					<Route exact path="/mypage" component={MyPage}/>
-				</Switch>
-    </div>
-		</Router>
-  );
-}
-
-
-*/
