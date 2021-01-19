@@ -38,8 +38,6 @@ function Regist() {
 	});
 
   let createDatabase = async () => {
-	  eachSkill = [skill1.toLowerCase(), skill2.toLowerCase(), skill3.toLowerCase()];
-	setSkilled(skill.concat(eachSkill));
 		let result = await handleFireBaseUpload();                                               //여기서 일단 이미지를 올린다.
 		if(result === false){                                                                    //2차 안전장치
 			console.log("이미지를 올리지 않아서 아무 일도 안생길 거임")
@@ -79,7 +77,6 @@ function Regist() {
     } else {
       if (skill.includes(eachSkill.toLowerCase()) === false) {
         setSkilled(skill.concat(eachSkill.toLowerCase()));
-        setTerm("");
       } else {
         alert("중복된 기술이에용~");
       }
@@ -181,15 +178,15 @@ function Regist() {
             ></input>
             <button onClick={skillbutton}>클릭</button>
             <div className={styles.teckstack}>
-              <input type="text" value={skill1}>
-                {/* 기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div> */}
-              </input>
-              <input type="text" value={skill2}>
-                {/* 기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div> */}
-              </input>
-              <input type="text" value={skill3}>
-                {/* 기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div> */}
-              </input>
+              <p>
+                기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
+              </p>
+              <p>
+                기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div>
+              </p>
+              <p>
+                기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div>
+              </p>
             </div>
           </div>
         </span>

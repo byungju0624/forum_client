@@ -1,0 +1,17 @@
+.sidemenu {
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 100vh;
+    color: black;
+    background: white;
+    font-weight: bold;
+    font-size: 130%;
+    display: flex;
+    justify-content: column;
+}
+
+.eachmenu {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: blue;
+}

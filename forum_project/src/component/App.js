@@ -4,6 +4,7 @@ import Menu from "../component/Menu";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import MyPage from './MyPage/MyPage';
 
 function App() {
   const [login, setLogin] = useState(false);
@@ -26,6 +27,7 @@ function App() {
           menu={menu}
           setMenu={setMenu}
         ></Menu>
+        
       </Router>
     </div>
   );
