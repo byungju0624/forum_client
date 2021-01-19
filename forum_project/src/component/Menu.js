@@ -61,28 +61,26 @@ function Menu(props) {
       <div className="App">
         <header className="App-header">
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-            <h1 className="logo">
-              플젝하쉴?!
-            </h1>
+
+            <h1 className="logo">플젝하쉴?!</h1>
+
           </Link>
           <nav className="nav">
             <Link
               to="/guide"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <span className="menu">
-                가이드
-              </span>
+
+              <span className="menu">가이드</span>
+
             </Link>
             <Link
               to="/project"
               style={{ textDecoration: "none", color: "black" }}
             >
-              <span
-                className="menu"
-              >
-                프로젝트 열람
-              </span>
+
+              <span className="menu">프로젝트 열람</span>
+
             </Link>
 
             {props.login === true ? (
@@ -90,11 +88,9 @@ function Menu(props) {
                 to="/regist"
                 style={{ textDecoration: "none", color: "black" }}
               >
-                <span
-                  className="menu"
-                >
-                  프로젝트 등록
-                </span>
+
+                <span className="menu">프로젝트 등록</span>
+
               </Link>
             ) : (
               <span
@@ -108,14 +104,12 @@ function Menu(props) {
             )}
             {props.login === true ? (
               <Link
-                to="/mypage"
+                to="/mypage/profile"
                 style={{ textDecoration: "none", color: "black" }}
               >
-                <span
-                  className="menu"
-                >
-                  프로젝트 관리
-                </span>
+
+                <span className="menu">프로젝트 관리</span>
+
               </Link>
             ) : (
               <span
