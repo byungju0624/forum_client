@@ -1,75 +1,83 @@
 import styles from "../../css/Project/Project.module.css";
 import { withRouter, Link } from "react-router-dom";
 import Slider from "react-slick";
-import React, { Component } from "react";
-// const photos = [
-//   {
-//     name: "photo1",
-//     url:
-//       "http://img.khan.co.kr/news/2019/11/29/l_2019112901003607500286631.jpg",
-//   },
-//   {
-//     name: "photo2",
-//     url:
-//       "https://www.ui4u.go.kr/depart/img/content/sub03/img_con03030100_01.jpg",
-//   },
-//   {
-//     name: "photo3",
-//     url: "https://image.dongascience.com/Photo/2018/01/15159739972169[1].jpg",
-//   },
-//   {
-//     name: "photo4",
-//     url:
-//       "https://www.sisa-news.com/data/photos/20200936/art_159912317533_32480a.jpg",
-//   },
-// ];
+import firebase from "firebase/app";
+import { firestore } from "../../firebase";
+import { storage } from "../../firebase";
+import React, { useState } from "react";
+import { useEffect } from "react";
+
 let photo = null;
 let name = null;
 let period = null;
 let person = null;
 let lang = null;
-export default class Project extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      photos: [
-        {
-          name: "photo1",
-          period: "2021-03-04",
-          person: "4",
-          lang: "javaScript,react",
-          url:
-            "http://img.khan.co.kr/news/2019/11/29/l_2019112901003607500286631.jpg",
-        },
-        {
-          name: "photo2",
-          period: "2021-03-10",
-          person: "2",
-          lang: "typeScript,react",
-          url:
-            "https://www.ui4u.go.kr/depart/img/content/sub03/img_con03030100_01.jpg",
-        },
-        {
-          name: "photo3",
-          period: "2021-03-15",
-          person: "5",
-          lang: "typeScript,react",
-          url:
-            "https://image.dongascience.com/Photo/2018/01/15159739972169[1].jpg",
-        },
-        {
-          name: "photo4",
-          period: "2021-03-07",
-          person: "1",
-          lang: "javaScript,react",
-          url:
-            "https://www.sisa-news.com/data/photos/20200936/art_159912317533_32480a.jpg",
-        },
-      ],
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
-  handleClick = (e) => {
+
+let fireData = [];
+
+function Project () {
+	
+	
+	//const [fireData, setFireData] = useState([]);
+
+
+	function delay(ms){
+		return new Promise((resolve, reject) =>{                        //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
+			setTimeout(resolve, ms)
+		})
+	}
+
+
+
+	let getFireBaseImage = (image) => {
+		storage.ref('project').child(image).getDownloadURL().then((url) => {
+			return url
+		}).catch((error) => {
+			console.log('이미지를 받아오지 못했습니다.'+error)
+		})
+	}
+
+	useEffect(async ()=> {
+		if(fireData.length === 0){
+			delay(2000)
+			console.log("왜 명령어가 먹히지 않을까. 배열의 길이는 다음과 같다 : "+ fireData.length)
+			await getFirestoreData();
+			testTwice()
+			let set = new Set(fireData)
+			let newData = [...set]
+			console.log(newData)
+		}
+	})
+
+	let testTwice = () => {
+		console.log("------------------두 번씩 나오는 것 체크------------------")
+	}
+
+
+	let getFirestoreData = async () => {
+		let result = await firestore.collection("project").get().then(function (querySnapshot) {               //result는 await를 하기 위해서 만들어낸 변수
+			querySnapshot.forEach(async function(doc) {
+        // doc.data() is never undefined for query doc snapshots
+				//console.log(doc.id, " => ", doc.data())
+				console.log("요청하는 이미지는 다음과 같습니다 :" + doc.data().image)
+				let image = await getFireBaseImage(doc.data().image)
+				let eachData = {
+					'comment' : doc.data().comment,
+					'finish' : doc.data().finish,
+					'host' : doc.data().host,
+					'image' : image,
+					'name' : doc.data().name,
+					'party' : doc.data().party,
+					'signed' : doc.data().signed,
+					'skill' : doc.data().skill,
+					'term' : doc.data().term
+				}
+				fireData.push(eachData)
+			});
+		})
+	}
+	
+  let handleClick = (e) => {
     console.log(e.target.period);
     photo = e.target.src;
     name = e.target.name;
@@ -87,50 +95,52 @@ export default class Project extends Component {
       },
     });
   };
+	
+	
+		
+	const settings = {
+    dots: true,
+    infinite: true,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    arrow: true,
+    className: "slides",
+  };
 
-  render() {
-    const settings = {
-      dots: true,
-      infinite: true,
-      slidesToShow: 3,
-      slidesToScroll: 3,
-      arrow: true,
-      className: "slides",
-    };
-
-    return (
-      <div className={styles.project}>
-        <h2>프로젝트 열람</h2>
-        <Slider {...settings}>
-          {this.state.photos.map((photo) => {
-            console.log(photo.person);
-            return (
-              <div className={styles.cardwraper}>
-                <div className={styles.card}>
-                  <div className={styles.card_img}>
-                    <img
-                      src={photo.url}
-                      name={photo.name}
-                      period={photo.period}
-                      person={photo.person}
-                      lang={photo.lang}
-                      className={styles.photo}
-                      onClick={this.handleClick}
-                    ></img>
-                  </div>
+  return (
+    <div className={styles.project}>
+      <h2>프로젝트 열람</h2>
+      <Slider {...settings}>
+        {fireData.map((photo) => {
+          return (
+            <div className={styles.cardwraper}>
+              <div className={styles.card}>
+                <div className={styles.card_img}>
+                  <img
+                    src={photo.url}
+                    name={photo.name}
+                    period={photo.period}
+                    person={photo.person}
+                    lang={photo.lang}
+                    className={styles.photo}
+                    onClick={handleClick}
+                  ></img>
                 </div>
-
-                <ul>
-                  <li>프로젝트 이름:{photo.name}</li>
-                  <li>예상 기간: {photo.period}</li>
-                  <li>현재 인원: {photo.person}</li>
-                  <li>사용 언어: {photo.lang}</li>
-                </ul>
               </div>
-            );
-          })}
-        </Slider>
-      </div>
-    );
-  }
+
+              <ul>
+                <li>프로젝트 이름:{photo.name}</li>
+                <li>예상 기간: {photo.period}</li>
+                <li>현재 인원: {photo.person}</li>
+                <li>사용 언어: {photo.lang}</li>
+              </ul>
+            </div>
+          );
+        })}
+      </Slider>
+    </div>
+  );
 }
+
+
+export default Project;
