@@ -1,0 +1,7 @@
+.header {
+  display: flex;
+  height: 90%;
+  width: 90%;
+  align-items: center;
+  flex-direction: column;
+}
