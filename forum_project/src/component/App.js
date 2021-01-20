@@ -22,7 +22,6 @@ function App() {
     <div className="App">
       <Router>
         <Menu login={login} setLogin={setLogin}></Menu>
-        <Mypage />
       </Router>
     </div>
   );

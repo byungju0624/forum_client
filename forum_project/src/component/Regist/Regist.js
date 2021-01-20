@@ -26,28 +26,25 @@ function Regist() {
   const [imageAsUrl, setImageAsUrl] = useState(allInputs);
 
   firebase.auth().onAuthStateChanged(function (user) {
-		if (user) {
+    if (user) {
       //console.log(user.displayName);
       //console.log(user.email);
       setHost(user.email);
     } else {
       console.log("유저 없는 뎁쇼");
     }
-	});
-	
+  });
 
-
-	function delay(ms){
-		return new Promise((resolve, reject) =>{                        //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
-			setTimeout(resolve, ms)
-		})
-	}
-
-
+  function delay(ms) {
+    return new Promise((resolve, reject) => {
+      //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
+      setTimeout(resolve, ms);
+    });
+  }
 
   let createDatabase = async () => {
-		let result = await handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
-		await delay(2500)
+    let result = await handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
+    await delay(2500);
     if (result === false) {
       //2차 안전장치
       console.log("이미지를 올리지 않아서 아무 일도 안생길 거임");
@@ -121,28 +118,46 @@ function Regist() {
       alert(`이미지 파일을 올려 주세요!!!`);
       return false;
     } else {
-			console.log("이미지 업로드를 시작합니다");
-			console.log("사진이름이 뭔지 확인해볼거야"+imageAsFile.name)
-      const uploadTask = storage.ref(`/project/${imageAsFile.name}`).put(imageAsFile);
-      uploadTask.on("state_changed",
+      console.log("이미지 업로드를 시작합니다");
+      console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
+      const uploadTask = storage
+        .ref(`/project/${imageAsFile.name}`)
+        .put(imageAsFile);
+      uploadTask.on(
+        "state_changed",
         (snapShot) => {
           console.log(snapShot);
-        },(err) => {
+        },
+        (err) => {
           console.log(err);
-        },() => {
-          storage.ref("project").child(imageAsFile.name).getDownloadURL()
+        },
+        () => {
+          storage
+            .ref("project")
+            .child(imageAsFile.name)
+            .getDownloadURL()
             .then((fireBaseUrl) => {
-							setImageAsUrl((prevObject) => ({...prevObject,imgUrl: fireBaseUrl,}));
-							console.log("유알엘이 뭔지 확인해볼거야"+fireBaseUrl)
-				 			console.log("사진이름이 뭔지 확인해볼거야"+imageAsFile.name)
-				 			firestore.collection("project").doc(imageAsFile.name).update({
-					 			image : fireBaseUrl
-				 			}).then(function(){
-					 			console.log('파이어베이스 업데이트 완료 이미지 url 파이어스토어에 업로드')
-				 			}).catch(function (err){
-					 			//alert(err)
-				 		})
-          });
+              setImageAsUrl((prevObject) => ({
+                ...prevObject,
+                imgUrl: fireBaseUrl,
+              }));
+              console.log("유알엘이 뭔지 확인해볼거야" + fireBaseUrl);
+              console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
+              firestore
+                .collection("project")
+                .doc(imageAsFile.name)
+                .update({
+                  image: fireBaseUrl,
+                })
+                .then(function () {
+                  console.log(
+                    "파이어베이스 업데이트 완료 이미지 url 파이어스토어에 업로드"
+                  );
+                })
+                .catch(function (err) {
+                  //alert(err)
+                });
+            });
         }
       );
       return true;
