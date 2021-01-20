@@ -1,6 +1,7 @@
 import "../css/App.css";
 import React, { useState } from "react";
 import Menu from "../component/Menu";
+import Mypage from "../component/MyPage/MyPage";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -18,6 +19,7 @@ function App() {
 	
 	dataFire = localStorage.getItem("fireStoreData")
 	console.log(dataFire)
+
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -84,12 +86,8 @@ function delay(ms){
   return (
     <div className="App">
       <Router>
-        <Menu
-          login={login}
-          setLogin={setLogin}
-          menu={menu}
-          setMenu={setMenu}
-        ></Menu>
+        <Menu login={login} setLogin={setLogin}></Menu>
+        <Mypage />
       </Router>
     </div>
   );
