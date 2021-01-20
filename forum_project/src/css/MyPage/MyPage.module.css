@@ -1,17 +1,16 @@
-.sidemenu {
-    margin-left: 20%;
-    margin-right: 20%;
-    height: 100vh;
-    color: black;
-    background: white;
-    font-weight: bold;
-    font-size: 130%;
-    display: flex;
-    justify-content: column;
-}
+.header {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 65vh;
 
-.eachmenu {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    background-color: blue;
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-size: 130%;
+  display: flex;
+  padding-top: 15%;
+  padding-left: 3%;
+}
+.sidebar {
+  width: 20%;
 }

@@ -1,36 +1,67 @@
-import styles from '../../css/MyPage/MyPage.module.css';
-import React from 'react'
+import styles from "../../css/MyPage/MyPage.module.css";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import Profile from './Profile'
-import ProjectList from './ProjectList'
-import Registed from './Registed'
-import Submitted from './Submitted'
-
+import Profile from "./Profile";
+import WishList from "./WishList";
+import RegistStatus from "./RegistStatus";
+import ApplyStatus from "./ApplyStatus";
 function MyPage() {
   return (
-    <div className={styles.container}>
-    <div className={styles.sidemenu}>
+    <div className={styles.header}>
       <Router>
-        <Link to="/mypage/profile">
-        <div>프로필</div>
-        </Link>
-        <Link to="/mypage/list">
-        <div>위시리스트</div>
-        </Link>
-        <Link to="/mypage/registed">
-        <div>등록현황</div>
-        </Link>
-        <Link to="/mypage/submitted">
-        <div>신청현황</div>
-        </Link>
-    <Switch>
-    <Route exact path="/mypage/profile"><Profile /></Route>
-    <Route exact path="/mypage/list" component={ProjectList} />
-    <Route exact path="/mypage/registed" component={Registed} />
-    <Route exact path="/mypage/submitted" component={Submitted} />
-  </Switch>
+        <div className={styles.sidebar}>
+          <Link
+            to="/mypage/profile"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div>프로필</div>
+          </Link>
+          <Link
+            to="/mypage/wishlist"
+            style={{
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
+            <div
+              style={{
+                paddingTop: "25%",
+              }}
+            >
+              위시리스트
+            </div>
+          </Link>
+          <Link
+            to="/mypage/registstatus"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div
+              style={{
+                paddingTop: "25%",
+              }}
+            >
+              등록현황
+            </div>
+          </Link>
+          <Link
+            to="/mypage/applystatus"
+            style={{ textDecoration: "none", color: "black" }}
+          >
+            <div
+              style={{
+                paddingTop: "25%",
+              }}
+            >
+              신청현황
+            </div>
+          </Link>
+        </div>
+        <Switch>
+          <Route exact path="/mypage/profile" component={Profile} />
+          <Route exact path="/mypage/wishlist" component={WishList} />
+          <Route exact path="/mypage/registstatus" component={RegistStatus} />
+          <Route exact path="/mypage/applystatus" component={ApplyStatus} />
+        </Switch>
       </Router>
-      </div>
     </div>
   );
 }
