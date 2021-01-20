@@ -15,6 +15,14 @@ import auth from "firebase/auth"; //이게 있어야 오류가 안난다
 import { firestore } from "../firebase";
 
 function Menu(props) {
+
+
+	function delay(ms){
+		return new Promise((resolve, reject) =>{ 
+			setTimeout(resolve, ms)
+		})
+	}
+
   let provider = new firebase.auth.GoogleAuthProvider();
 
   let googleLogin = () => {
@@ -23,17 +31,16 @@ function Menu(props) {
       .setPersistence(firebase.auth.Auth.Persistence.SESSION)
       .then(() => {
         let provider = new firebase.auth.GoogleAuthProvider();
-        firebase.auth().onAuthStateChanged((user) => {
+        firebase.auth().onAuthStateChanged(async (user) => {
           if (user) {
-            console.log("로그인이 되어 있습니다");
+						console.log("로그인이 되어 있습니다"+user.email);
+						await checkMemberShip(user.email)
           } else {
-            firebase
-              .auth()
-              .signInWithPopup(provider)
-              .then(() => {
-                props.setLogin(true);
-                console.log("로그인");
-              })
+            firebase.auth().signInWithPopup(provider).then(async() => {
+							//console.log('-----------------------------------------------------------'+JSON.stringify(provider))
+							props.setLogin(true);
+							//console.log("로그인");
+						})
               .catch((error) => {
                 let errorCode = error.code;
                 let errorMessage = error.message;
@@ -52,6 +59,38 @@ function Menu(props) {
 			window.location.reload();
 		}).catch(function(error) {
 			// An error happened.
+		});
+	}
+
+	let checkMemberShip = (userEmail) => {
+		//console.log("여리고 뭐가 들어오는지 보고 판단하자 : "+JSON.stringify(userEmail))
+		firestore.collection('users').doc(userEmail).get().then(async function(doc) {
+			if (doc.exists) {
+				console.log("이랏샤이 마세!!!!!!");
+			} else {
+				await addUserFireStore(userEmail)
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+	}
+
+
+
+
+	let addUserFireStore = async (userEmail) => {
+		await firestore.collection('users').doc(userEmail).set({
+			'hostProject' : [],
+			'joinProject' : [],
+			'message' : [],
+			'submittedProject' : [],
+			'appliedProject' : [],
+		})
+		.then(function() {
+			//console.log("Document successfully written!");
+		})
+		.catch(function(error) {
+			console.error("Error writing document: ", error);
 		});
 	}
 

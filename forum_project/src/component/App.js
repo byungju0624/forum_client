@@ -31,7 +31,7 @@ function App() {
 	
 
 function delay(ms){
-		return new Promise((resolve, reject) =>{                        //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
+		return new Promise((resolve, reject) =>{ 
 			setTimeout(resolve, ms)
 		})
 	}
