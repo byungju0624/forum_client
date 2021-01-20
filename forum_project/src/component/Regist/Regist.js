@@ -185,13 +185,13 @@ function Regist() {
               />
             </form>
           </div>
-          <div>
+          <div style={{ marginTop: "10px" }}>
             {imageAsFile !== "" ? (
-              <img src={imageAsUrl} style={{ width: "100%" }} />
+              <img src={imageAsUrl} style={{ width: "50%" }} />
             ) : (
               <span>
-                png 파일을 선택해주세요. 파일의 이름은 프로젝트의 이름과
-                동일해야 합니다.
+                png 파일을 선택해주세요. <br />
+                파일의 이름은 프로젝트의 이름과 동일해야 합니다.
               </span>
             )}
           </div>
