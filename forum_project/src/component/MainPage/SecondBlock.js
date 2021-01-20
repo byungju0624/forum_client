@@ -1,4 +1,7 @@
 import "../../css/MainPage/SecondBlock.css";
+import Slider from "react-slick";
+import React, { useState } from "react";
+import { useEffect } from "react"; 
 
 import Slider from "react-slick";
 import React, { Component } from "react";
