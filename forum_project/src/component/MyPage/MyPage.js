@@ -27,7 +27,7 @@ function MyPage() {
                 paddingTop: "25%",
               }}
             >
-              위시리스트
+              진행 프로젝트
             </div>
           </Link>
           <Link

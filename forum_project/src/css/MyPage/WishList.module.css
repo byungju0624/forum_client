@@ -1,14 +1,27 @@
 .header {
   position: relative;
   height: 90%;
-  width: 50%;
+  width: 100%;
   justify-content: center;
   padding-left: 15%;
-  padding-top: 10%;
+  /* padding-top: 10%; */
 }
-.slides .slick-prev,
+.registlist {
+  width: 100%;
+  height: 30vh;
+  border-bottom: 1px dotted gray;
+  display: flex;
+
+  justify-content: space-around;
+}
+.attendlist {
+  width: 100%;
+  height: 30vh;
+}
+
+/* .slides .slick-prev,
 .slides .slick-next {
-  /* position: relative; */
+  position: relative;
   top: 50%;
   z-index: 1;
   display: "block";
@@ -32,7 +45,7 @@
 
 .slides .slick-prev {
   left: -7.5vh;
-}
+} */
 
 .slides .slick-next {
   right: 10vh;
