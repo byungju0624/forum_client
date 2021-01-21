@@ -1,20 +1,18 @@
 .header {
   position: relative;
-  /*display: flex;*/
   height: 90%;
-  width: 60%;
-  align-items: center;
+  width: 50%;
+  justify-content: center;
   padding-left: 15%;
   padding-top: 10%;
-  /*flex-direction: column;*/
 }
-
 .slides .slick-prev,
 .slides .slick-next {
   /* position: relative; */
   top: 50%;
   z-index: 1;
   display: "block";
+
   height: 100%;
 }
 .slick-prev:before,

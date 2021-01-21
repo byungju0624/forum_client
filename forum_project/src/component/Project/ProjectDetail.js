@@ -2,15 +2,19 @@ import React from "react";
 import { useLocation } from "react-router";
 import styles from "../../css/Project/ProjectDetail.module.css";
 import { useHistory } from "react-router-dom";
-const ProjectDetail = (props) => {
-  const location = useLocation();
+import { TextFormatRounded } from '@material-ui/icons';
+
+const ProjectDetail = () => {
+	
+	const location = useLocation();
   const photo = location.state.photo;
   const name = location.state.name;
   const period = location.state.period;
   const person = location.state.person;
   const lang = location.state.lang;
   const history = useHistory();
-  console.log(period);
+	console.log(period);
+	
   return (
     <>
       <div className={styles.projectDetail}>
