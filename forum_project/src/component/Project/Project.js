@@ -6,59 +6,43 @@ import { firestore } from "../../firebase";
 import { storage } from "../../firebase";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 let photo = null;
 let name = null;
 let period = null;
 let person = null;
 let lang = null;
-let comment = null;
 
-let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
 
-function delay(ms) {
-  return new Promise((resolve, reject) => {
-    //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
-    setTimeout(resolve, ms);
-  });
-}
 
-let getFireBaseImage = (image) => {
-  return storage
-    .ref("project")
-    .child(image)
-    .getDownloadURL()
-    .then((url) => {
-      return url;
-    })
-    .catch((error) => {
-      console.log("이미지를 받아오지 못했습니다." + error);
-    });
-};
+function Project (props) {
 
-function Project(props) {
-  /*function delay(ms){
+	let json = localStorage.getItem("fireStoreData")
+	let localData = JSON.parse(json) || [];
+	let [dataFire, setDataFire] = useState(localData)
+	
+	/*function delay(ms){
 		return new Promise((resolve, reject) =>{
 			setTimeout(resolve, ms)
 		})
 	}*/
 
-  /*useEffect(async ()=> {
+
+	/*useEffect(async ()=> {
 		await delay(2000)
 		console.log("루삥뽕"+JSON.stringify(dataFire))
 	},[])*/
 
-  let history = useHistory();
 
+	let history = useHistory();
+	
   let handleClick = (e) => {
-    console.log(e.target);
-
+    console.log(e.target.person);
     photo = e.target.src;
     name = e.target.name;
-    period = e.target.period;
-    person = e.target.person;
-    comment = e.target.comment;
+    period = String(e.target.period);
+    person = String(e.target.person);
     lang = e.target.lang;
     history.push({
       pathname: "/projectdetail",
@@ -67,13 +51,14 @@ function Project(props) {
         name: name,
         period: period,
         person: person,
-        comment: comment,
         lang: lang,
       },
     });
   };
-
-  const settings = {
+	
+	
+		
+	const settings = {
     dots: true,
     infinite: true,
     slidesToShow: 3,
@@ -97,7 +82,6 @@ function Project(props) {
                     period={eachData.term}
                     person={eachData.party}
                     lang={eachData.skill}
-                    comment={eachData.comment}
                     className={styles.photo}
                     onClick={handleClick}
                   ></img>
@@ -116,5 +100,6 @@ function Project(props) {
     </div>
   );
 }
+
 
 export default Project;
