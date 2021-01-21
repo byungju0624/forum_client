@@ -6,30 +6,31 @@ import { firestore } from "../../firebase";
 import { storage } from "../../firebase";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 let photo = null;
 let name = null;
 let period = null;
 let person = null;
 let lang = null;
+let comment = null;
 
 
+let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
 
-function Project (props) {
 
-	let json = localStorage.getItem("fireStoreData")
-	let localData = JSON.parse(json) || [];
-	let [dataFire, setDataFire] = useState(localData)
+function Project(props) {
 
-	let history = useHistory();
-	
+  let history = useHistory();
+
   let handleClick = (e) => {
-    console.log(e.target.person);
+    console.log(e.target);
+
     photo = e.target.src;
     name = e.target.name;
-    period = String(e.target.period);
-    person = String(e.target.person);
+    period = e.target.period;
+    person = e.target.person;
+    comment = e.target.comment;
     lang = e.target.lang;
     history.push({
       pathname: "/projectdetail",
@@ -38,14 +39,13 @@ function Project (props) {
         name: name,
         period: period,
         person: person,
+        comment: comment,
         lang: lang,
       },
     });
   };
-	
-	
-		
-	const settings = {
+
+  const settings = {
     dots: true,
     infinite: true,
     slidesToShow: 3,
@@ -69,6 +69,7 @@ function Project (props) {
                     period={eachData.term}
                     person={eachData.party}
                     lang={eachData.skill}
+                    comment={eachData.comment}
                     className={styles.photo}
                     onClick={handleClick}
                   ></img>
@@ -87,6 +88,5 @@ function Project (props) {
     </div>
   );
 }
-
 
 export default Project;

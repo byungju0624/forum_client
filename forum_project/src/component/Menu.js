@@ -52,6 +52,7 @@ function Menu(props) {
       });
   };
 
+
 	let googleLogout = () => {
 		firebase.auth().signOut().then(function() {
 			props.setLogin(false)
@@ -95,31 +96,40 @@ function Menu(props) {
 	}
 
 
+  let googleLogout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(function () {
+        props.setLogin(false);
+        console.log("로그아웃을 성공적으로 실시함");
+        window.location.reload();
+      })
+      .catch(function (error) {
+        // An error happened.
+      });
+  };
+
+
   return (
     <Router>
       <div className="App">
         <header className="App-header">
           <Link to="/" style={{ textDecoration: "none", color: "black" }}>
-
             <h1 className="logo">플젝하쉴?!</h1>
-
           </Link>
           <nav className="nav">
             <Link
               to="/guide"
               style={{ textDecoration: "none", color: "black" }}
             >
-
               <span className="menu">가이드</span>
-
             </Link>
             <Link
               to="/project"
               style={{ textDecoration: "none", color: "black" }}
             >
-
               <span className="menu">프로젝트 열람</span>
-
             </Link>
 
             {props.login === true ? (
@@ -127,9 +137,7 @@ function Menu(props) {
                 to="/regist"
                 style={{ textDecoration: "none", color: "black" }}
               >
-
                 <span className="menu">프로젝트 등록</span>
-
               </Link>
             ) : (
               <span
@@ -170,15 +178,13 @@ function Menu(props) {
               onClick={googleLogin}
             ></img>
           ) : (
-						<Link
-						to="/"
-						>
-            <img
-              className="login_image"
-              src="image/signed.png"
-              onClick={googleLogout}
-            ></img>
-						</Link>
+            <Link to="/">
+              <img
+                className="login_image"
+                src="image/signed.png"
+                onClick={googleLogout}
+              ></img>
+            </Link>
           )}
         </header>
         <Link to="/projectdetail"></Link>
@@ -196,4 +202,3 @@ function Menu(props) {
 }
 
 export default React.memo(Menu);
-
