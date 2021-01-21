@@ -14,23 +14,13 @@ let period = null;
 let person = null;
 let lang = null;
 
-let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
 
 
 function Project (props) {
-	
-	/*function delay(ms){
-		return new Promise((resolve, reject) =>{
-			setTimeout(resolve, ms)
-		})
-	}*/
 
-
-	/*useEffect(async ()=> {
-		await delay(2000)
-		console.log("루삥뽕"+JSON.stringify(dataFire))
-	},[])*/
-
+	let json = localStorage.getItem("fireStoreData")
+	let localData = JSON.parse(json) || [];
+	let [dataFire, setDataFire] = useState(localData)
 
 	let history = useHistory();
 	

@@ -141,14 +141,16 @@ function Menu(props) {
                 프로젝트 등록
               </span>
             )}
+
+
+
+
             {props.login === true ? (
               <Link
                 to="/mypage/profile"
                 style={{ textDecoration: "none", color: "black" }}
               >
-
                 <span className="menu">프로젝트 관리</span>
-
               </Link>
             ) : (
               <span
@@ -186,7 +188,7 @@ function Menu(props) {
           <Route exact path="/project" component={Project} />
           <Route exact path="/projectdetail" component={ProjectDetail} />
           <Route exact path="/regist" component={Regist} />
-          <Route exact path="/mypage" component={MyPage} />
+          <Route exact path="/mypage/profile" component={MyPage} />
         </Switch>
       </div>
     </Router>

@@ -13,13 +13,6 @@ let dataFire = null;
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [menu, setMenu] = useState(0);
-	const [fireData, setFireData] = useState([])
-
-	
-	dataFire = localStorage.getItem("fireStoreData")
-	console.log(dataFire)
-
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -52,6 +45,8 @@ function delay(ms){
 		await delay(1000)
 		let resultString = JSON.stringify(result)//로컬스토리지에는 문자열만 넣을 수 있음
 		localStorage.setItem("fireStoreData", resultString)
+		dataFire = localStorage.getItem("fireStoreData")
+		console.log(dataFire)
 	},[])
 
 
@@ -87,7 +82,6 @@ function delay(ms){
     <div className="App">
       <Router>
         <Menu login={login} setLogin={setLogin}></Menu>
-        <Mypage />
       </Router>
     </div>
   );
