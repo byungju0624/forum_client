@@ -52,17 +52,6 @@ function Menu(props) {
       });
   };
 
-
-	let googleLogout = () => {
-		firebase.auth().signOut().then(function() {
-			props.setLogin(false)
-			console.log("로그아웃을 성공적으로 실시함")
-			window.location.reload();
-		}).catch(function(error) {
-			// An error happened.
-		});
-	}
-
 	let checkMemberShip = (userEmail) => {
 		//console.log("여리고 뭐가 들어오는지 보고 판단하자 : "+JSON.stringify(userEmail))
 		firestore.collection('users').doc(userEmail).get().then(async function(doc) {
