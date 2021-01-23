@@ -37,3 +37,10 @@
 .slides .slick-next {
   right: -10vh;
 }
+.img {
+  width: 100%;
+  height: 30vh;
+  border-radius: 16px;
+  padding: 0 10px;
+  box-sizing: border-box;
+}

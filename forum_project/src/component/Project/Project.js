@@ -13,10 +13,12 @@ let period = null;
 let person = null;
 let lang = null;
 
-let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
-console.log('파이어베이스 데이터(전체):', dataFire);
 
 function Project (props) {
+
+	let json = localStorage.getItem("fireStoreData")
+	let localData = JSON.parse(json) || [];
+	let [dataFire, setDataFire] = useState(localData)
 	
 	/*function delay(ms){
 		return new Promise((resolve, reject) =>{

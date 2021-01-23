@@ -1,0 +1,49 @@
+.regist {
+    margin-left: 20%;
+    margin-right: 20%;
+    height: 100vh;
+    color: black;
+    background: white;
+    font-weight: bold;
+    font-size: 130%;
+  
+    /* border-bottom: 2px solid black; */
+  }
+  .projectint {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .teckstack {
+    padding-left: 10px;
+    margin-top: 10px;
+    font-size: medium;
+  }
+  .teckstack > li {
+    display: flex;
+    border-bottom: 1px solid gray;
+    width: 70%;
+    align-items: center;
+  }
+  .teckstack > li > div {
+    text-align: center;
+    padding-left: 10px;
+  }
+  .registbtn {
+    display: flex;
+    height: 30vh;
+    justify-content: center;
+    align-items: flex-end;
+  }
+  .registbtn > span > button {
+    padding: 20px;
+    border-radius: 16px;
+    font-weight: bold;
+    font-size: 130%;
+  }
+  .registbtn > span > button:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+  }
+  
