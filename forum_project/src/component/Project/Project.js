@@ -1,19 +1,17 @@
 import styles from "../../css/Project/Project.module.css";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, useHistory } from "react-router-dom";
 import Slider from "react-slick";
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import { storage } from "../../firebase";
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { useHistory } from 'react-router-dom';
 
 let photo = null;
 let name = null;
 let period = null;
 let person = null;
 let lang = null;
-
 
 
 function Project (props) {
@@ -38,12 +36,13 @@ function Project (props) {
 	let history = useHistory();
 	
   let handleClick = (e) => {
-    console.log(e.target.person);
+    console.log('e.target:', e.target)
     photo = e.target.src;
     name = e.target.name;
-    period = String(e.target.period);
-    person = String(e.target.person);
+    period = e.target.period;
+    person = e.target.person;
     lang = e.target.lang;
+    console.log('이미지:', photo, '이름:', name, '기간:', period, '인원:', person, '스킬', lang)
     history.push({
       pathname: "/projectdetail",
       state: {
@@ -72,6 +71,7 @@ function Project (props) {
       <h2>프로젝트 열람</h2>
       <Slider {...settings}>
         {dataFire.map((eachData) => {
+          console.log('개별 프로젝트 데이터:', eachData)
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>

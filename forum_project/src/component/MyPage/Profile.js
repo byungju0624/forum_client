@@ -5,7 +5,7 @@ import auth from "firebase/auth";
 const Profile = (props) => {
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
-
+  console.log('유저 정보', user)
   if (user != null) {
     name = user.displayName;
     email = user.email;
