@@ -1,31 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router";
 import styles from "../../css/Project/ProjectDetail.module.css";
 import { useHistory } from "react-router-dom";
+import { firestore } from "../../firebase";
+import { storage } from "../../firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 const ProjectDetail = () => {
   const location = useLocation();
   const photo = location.state.photo;
-  const name = location.state.name;
-  const period = location.state.period;
-  const person = location.state.person;
-  const lang = location.state.lang;
+  const projectName = location.state.name;
 
+  const lang = location.state.lang;
+  const [host, setHost] = useState("");
+  let [appliedProject, setAppliedProject] = useState("");
+  const [party, setParty] = useState(0);
   const history = useHistory();
 
+  let user = firebase.auth().currentUser;
+  let email, photoUrl, uid, emailVerified;
+
+  if (user != null) {
+    email = user.email;
+    photoUrl = user.photoURL;
+    emailVerified = user.emailVerified;
+    uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
+    // this value to authenticate with your backend server, if
+    // you have one. Use User.getToken() instead.
+  }
   const dataFire = JSON.parse(localStorage.getItem("fireStoreData")).filter(
     (eachData) => {
-      if (eachData.name === name) return eachData;
+      if (eachData.name === projectName) return eachData;
     }
   );
   console.log("파이어베이스 데이터(필터링):", dataFire);
   const term = dataFire[0].term;
-  const party = dataFire[0].party;
+  const person = dataFire[0].party;
   const comment = dataFire[0].comment;
+
+  // let addUserFireStore = async (userEmail) => {
+  //   await firestore
+  //     .collection("users")
+  //     .doc(userEmail)
+  //     .add({
+  //       hostProject: [],
+  //       joinProject: [],
+  //       message: [],
+  //       submittedProject: [],
+  //       appliedProject: [userEmail],
+  //     })
+  //     .then(function () {
+  //       //console.log("Document successfully written!");
+  //     })
+  //     .catch(function (error) {
+  //       console.error("Error writing document: ", error);
+  //     });
+  // };
+
   return (
     <>
       <div className={styles.projectDetail}>
         <div className={styles.header}>
-          <h2>프로젝트명:{name}</h2>
+          <h2>프로젝트명:{projectName}</h2>
         </div>
         <div className={styles.projectEx}>
           <img src={photo}></img>
@@ -45,7 +81,9 @@ const ProjectDetail = () => {
             <button>관심 프로젝트 담기</button>
           </span>
           <span>
-            <button style={{ marginLeft: "20px" }}>지원하기</button>
+            <button style={{ marginLeft: "20px" }} onClick={addUserFireStore}>
+              지원하기
+            </button>
           </span>
           <span>
             <button
