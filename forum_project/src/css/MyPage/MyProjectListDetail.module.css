@@ -46,3 +46,12 @@
   background-color: black;
   color: white;
 }
+
+.skill {
+  font-size: medium;
+  border: solid 1px grey;
+  border-radius: 14px;
+  margin-top: 5px;
+  margin-left: 10px;
+  padding: 5px;
+}
