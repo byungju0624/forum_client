@@ -13,13 +13,6 @@ let dataFire = null;
 
 function App() {
   const [login, setLogin] = useState(false);
-  const [menu, setMenu] = useState(0);
-	const [fireData, setFireData] = useState([])
-
-	
-	dataFire = localStorage.getItem("fireStoreData")
-	console.log(dataFire)
-
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
@@ -30,8 +23,8 @@ function App() {
 	});
 	
 
-function delay(ms){
-		return new Promise((resolve, reject) =>{                        //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
+	function delay(ms){
+		return new Promise((resolve, reject) =>{ 
 			setTimeout(resolve, ms)
 		})
 	}
@@ -52,6 +45,8 @@ function delay(ms){
 		await delay(1000)
 		let resultString = JSON.stringify(result)//로컬스토리지에는 문자열만 넣을 수 있음
 		localStorage.setItem("fireStoreData", resultString)
+		dataFire = localStorage.getItem("fireStoreData")
+		console.log(dataFire)
 	},[])
 
 
