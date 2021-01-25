@@ -8,14 +8,21 @@ import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
 function MyProjectListDetail () {
-    const [comment, setComment] = useState("");
-    const [finish, setFinish] = useState(false);
+  //넘어온 프로젝트 이름을 통해 데이터베이스에서 검색
+  const location = useLocation();
+  const projectName = location.state.name;
+  let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
+  let projectData = dataFire.filter((el) => {
+    if (el.name === projectName) return el;
+  })
+  console.log('읽어온 현재 프로젝트 데이터', projectData[0])
+
+    const [comment, setComment] = useState(projectData[0].comment);
     const [host, setHost] = useState("");
-    const [name, setName] = useState("");
-    const [party, setParty] = useState(0);
-    const [signed, setSigned] = useState(0);
-    const [skill, setSkilled] = useState([]);
-    const [term, setTerm] = useState("");
+    const [party, setParty] = useState(projectData[0].party);
+    const [skill, setSkilled] = useState(projectData[0].skill);
+    const [term, setTerm] = useState(projectData[0].term);
+
     const history = useHistory();
 
     //하나의 기술 문자열을 담기 위한 샅애
@@ -36,60 +43,63 @@ function MyProjectListDetail () {
       }
     });
 
-    function delay(ms) {
-      return new Promise((resolve, reject) => {
-        //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
-        setTimeout(resolve, ms);
-      });
-    }
+    // let getFirestoreData = async () => {
+    //   let eachStore = []
+    //   let result = await firestore.collection("project").get().then(function (querySnapshot) {               //result는 await를 하기 위해서 만들어낸 변수
+    //     querySnapshot.forEach(async function(doc) {
+    //       // doc.data() is never undefined for query doc snapshots
+    //       //console.log(doc.id, " => ", doc.data())
+    //       console.log("요청하는 이미지는 다음과 같습니다 :" + doc.data().image)
+    //       let image = await getFireBaseImage(doc.data().image)
+    //       let eachData = {
+    //         'comment' : doc.data().comment,
+    //         'finish' : doc.data().finish,
+    //         'host' : doc.data().host,
+    //         'image' : image,
+    //         'name' : doc.data().name,
+    //         'party' : doc.data().party,
+    //         'signed' : doc.data().signed,
+    //         'skill' : doc.data().skill,
+    //         'term' : doc.data().term
+    //       }
+    //       eachStore.push(eachData)
+    //     });
+    //   })
+    //   return eachStore
+    // }
 
-    let createDatabase = async () => {
-      let result = await handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
-      await delay(2500);
-      if (result === false) {
-        //2차 안전장치
-        console.log("이미지를 올리지 않아서 아무 일도 안생길 거임");
-      } else if (!comment || finish || !name || !party || !eachSkill) {
-        alert("모든 항목은 필수입니다");
-        window.location.reload();
-      } else {
+    let updateDatabase = async () => {
+      console.log('수정되는 데이터:', '개요:', comment, '인원:', party, '스킬:', skill, '기간',term)
+      console.log('현재 데이터:', projectData[0]);
         firestore
           .collection("project")
-          .doc(name)
-          .get()
-          .then(function (docName) {
-            if (docName.data() !== undefined) {
-              alert("중복된 프로젝트명입니다. 다른 프로젝트 이름을 정해주세요");
-              window.location.reload();
-            } else if (name + ".png" !== imageAsFile.name) {
-              alert("프로젝트 이름과 이미지 파일은 이름이 같아야 합니다.");
-              window.location.reload();
-            } else {
-              firestore
-                .collection("project")
-                .doc(name)
-                .set({
-                  host: host,
-                  comment: comment,
-                  finish: finish,
-                  name: name,
-                  party: party,
-                  signed: signed,
-                  skill: skill,
-                  term: term,
-                  image: imageAsFile.name,
-                })
-                .then(function () {
-                  alert("프로젝트 등록에 성공했습니다");
-                  window.location.reload();
-                })
-                .catch(function (error) {
-                  console.error("다음과 같은 에러가 발생했습니다 : " + error);
-                });
-            }
+          .doc(projectData[0].name)
+          .update({
+            comment: comment,
+            party: party,
+            skill: skill,
+            term: term,
+          })
+          .then(function () {
+            alert("프로젝트 수정에 성공했습니다");
+            console.log(localStorage.fireStoreData);
+            history.push('/mypage/myprojectlist');
+          })
+          .catch(function (error) {
+            console.error("다음과 같은 에러가 발생했습니다 : " + error);
           });
-      }
     };
+
+    let deleteProjectData = async () => {
+      firestore.collection("project").doc(projectName).delete()
+      .then(() => {
+        alert("프로젝트를 성공적으로 삭제했습니다");
+        history.push('/mypage/myprojectlist');
+      })
+      .catch((error) => {
+        console.error("다음과 같은 에러가 발생했습니다 : " + error);
+      });
+    }
 
     let skillbutton = () => {
       if (skill.length > 2) {
@@ -102,78 +112,6 @@ function MyProjectListDetail () {
         }
       }
     };
-
-    let handleImageAsFile = (e) => {
-      e.preventDefault();
-      const reader = new FileReader();
-      const image = e.target.files[0];
-      reader.onloadend = () => {
-        setImageAsFile(image);
-        setImageAsUrl(reader.result);
-      };
-      reader.readAsDataURL(image);
-    };
-
-    let handleFireBaseUpload = (e) => {
-      if (imageAsFile === "") {
-        alert(`이미지 파일을 올려 주세요!!!`);
-        return false;
-      } else {
-        console.log("이미지 업로드를 시작합니다");
-        console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
-        const uploadTask = storage
-          .ref(`/project/${imageAsFile.name}`)
-          .put(imageAsFile);
-        uploadTask.on(
-          "state_changed",
-          (snapShot) => {
-            console.log(snapShot);
-          },
-          (err) => {
-            console.log(err);
-          },
-          () => {
-            storage
-              .ref("project")
-              .child(imageAsFile.name)
-              .getDownloadURL()
-              .then((fireBaseUrl) => {
-                setImageAsUrl((prevObject) => ({
-                  ...prevObject,
-                  imgUrl: fireBaseUrl,
-                }));
-                console.log("유알엘이 뭔지 확인해볼거야" + fireBaseUrl);
-                console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
-                firestore
-                  .collection("project")
-                  .doc(imageAsFile.name)
-                  .update({
-                    image: fireBaseUrl,
-                  })
-                  .then(function () {
-                    console.log(
-                      "파이어베이스 업데이트 완료 이미지 url 파이어스토어에 업로드"
-                    );
-                  })
-                  .catch(function (err) {
-                    //alert(err)
-                  });
-              });
-          }
-        );
-        return true;
-      }
-    };
-
-    //넘어온 프로젝트 이름을 통해 데이터베이스에서 검색
-    const location = useLocation();
-    const projectName = location.state.name;
-    let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
-    let projectData = dataFire.filter((el) => {
-      if (el.name === projectName) return el;
-    })
-    console.log('프로젝트 데이터:', projectData)
-    console.log('프로젝트 이름:', projectData[0].name, '프로젝트 이미지:', projectData[0].image)
 
     return (
       <div className={styles.regist}>
@@ -190,7 +128,7 @@ function MyProjectListDetail () {
 
           <span>
             <p>
-              모집인원 :{" "}
+              모집인원 :{projectData[0].party}
               <input
                 type="number"
                 value={party}
@@ -198,15 +136,10 @@ function MyProjectListDetail () {
               ></input>
             </p>
             <p>
-              현재 등록 인원 :{" "}
-              <input
-                type="number"
-                value={signed}
-                onChange={(e) => setSigned(e.target.value)}
-              ></input>
+              현재 등록 인원 :{projectData[0].signed}
             </p>
             <p>
-              프로젝트 기간 :{" "}
+              프로젝트 기간 :{projectData[0].term}
               <input
                 type="date"
                 value={term}
@@ -215,13 +148,19 @@ function MyProjectListDetail () {
             </p>
   
             <div>
-              기술 스택 :{" "}
+              기술 스택 :{projectData[0].skill.map((el, idx) => {
+                return (
+                <div><div className={styles.skill}>{el}</div>
+                  <input type="text" value={eachSkill} onChange={(e) => setEachSkill(e.target.value)}></input>
+                  <button>변경</button>
+                  </div>)
+              })}
               <input
                 type="text"
                 value={eachSkill}
                 onChange={(e) => setEachSkill(e.target.value)}
               ></input>
-              <button onClick={skillbutton}>클릭</button>
+              <button onClick={skillbutton}>추가</button>
               <div className={styles.teckstack}>
                 <li>
                   기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
@@ -238,7 +177,7 @@ function MyProjectListDetail () {
         </div>
 
         <p>
-          프로젝트 개요 :{" "}
+          프로젝트 개요 :{projectData[0].comment}
           <div style={{ paddingTop: "20px" }}>
             <textarea
               type="text"
@@ -250,10 +189,10 @@ function MyProjectListDetail () {
         </p>
         <div className={styles.registbtn}>
           <span>
-            <button>등록하기</button>
+            <button onClick={updateDatabase}>수정하기</button>
           </span>
           <span style={{ paddingLeft: "20px" }}>
-            <button onClick={() => history.push("/")}>취소</button>
+            <button onClick={deleteProjectData}>삭제</button>
           </span>
         </div>
       </div>

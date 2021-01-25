@@ -27,6 +27,7 @@ const MyProjectList = (props) => {
     // this value to authenticate with your backend server, if
     // you have one. Use User.getToken() instead.
   }
+
   let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
   let myRegistedProject = dataFire.filter((el) => {
     if (el.host === email) return el;
@@ -107,7 +108,9 @@ const MyProjectList = (props) => {
               <li>프로젝트 이름:{eachData.name}</li>
               <li>예상 기간: {eachData.term}</li>
               <li>현재 인원: {eachData.party}</li>
-              <li>사용 언어: {eachData.skill}</li>
+              <li>사용 언어: {eachData.skill.map((el) => {
+                return <span className={styles.skill}>{el}</span>
+              })}</li>
             </ul>
           </div>
         );
