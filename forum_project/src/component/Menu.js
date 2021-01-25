@@ -177,6 +177,7 @@ function Menu(props) {
           )}
         </header>
         <Link to="/projectdetail"></Link>
+        
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/guide" component={Guide} />
@@ -184,6 +185,7 @@ function Menu(props) {
           <Route exact path="/projectdetail" component={ProjectDetail} />
           <Route exact path="/regist" component={Regist} />
           <Route exact path="/mypage/profile" component={MyPage} />
+          
         </Switch>
       </div>
     </Router>
