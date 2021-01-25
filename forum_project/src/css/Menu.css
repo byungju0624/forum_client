@@ -1,0 +1,47 @@
+header {
+  margin-left: 20%;
+  margin-right: 20%;
+  height: 10vh;
+  color: black;
+  background: white;
+  font-weight: bold;
+  font-size: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.App-header {
+  border-bottom: 2px solid black;
+}
+
+.logo:hover {
+  transform: scale(1.1);
+}
+
+.nav {
+  margin-left: 12%;
+  margin-right: 7%;
+  /*margin-right: ;*/
+  width: 60%;
+}
+
+.menu {
+  font-size: 20px;
+  margin-right: 8%;
+}
+
+.menu:hover {
+  text-decoration: overline underline;
+  text-underline-position: under;
+}
+
+.login_image {
+  width: 64px;
+  height: 64px;
+}
+
+.login_image:hover {
+  transform: rotate(30deg);
+  cursor: pointer;
+}
