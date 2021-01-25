@@ -178,6 +178,7 @@ function Menu(props) {
           )}
         </header>
         <Link to="/projectdetail"></Link>
+
         <Switch>
           <Route exact path="/" component={MainPage} />
           <Route exact path="/guide" component={Guide} />

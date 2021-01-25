@@ -4,7 +4,7 @@
   width: 50%;
   justify-content: center;
   padding-left: 15%;
-  /* padding-top: 10%; */
+  padding-top: 10%;
 }
 .slides .slick-prev,
 .slides .slick-next {
@@ -35,7 +35,7 @@
 }
 
 .slides .slick-next {
-  /* right: -10vh; */
+  right: -10vh;
 }
 .img {
   width: 100%;

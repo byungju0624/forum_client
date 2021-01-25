@@ -81,9 +81,7 @@ const ProjectDetail = () => {
             <button>관심 프로젝트 담기</button>
           </span>
           <span>
-            <button style={{ marginLeft: "20px" }} onClick={addUserFireStore}>
-              지원하기
-            </button>
+            <button style={{ marginLeft: "20px" }}>지원하기</button>
           </span>
           <span>
             <button

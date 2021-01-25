@@ -1,9 +1,11 @@
 import styles from "../../css/MyPage/MyPage.module.css";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Profile from "./Profile";
-import WishList from "./WishList";
+import MyProjectList from "./MyProjectList";
 import RegistStatus from "./RegistStatus";
 import ApplyStatus from "./ApplyStatus";
+import MyProjectListDetail from "./MyProjectListDetail";
+
 function MyPage() {
   return (
     <div className={styles.header}>
@@ -16,7 +18,7 @@ function MyPage() {
             <div>프로필</div>
           </Link>
           <Link
-            to="/mypage/wishlist"
+            to="/mypage/myprojectlist"
             style={{
               textDecoration: "none",
               color: "black",
@@ -27,7 +29,7 @@ function MyPage() {
                 paddingTop: "25%",
               }}
             >
-              진행 프로젝트
+              나의 프로젝트
             </div>
           </Link>
           <Link
@@ -54,12 +56,18 @@ function MyPage() {
               신청현황
             </div>
           </Link>
+          <Link to="/mypage/myprojectlistdetail"></Link>
         </div>
         <Switch>
           <Route exact path="/mypage/profile" component={Profile} />
-          <Route exact path="/mypage/wishlist" component={WishList} />
+          <Route exact path="/mypage/myprojectlist" component={MyProjectList} />
           <Route exact path="/mypage/registstatus" component={RegistStatus} />
           <Route exact path="/mypage/applystatus" component={ApplyStatus} />
+          <Route
+            exact
+            Path="/mypage/myprojectlistdetail"
+            component={MyProjectListDetail}
+          />
         </Switch>
       </Router>
     </div>
