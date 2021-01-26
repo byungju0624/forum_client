@@ -97,7 +97,7 @@ const MyProjectList = (props) => {
         <div>위시리스트4</div>
         <div>위시리스트5</div>
       </Slider> */}
-      <h3>내가 등록한 프로젝트</h3>
+      <div>내가 등록한 프로젝트</div>
       <div className={styles.firstContainer}>
         {myRegistedProject.map((eachData) => {
           return (
@@ -116,11 +116,11 @@ const MyProjectList = (props) => {
                 </div>
               </div>
               <ul>
-                <li>프로젝트 이름:{eachData.name}</li>
-                <li>예상 기간: {eachData.term}</li>
-                <li>현재 인원: {eachData.party}</li>
+                <li>프로젝트 : {eachData.name}</li>
+                <li>예상기간 : {eachData.term}</li>
+                <li>현재인원 : {eachData.party}명</li>
                 <li>
-                  사용 언어:{" "}
+                  사용언어 :{" "}
                   {eachData.skill.map((el) => {
                     return <span className={styles.skill}>{el}</span>;
                   })}
@@ -131,8 +131,8 @@ const MyProjectList = (props) => {
         })}
       </div>
 
-      <h3>내가 참가 중인 프로젝트</h3>
-      <div className={styles.firstContainer}>
+      <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
+      <div className={styles.secondContainer}>
         {myJoinedProject.map((eachData) => {
           return (
             <div className={styles.cardwraper}>

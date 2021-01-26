@@ -133,7 +133,7 @@ function MyProjectListDetail() {
           <p>프로젝트 이름 :{projectData[0].name}</p>
 
           <div style={{ marginTop: "10px" }}>
-            <img src={projectData[0].image} style={{ width: "50%" }} />
+            <img src={projectData[0].image} style={{ width: "40vh" }} />
           </div>
         </span>
 
@@ -208,7 +208,7 @@ function MyProjectListDetail() {
           <button onClick={updateDatabase}>수정하기</button>
         </span>
         <span style={{ paddingLeft: "20px" }}>
-          <button onClick={deleteProjectData}>삭제</button>
+          <button onClick={deleteProjectData}>삭제하기</button>
         </span>
       </div>
     </div>

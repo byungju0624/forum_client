@@ -93,10 +93,23 @@ function Project(props) {
                 </div>
               </div>
               <ul>
-                <li>프로젝트 이름:{eachData.name}</li>
-                <li>예상 기간: {eachData.term}</li>
-                <li>현재 인원: {eachData.party}</li>
-                <li>사용 언어: {eachData.skill}</li>
+                <li>프로젝트: {eachData.name}</li>
+                <li style={{ marginTop: "4px" }}>예상기간: {eachData.term}</li>
+                <li style={{ marginTop: "4px" }}>
+                  현재인원: {eachData.party}명
+                </li>
+                <li>
+                  <div className={styles.tag}>
+                    <div>사용언어: </div>
+                    {eachData.skill.map((skill) => {
+                      return (
+                        <>
+                          <div className={styles.skill}>{skill}</div>
+                        </>
+                      );
+                    })}
+                  </div>
+                </li>
               </ul>
             </div>
           );

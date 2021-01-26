@@ -17,7 +17,7 @@ const RegistStatus = (props) => {
   //submittedProject : 내가 등록을 했는데(내가 호스트인데) 신청이 들어온 프로젝트
   //[ {프로젝트명: [신청자1, 신청자2,...} ]
   let submittedProject = [
-    { test: ["chejg7@gmail.com", "yanda20201@gmail.com"] },
+    { projectTest: ["chejg7@gmail.com", "yanda20201@gmail.com"] },
   ];
 
   let user = firebase.auth().currentUser;
@@ -61,25 +61,40 @@ const RegistStatus = (props) => {
       {submittedProject.map((el) => {
         let projectName = Object.keys(el)[0];
         return (
-          <div>
-            <div>프로젝트명:{projectName}</div>
-            <div>
-              신청자:
-              {el[projectName].map((data) => {
-                return (
-                  <div>
-                    {data}
-                    <button value={data} onClick={handleApprove}>
-                      승인
-                    </button>
-                    <button value={data} onClick={handleReject}>
-                      거부
-                    </button>
-                  </div>
-                );
-              })}
+          <>
+            <div className={styles.table}>
+              <div className={styles.title}>
+                <li>프로젝트</li>
+                <li>신청자</li>
+                <li>상태</li>
+              </div>
+              <div className={styles.tableInt}>
+                <div style={{ marginLeft: "3vh" }}>{projectName}</div>
+                <div style={{ width: "30%" }}>
+                  {el[projectName].map((data) => {
+                    return <div>{data}</div>;
+                  })}
+                </div>
+                <div className={styles.btn}>
+                  {el[projectName].map((data) => {
+                    return (
+                      <frameElement>
+                        <div>
+                          <button style={{ fontWeight: "bold" }}>승인</button>
+
+                          <button
+                            style={{ marginLeft: "5px", fontWeight: "bold" }}
+                          >
+                            거절
+                          </button>
+                        </div>
+                      </frameElement>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
-          </div>
+          </>
         );
       })}
     </div>

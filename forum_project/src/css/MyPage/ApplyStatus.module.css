@@ -2,23 +2,25 @@
   display: flex;
   position: relative;
   height: 90%;
-  width: 90%;
+  width: 70vh;
   justify-content: center;
-  padding-top: 10%;
+  align-items: center;
+  margin-left: 10vh;
+  margin-top: 5vh;
 }
 .table {
-  border: gray 1px solid;
+  border: gray 3px solid;
   border-radius: 16px;
-  height: 20vh;
-  width: 80%;
+  height: 40vh;
+  width: 80vh;
   padding-top: 20px;
   padding-bottom: 20px;
+  margin-top: 5vh;
+  margin-left: 5vh;
 }
 .title {
-  margin-left: 5%;
   padding-bottom: 10px;
   display: flex;
   justify-content: space-around;
   border-bottom: 1px solid gray;
-  width: 90%;
 }

@@ -218,6 +218,7 @@ function Regist() {
           <p>
             프로젝트 이름 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -229,12 +230,13 @@ function Regist() {
                 type="file"
                 accept="image/png"
                 onChange={handleImageAsFile}
+                style={{ fontWeight: "bold" }}
               />
             </form>
           </div>
           <div style={{ marginTop: "10px" }}>
             {imageAsFile !== "" ? (
-              <img src={imageAsUrl} style={{ width: "50%" }} />
+              <img src={imageAsUrl} style={{ width: "40vh" }} />
             ) : (
               <span>
                 png 파일을 선택해주세요. <br />
@@ -245,24 +247,29 @@ function Regist() {
         </span>
         <span>
           <p>
-            모집인원 :{" "}
+            모집 인원 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="number"
               value={party}
               onChange={(e) => setParty(e.target.value)}
-            ></input>
+            ></input>{" "}
+            명
           </p>
           <p>
-            현재 등록 인원 :{" "}
+            등록 인원 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="number"
               value={signed}
               onChange={(e) => setSigned(e.target.value)}
-            ></input>
+            ></input>{" "}
+            명
           </p>
           <p>
-            프로젝트 기간 :{" "}
+            예상 기간 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="date"
               value={term}
               onChange={(e) => setTerm(e.target.value)}
@@ -270,45 +277,61 @@ function Regist() {
           </p>
 
           <div>
-            기술 스택 :{" "}
+            사용 언어 :{" "}
             <input
+              style={{ border: "3px solid black" }}
               type="text"
               value={eachSkill}
               onChange={(e) => setEachSkill(e.target.value)}
             ></input>
-            <button onClick={skillbutton}>클릭</button>
+            <button
+              style={{
+                marginLeft: "5px",
+                border: "3px solid black",
+                fontWeight: "bold",
+              }}
+              onClick={skillbutton}
+            >
+              클릭
+            </button>
             <div className={styles.teckstack}>
               <li>
-                기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
+                사용언어① : <div style={{ width: "50%" }}>{skill[0]}</div>
               </li>
               <li>
-                기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div>
+                사용언어② : <div style={{ width: "50%" }}>{skill[1]}</div>
               </li>
               <li>
-                기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div>
+                사용언어③ : <div style={{ width: "50%" }}>{skill[2]}</div>
               </li>
             </div>
           </div>
         </span>
       </div>
-
-      <p>
-        프로젝트 개요 :{" "}
-        <div style={{ paddingTop: "20px" }}>
-          <textarea
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            style={{ width: "50vh", height: "15vh" }}
-          ></textarea>
-        </div>
-      </p>
+      <div style={{ marginLeft: "12vh", marginTop: "10vh" }}>
+        <p>
+          프로젝트 개요 :{" "}
+          <div style={{ paddingTop: "20px" }}>
+            <textarea
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              style={{
+                width: "50vh",
+                height: "15vh",
+                border: "3px solid black",
+                fontWeight: "bold",
+              }}
+            ></textarea>
+          </div>
+        </p>
+      </div>
       <div className={styles.registbtn}>
         <span>
           <button onClick={createDatabase}>등록하기</button>
         </span>
-        <span style={{ paddingLeft: "20px" }}>
-          <button onClick={() => history.push("/")}>취소</button>
+        <span style={{ paddingLeft: "6vh" }}>
+          <button onClick={() => history.push("/")}>취소하기</button>
         </span>
       </div>
     </div>

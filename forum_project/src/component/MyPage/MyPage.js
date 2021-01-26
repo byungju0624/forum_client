@@ -26,7 +26,7 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               나의 프로젝트
@@ -38,7 +38,7 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               등록현황
@@ -50,7 +50,7 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               신청현황
