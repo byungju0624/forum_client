@@ -7,7 +7,6 @@
   font-weight: bold;
   font-size: 130%;
   padding-top: 20px;
-  border-bottom: 2px solid black;
 }
 .cardwraper {
   position: relative;
@@ -62,15 +61,15 @@ li {
 
 .slides .slick-prev,
 .slides .slick-next {
-  /* position: relative; */
+  position: relative;
   top: 50%;
   z-index: 1;
   display: "block";
 
   height: 100%;
 }
-.slick-prev:before,
-.slick-next:before {
+.slides.slick-prev:before,
+.slides.slick-next:before {
   font-family: "slick";
   font-size: 50px;
   line-height: 1;

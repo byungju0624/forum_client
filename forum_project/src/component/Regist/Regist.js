@@ -12,7 +12,7 @@ function Regist() {
   const [host, setHost] = useState("");
   const [name, setName] = useState("");
   const [party, setParty] = useState(0);
-  const [signed, setSigned] = useState(0);
+  const [signed, setSigned] = useState(1);
   const [skill, setSkilled] = useState([]);
   const [term, setTerm] = useState("");
   const history = useHistory();
@@ -52,7 +52,8 @@ function Regist() {
       alert("모든 항목은 필수입니다");
       window.location.reload();
     } else {
-      firestore
+      await howManyRegist(host);
+      await firestore
         .collection("project")
         .doc(name)
         .get()
@@ -77,8 +78,10 @@ function Regist() {
                 skill: skill,
                 term: term,
                 image: imageAsFile.name,
+                people: [host],
               })
-              .then(function () {
+              .then(async function () {
+                await addAppliedProject(host, name);
                 alert("프로젝트 등록에 성공했습니다");
                 window.location.reload();
               })
@@ -162,6 +165,50 @@ function Regist() {
       );
       return true;
     }
+  };
+
+  let howManyRegist = async (host) => {
+    console.log("-------------------------------------");
+    await firestore
+      .collection("users")
+      .doc(host)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          let document = doc.data();
+          if (document.hostProject.length > 2) {
+            alert(
+              "프로젝트를 3개 이상 등록하실려면 프라이빗 계정으로 전환하세요"
+            );
+            window.location.reload();
+          } else {
+            console.log("참");
+          }
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log("에러는 다음과 같음" + error);
+      });
+    console.log("-------------------------------------");
+  };
+
+  let addAppliedProject = async (host, name) => {
+    console.log("여기에 들어와 지는지 알고 싶어요!" + host + " / " + name);
+    firestore
+      .collection("users")
+      .doc(host)
+      .update({
+        hostProject: firebase.firestore.FieldValue.arrayUnion(name), //파이어스토어 배열 건드릴 때에는 절대 세미콜론 넣지마!!!
+      })
+      .then(function () {
+        console.log("유저 정보에도 자기가 등록한 프로젝트가 들어갔나요?");
+      })
+      .catch(function (err) {
+        console.log("발생한 에러는 다음과 같습니다" + err);
+      });
   };
 
   return (

@@ -1,7 +1,7 @@
 .first_block {
   margin-left: 20%;
   margin-right: 20%;
-  height: 140vh;
+  height: 90vh;
 }
 
 .slogan {
@@ -22,7 +22,6 @@
   display: flex;
   justify-content: space-around;
   text-align: center;
-  border-bottom: 2px solid black;
 }
 
 .summary_block {
