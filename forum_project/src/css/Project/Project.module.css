@@ -90,3 +90,8 @@ li {
 .slides .slick-next {
   right: -4vh;
 }
+
+.tag {
+  display: flex;
+  margin-top: 4px;
+}

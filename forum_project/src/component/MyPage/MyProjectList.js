@@ -118,7 +118,7 @@ const MyProjectList = (props) => {
       </div>
 
         <h3>내가 참가 중인 프로젝트</h3>
-        <div className={styles.firstContainer}>
+        <div className={styles.secondContainer}>
       {myJoinedProject.map((eachData) => {
         return (
           <div className={styles.cardwraper}>
