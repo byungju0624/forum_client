@@ -45,14 +45,16 @@ const RegistStatus = (props) => {
   
 
   const handleApprove = (e) => {
-    let userEmail = e.target.value;
+    let targetValue = e.target.value.split(',')
+    console.log(targetValue)
+    let projectName = targetValue[0];
+    let userEmail = targetValue[1];
+    console.log('프로젝트명:', projectName, '유저 이메일:', userEmail)
     //유저데이터
     let userData = firestore
     .collection("users")
-    .doc(userEmail)
-    .update({
-      joinProject:[userEmail]
-    })
+    .doc(userEmail).get()
+    .then(console.log(userData))
   }
 
   const handleReject = () => {
@@ -68,7 +70,7 @@ const RegistStatus = (props) => {
         <div>신청자:{el[projectName].map((data) => {
           return (<div>
             {data}
-            <button value={data} onClick={handleApprove}>승인</button>
+            <button value={[projectName, data]} onClick={handleApprove}>승인</button>
             <button value={data} onClick={handleReject}>거부</button>
           </div>)
         })}</div>
