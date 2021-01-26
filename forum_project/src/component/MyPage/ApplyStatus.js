@@ -6,8 +6,9 @@ const ApplyStatus = (props) => {
       <div className={styles.table}>
         <div className={styles.title}>
           <li>프로젝트</li>
-          <li>신청일시</li>
-          <li>상태</li>
+          <li>신청날짜</li>
+          <li>신청현황</li>
+          <li>신청취소</li>
         </div>
       </div>
     </div>

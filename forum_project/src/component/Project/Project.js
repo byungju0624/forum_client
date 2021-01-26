@@ -13,36 +13,43 @@ let period = null;
 let person = null;
 let lang = null;
 
+function Project(props) {
+  let json = localStorage.getItem("fireStoreData");
+  let localData = JSON.parse(json) || [];
+  let [dataFire, setDataFire] = useState(localData);
 
-function Project (props) {
-
-	let json = localStorage.getItem("fireStoreData")
-	let localData = JSON.parse(json) || [];
-	let [dataFire, setDataFire] = useState(localData)
-	
-	/*function delay(ms){
+  /*function delay(ms){
 		return new Promise((resolve, reject) =>{
 			setTimeout(resolve, ms)
 		})
 	}*/
 
-
-	/*useEffect(async ()=> {
+  /*useEffect(async ()=> {
 		await delay(2000)
 		console.log("루삥뽕"+JSON.stringify(dataFire))
 	},[])*/
 
+  let history = useHistory();
 
-	let history = useHistory();
-	
   let handleClick = (e) => {
-    console.log('e.target:', e.target)
+    console.log("e.target:", e.target);
     photo = e.target.src;
     name = e.target.name;
     period = e.target.period;
     person = e.target.person;
     lang = e.target.lang;
-    console.log('이미지:', photo, '이름:', name, '기간:', period, '인원:', person, '스킬', lang)
+    console.log(
+      "이미지:",
+      photo,
+      "이름:",
+      name,
+      "기간:",
+      period,
+      "인원:",
+      person,
+      "스킬",
+      lang
+    );
     history.push({
       pathname: "/projectdetail",
       state: {
@@ -54,8 +61,8 @@ function Project (props) {
       },
     });
   };
-		
-	const settings = {
+
+  const settings = {
     dots: true,
     infinite: true,
     slidesToShow: 3,
@@ -69,7 +76,7 @@ function Project (props) {
       <h2>프로젝트 열람</h2>
       <Slider {...settings}>
         {dataFire.map((eachData) => {
-          console.log('개별 프로젝트 데이터:', eachData)
+          console.log("개별 프로젝트 데이터:", eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>
@@ -86,10 +93,23 @@ function Project (props) {
                 </div>
               </div>
               <ul>
-                <li>프로젝트 이름:{eachData.name}</li>
-                <li>예상 기간: {eachData.term}</li>
-                <li>현재 인원: {eachData.party}</li>
-                <li>사용 언어: {eachData.skill}</li>
+                <li>프로젝트: {eachData.name}</li>
+                <li style={{ marginTop: "4px" }}>예상기간: {eachData.term}</li>
+                <li style={{ marginTop: "4px" }}>
+                  현재인원: {eachData.party}명
+                </li>
+                <li>
+                  <div className={styles.tag}>
+                    <div>사용언어: </div>
+                    {eachData.skill.map((skill) => {
+                      return (
+                        <>
+                          <div className={styles.skill}>{skill}</div>
+                        </>
+                      );
+                    })}
+                  </div>
+                </li>
               </ul>
             </div>
           );
@@ -98,6 +118,5 @@ function Project (props) {
     </div>
   );
 }
-
 
 export default Project;

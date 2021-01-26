@@ -29,7 +29,7 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               나의 프로젝트
@@ -41,7 +41,7 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               등록현황
@@ -53,20 +53,24 @@ function MyPage() {
           >
             <div
               style={{
-                paddingTop: "25%",
+                paddingTop: "6vh",
               }}
             >
               신청현황
             </div>
           </Link>
-          <Link to='/mypage/myprojectlistdetail'></Link>
+          <Link to="/mypage/myprojectlistdetail"></Link>
         </div>
         <Switch>
           <Route exact path="/mypage/profile" component={Profile} />
           <Route exact path="/mypage/myprojectlist" component={MyProjectList} />
           <Route exact path="/mypage/registstatus" component={RegistStatus} />
           <Route exact path="/mypage/applystatus" component={ApplyStatus} />
-          <Route exact Path="/mypage/myprojectlistdetail" component={MyProjectListDetail} />
+          <Route
+            exact
+            Path="/mypage/myprojectlistdetail"
+            component={MyProjectListDetail}
+          />
         </Switch>
       </Router>
     </div>

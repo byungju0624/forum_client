@@ -12,7 +12,7 @@ function Regist() {
   const [host, setHost] = useState("");
   const [name, setName] = useState("");
   const [party, setParty] = useState(0);
-	const [signed, setSigned] = useState(1);
+  const [signed, setSigned] = useState(1);
   const [skill, setSkilled] = useState([]);
   const [term, setTerm] = useState("");
   const history = useHistory();
@@ -29,7 +29,7 @@ function Regist() {
     if (user) {
       //console.log(user.displayName);
       //console.log(user.email);
-			setHost(user.email);
+      setHost(user.email);
     } else {
       console.log("유저 없는 뎁쇼");
     }
@@ -49,10 +49,10 @@ function Regist() {
       //2차 안전장치
       console.log("이미지를 올리지 않아서 아무 일도 안생길 거임");
     } else if (!comment || finish || !name || !party || !eachSkill) {
-			alert("모든 항목은 필수입니다");
-			window.location.reload();
-		}else {
-			await howManyRegist(host);
+      alert("모든 항목은 필수입니다");
+      window.location.reload();
+    } else {
+      await howManyRegist(host);
       await firestore
         .collection("project")
         .doc(name)
@@ -65,7 +65,10 @@ function Regist() {
             alert("프로젝트 이름과 이미지 파일은 이름이 같아야 합니다.");
             window.location.reload();
           } else {
-            firestore.collection("project").doc(name).set({
+            firestore
+              .collection("project")
+              .doc(name)
+              .set({
                 host: host,
                 comment: comment,
                 finish: finish,
@@ -74,11 +77,11 @@ function Regist() {
                 signed: signed,
                 skill: skill,
                 term: term,
-								image: imageAsFile.name,
-								people : [host]
+                image: imageAsFile.name,
+                people: [host],
               })
               .then(async function () {
-								await addAppliedProject(host, name)
+                await addAppliedProject(host, name);
                 alert("프로젝트 등록에 성공했습니다");
                 window.location.reload();
               })
@@ -112,7 +115,6 @@ function Regist() {
     };
     reader.readAsDataURL(image);
   };
-
 
   let handleFireBaseUpload = (e) => {
     if (imageAsFile === "") {
@@ -163,43 +165,51 @@ function Regist() {
       );
       return true;
     }
-	};
+  };
 
+  let howManyRegist = async (host) => {
+    console.log("-------------------------------------");
+    await firestore
+      .collection("users")
+      .doc(host)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log("Document data:", doc.data());
+          let document = doc.data();
+          if (document.hostProject.length > 2) {
+            alert(
+              "프로젝트를 3개 이상 등록하실려면 프라이빗 계정으로 전환하세요"
+            );
+            window.location.reload();
+          } else {
+            console.log("참");
+          }
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log("에러는 다음과 같음" + error);
+      });
+    console.log("-------------------------------------");
+  };
 
-	let howManyRegist = async (host) => {
-		console.log("-------------------------------------")
-		await firestore.collection("users").doc(host).get().then(function (doc){
-			if(doc.exists){
-				console.log("Document data:", doc.data());
-				let document = doc.data();
-				if(document.hostProject.length > 2){
-					alert("프로젝트를 3개 이상 등록하실려면 프라이빗 계정으로 전환하세요");
-					window.location.reload();
-				}else{
-					console.log("참")
-				}
-			}else{
-				console.log("문서가 존재하지 않습니다")
-			}
-		}).catch(function(error){
-			console.log("에러는 다음과 같음"+error)
-		})
-		console.log("-------------------------------------")
-	}
-	
-
-	let addAppliedProject = async (host, name) => {
-		console.log("여기에 들어와 지는지 알고 싶어요!"+host+" / "+name)
-		firestore.collection("users").doc(host).update({
-			hostProject : firebase.firestore.FieldValue.arrayUnion(name)          //파이어스토어 배열 건드릴 때에는 절대 세미콜론 넣지마!!!
-		}).then(function (){
-			console.log("유저 정보에도 자기가 등록한 프로젝트가 들어갔나요?")
-		}).catch(function(err){
-			console.log("발생한 에러는 다음과 같습니다"+err)
-		}) 
-	}
-
-
+  let addAppliedProject = async (host, name) => {
+    console.log("여기에 들어와 지는지 알고 싶어요!" + host + " / " + name);
+    firestore
+      .collection("users")
+      .doc(host)
+      .update({
+        hostProject: firebase.firestore.FieldValue.arrayUnion(name), //파이어스토어 배열 건드릴 때에는 절대 세미콜론 넣지마!!!
+      })
+      .then(function () {
+        console.log("유저 정보에도 자기가 등록한 프로젝트가 들어갔나요?");
+      })
+      .catch(function (err) {
+        console.log("발생한 에러는 다음과 같습니다" + err);
+      });
+  };
 
   return (
     <div className={styles.regist}>
@@ -208,6 +218,7 @@ function Regist() {
           <p>
             프로젝트 이름 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -219,12 +230,13 @@ function Regist() {
                 type="file"
                 accept="image/png"
                 onChange={handleImageAsFile}
+                style={{ fontWeight: "bold" }}
               />
             </form>
           </div>
           <div style={{ marginTop: "10px" }}>
             {imageAsFile !== "" ? (
-              <img src={imageAsUrl} style={{ width: "50%" }} />
+              <img src={imageAsUrl} style={{ width: "40vh" }} />
             ) : (
               <span>
                 png 파일을 선택해주세요. <br />
@@ -235,24 +247,29 @@ function Regist() {
         </span>
         <span>
           <p>
-            모집인원 :{" "}
+            모집 인원 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="number"
               value={party}
               onChange={(e) => setParty(e.target.value)}
-            ></input>
+            ></input>{" "}
+            명
           </p>
           <p>
-            현재 등록 인원 :{" "}
+            등록 인원 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="number"
               value={signed}
               onChange={(e) => setSigned(e.target.value)}
-            ></input>
+            ></input>{" "}
+            명
           </p>
           <p>
-            프로젝트 기간 :{" "}
+            예상 기간 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="date"
               value={term}
               onChange={(e) => setTerm(e.target.value)}
@@ -260,45 +277,61 @@ function Regist() {
           </p>
 
           <div>
-            기술 스택 :{" "}
+            사용 언어 :{" "}
             <input
+              style={{ border: "3px solid black" }}
               type="text"
               value={eachSkill}
               onChange={(e) => setEachSkill(e.target.value)}
             ></input>
-            <button onClick={skillbutton}>클릭</button>
+            <button
+              style={{
+                marginLeft: "5px",
+                border: "3px solid black",
+                fontWeight: "bold",
+              }}
+              onClick={skillbutton}
+            >
+              클릭
+            </button>
             <div className={styles.teckstack}>
               <li>
-                기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
+                사용언어① : <div style={{ width: "50%" }}>{skill[0]}</div>
               </li>
               <li>
-                기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div>
+                사용언어② : <div style={{ width: "50%" }}>{skill[1]}</div>
               </li>
               <li>
-                기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div>
+                사용언어③ : <div style={{ width: "50%" }}>{skill[2]}</div>
               </li>
             </div>
           </div>
         </span>
       </div>
-
-      <p>
-        프로젝트 개요 :{" "}
-        <div style={{ paddingTop: "20px" }}>
-          <textarea
-            type="text"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            style={{ width: "50vh", height: "15vh" }}
-          ></textarea>
-        </div>
-      </p>
+      <div style={{ marginLeft: "12vh", marginTop: "10vh" }}>
+        <p>
+          프로젝트 개요 :{" "}
+          <div style={{ paddingTop: "20px" }}>
+            <textarea
+              type="text"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              style={{
+                width: "50vh",
+                height: "15vh",
+                border: "3px solid black",
+                fontWeight: "bold",
+              }}
+            ></textarea>
+          </div>
+        </p>
+      </div>
       <div className={styles.registbtn}>
         <span>
           <button onClick={createDatabase}>등록하기</button>
         </span>
-        <span style={{ paddingLeft: "20px" }}>
-          <button onClick={() => history.push("/")}>취소</button>
+        <span style={{ paddingLeft: "6vh" }}>
+          <button onClick={() => history.push("/")}>취소하기</button>
         </span>
       </div>
     </div>

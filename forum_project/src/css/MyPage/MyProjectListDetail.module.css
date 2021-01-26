@@ -1,12 +1,11 @@
 .regist {
-  margin-left: 20%;
-  margin-right: 20%;
   height: 100vh;
   color: black;
   background: white;
   font-weight: bold;
   font-size: 130%;
-
+  margin-left: 10vh;
+  margin-top: 3vh;
   /* border-bottom: 2px solid black; */
 }
 .projectint {
@@ -16,7 +15,7 @@
 }
 .teckstack {
   padding-left: 10px;
-  margin-top: 10px;
+
   font-size: medium;
 }
 .teckstack > li {
@@ -45,13 +44,4 @@
   cursor: pointer;
   background-color: black;
   color: white;
-}
-
-.skill {
-  font-size: medium;
-  border: solid 1px grey;
-  border-radius: 14px;
-  margin-top: 5px;
-  margin-left: 10px;
-  padding: 5px;
 }
