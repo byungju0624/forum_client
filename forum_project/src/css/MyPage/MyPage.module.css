@@ -8,9 +8,9 @@
   font-size: 130%;
   display: flex;
   /* padding-top: 5%; */
-  padding-left: 3%;
+  padding-left: 7vh;
 }
 .sidebar {
-  width: 25%;
-  padding-top: 5%;
+  margin-top: 20vh;
+  width: 20vh;
 }

@@ -10,7 +10,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 23vh;
+  margin-top: 15vh;
 }
 .first {
   border-bottom: 2px dotted gray;
