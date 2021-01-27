@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "../../css/MyPage/ApplyStatus.module.css";
+
 import { firestore } from "../../firebase";
 import auth from "firebase/auth";
 import firebase from "firebase/app";
@@ -15,6 +16,7 @@ const ApplyStatus = (props) => {
   let name, email, photoUrl, uid, emailVerified;
   const [appliedProjectData, setAppliedProjectData] = useState([]);
   const [myMessageData, setMyMessageData] = useState([]);
+
   useEffect(async () => {
     let user = firebase.auth().currentUser;
     if (user != null) {
@@ -24,6 +26,7 @@ const ApplyStatus = (props) => {
       emailVerified = user.emailVerified;
       uid = user.uid;
     }
+
     await getMyAppliedProject(email);
     await getMessage(email);
     await delay(1000);
@@ -31,11 +34,15 @@ const ApplyStatus = (props) => {
     setAppliedProjectData(appliedData);
     setMyMessageData(messageData);
   }, []);
+
+
+
   function delay(ms) {
     return new Promise((resolve, reject) => {
       setTimeout(resolve, ms);
     });
   }
+
   let getMyAppliedProject = async (email) => {
     firebase
       .firestore()
@@ -53,6 +60,7 @@ const ApplyStatus = (props) => {
         console.log(error);
       });
   };
+
 
   let getMessage = async (email) => {
     firebase
@@ -72,6 +80,7 @@ const ApplyStatus = (props) => {
       });
   };
 
+
   return (
     <div className={styles.header}>
       <div className={styles.table}>
@@ -80,6 +89,7 @@ const ApplyStatus = (props) => {
           <li>신청현황</li>
           <li>신청취소</li>
         </div>
+
         {appliedProjectData.map((data) => {
           return (
             <div className={styles.tableInt}>
@@ -106,9 +116,9 @@ const ApplyStatus = (props) => {
             </div>
           );
         })}
+
       </div>
     </div>
   );
-};
-
+  };
 export default ApplyStatus;
