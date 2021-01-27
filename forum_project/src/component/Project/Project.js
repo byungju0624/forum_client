@@ -96,7 +96,7 @@ function Project(props) {
                 <li>프로젝트: {eachData.name}</li>
                 <li style={{ marginTop: "4px" }}>예상기간: {eachData.term}</li>
                 <li style={{ marginTop: "4px" }}>
-                  현재인원: {eachData.party}명
+                  현재인원: {eachData.signed}명
                 </li>
                 <li>
                   <div className={styles.tag}>

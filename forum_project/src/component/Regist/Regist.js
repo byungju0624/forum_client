@@ -255,7 +255,7 @@ function Regist() {
               onChange={(e) => setParty(e.target.value)}
             ></input>{" "}명
           </p>
-          <p>
+          {/* <p>
             등록 인원 :{" "}
             <input
               style={{ border: "3px solid black", fontWeight: "bold" }}
@@ -264,7 +264,7 @@ function Regist() {
               onChange={(e) => setSigned(e.target.value)}
             ></input>{" "}
             명
-          </p>
+          </p> */}
           <p>
             예상 기간 :{" "}
             <input
