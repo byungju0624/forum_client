@@ -17,7 +17,7 @@ const MyProjectList = (props) => {
   const history = useHistory();
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
-  console.log('유저 정보', user)
+  console.log("유저 정보", user);
   if (user != null) {
     name = user.displayName;
     email = user.email;
@@ -28,19 +28,19 @@ const MyProjectList = (props) => {
     // you have one. Use User.getToken() instead.
   }
 
-  let dataFire = JSON.parse(localStorage.getItem("fireStoreData"))
+  let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
   let myRegistedProject = dataFire.filter((el) => {
     if (el.host === email) return el;
-  })
-  console.log('파이어베이스 데이터(전체):', dataFire);
+  });
+  console.log("파이어베이스 데이터(전체):", dataFire);
 
-  let joinProject = ['test4', 'test2'];
+  let joinProject = ["test4", "test2"];
   let myJoinedProject = dataFire.filter((el) => {
     for (let i = 0; i < joinProject.length; i++) {
       if (el.name === joinProject[i]) return el;
     }
-  })
-  console.log('myJoinedProject:', myJoinedProject)
+  });
+  console.log("myJoinedProject:", myJoinedProject);
 
   // for (let i = 0; i < joinProject.length; i++) {
   //   let temp = dataFire.filter((el) => {
@@ -58,13 +58,24 @@ const MyProjectList = (props) => {
   let lang = null;
 
   let handleClick = (e) => {
-    console.log('e.target:', e.target)
+    console.log("e.target:", e.target);
     photo = e.target.src;
     projectName = e.target.name;
     period = e.target.period;
     person = e.target.person;
     lang = e.target.lang;
-    console.log('이미지:', photo, '이름:', projectName, '기간:', period, '인원:', person, '스킬', lang)
+    console.log(
+      "이미지:",
+      photo,
+      "이름:",
+      projectName,
+      "기간:",
+      period,
+      "인원:",
+      person,
+      "스킬",
+      lang
+    );
     history.push({
       pathname: "/mypage/myprojectlistdetail",
       state: {
@@ -86,63 +97,66 @@ const MyProjectList = (props) => {
         <div>위시리스트4</div>
         <div>위시리스트5</div>
       </Slider> */}
-      <h3>내가 등록한 프로젝트</h3>
+      <div>내가 등록한 프로젝트</div>
       <div className={styles.firstContainer}>
-      {myRegistedProject.map((eachData) => {
-        return (
-          <div className={styles.cardwraper}>
-            <div className={styles.card}>
-              <div className={styles.card_img}>
-                <img
-                  src={eachData.image}
-                  name={eachData.name}
-                  period={eachData.term}
-                  person={eachData.party}
-                  lang={eachData.skill}
-                  className={styles.photo}
-                  onClick={handleClick}
-                ></img>
+        {myRegistedProject.map((eachData) => {
+          return (
+            <div className={styles.cardwraper}>
+              <div className={styles.card}>
+                <div className={styles.card_img}>
+                  <img
+                    src={eachData.image}
+                    name={eachData.name}
+                    period={eachData.term}
+                    person={eachData.party}
+                    lang={eachData.skill}
+                    className={styles.photo}
+                    onClick={handleClick}
+                  ></img>
+                </div>
               </div>
+              <ul>
+                <li>프로젝트 : {eachData.name}</li>
+                <li>예상기간 : {eachData.term}</li>
+                <li>현재인원 : {eachData.party}명</li>
+                <li>
+                  사용언어 :{" "}
+                  {eachData.skill.map((el) => {
+                    return <span className={styles.skill}>{el}</span>;
+                  })}
+                </li>
+              </ul>
             </div>
-            <ul>
-              <li>프로젝트 이름:{eachData.name}</li>
-              <li>예상 기간: {eachData.term}</li>
-              <li>현재 인원: {eachData.party}</li>
-              <li>사용 언어: {eachData.skill.map((el) => {
-                return <span className={styles.skill}>{el}</span>
-              })}</li>
-            </ul>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
 
-        <h3>내가 참가 중인 프로젝트</h3>
-        <div className={styles.firstContainer}>
-      {myJoinedProject.map((eachData) => {
-        return (
-          <div className={styles.cardwraper}>
-            <div className={styles.card}>
-              <div className={styles.card_img}>
-                <img
-                  src={eachData.image}
-                  name={eachData.name}
-                  period={eachData.term}
-                  person={eachData.party}
-                  lang={eachData.skill}
-                  className={styles.photo}
-                ></img>
+      <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
+      <div className={styles.secondContainer}>
+        {myJoinedProject.map((eachData) => {
+          return (
+            <div className={styles.cardwraper}>
+              <div className={styles.card}>
+                <div className={styles.card_img}>
+                  <img
+                    src={eachData.image}
+                    name={eachData.name}
+                    period={eachData.term}
+                    person={eachData.party}
+                    lang={eachData.skill}
+                    className={styles.photo}
+                  ></img>
+                </div>
               </div>
+              <ul>
+                <li>프로젝트 이름:{eachData.name}</li>
+                <li>예상 기간: {eachData.term}</li>
+                <li>현재 인원: {eachData.party}</li>
+                <li>사용 언어: {eachData.skill}</li>
+              </ul>
             </div>
-            <ul>
-              <li>프로젝트 이름:{eachData.name}</li>
-              <li>예상 기간: {eachData.term}</li>
-              <li>현재 인원: {eachData.party}</li>
-              <li>사용 언어: {eachData.skill}</li>
-            </ul>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
     </div>
   );
