@@ -140,7 +140,7 @@ function ProjectDetail() {
               style={{ marginLeft: "6vh" }}
               onClick={() => history.goBack()}
             >
-              취소하기
+              뒤로가기
             </button>
           </span>
         </div>
