@@ -28,7 +28,6 @@ function ProjectDetail() {
   let party = dataFire[0].party;
   let signed = dataFire[0].signed;
   let comment = dataFire[0].comment;
-  let signed = dataFire[0].signed;
   let host = dataFire[0].host; //프로젝트 주인장 아이디
   console.log("프로젝트의 이름은 다음과 같습니다 : " + name);
   console.log("프로젝트를 등록한 유저의 아이디는 다음과 같습니다 : " + host);
