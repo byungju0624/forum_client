@@ -253,8 +253,7 @@ function Regist() {
               type="number"
               value={party}
               onChange={(e) => setParty(e.target.value)}
-            ></input>{" "}
-            명
+            ></input>{" "}명
           </p>
           {/* <p>
             등록 인원 :{" "}
@@ -296,18 +295,19 @@ function Regist() {
             </button>
             <div className={styles.teckstack}>
               <li>
-                사용언어① : <div style={{ width: "50%" }}>{skill[0]}</div>
+                사용 언어① : <div style={{ width: "50%" }}>{skill[0]}</div>
               </li>
               <li>
-                사용언어② : <div style={{ width: "50%" }}>{skill[1]}</div>
+                사용 언어② : <div style={{ width: "50%" }}>{skill[1]}</div>
               </li>
               <li>
-                사용언어③ : <div style={{ width: "50%" }}>{skill[2]}</div>
+                사용 언어③ : <div style={{ width: "50%" }}>{skill[2]}</div>
               </li>
             </div>
           </div>
         </span>
       </div>
+      
       <div style={{ marginLeft: "12vh", marginTop: "10vh" }}>
         <p>
           프로젝트 개요 :{" "}

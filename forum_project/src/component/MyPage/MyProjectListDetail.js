@@ -25,7 +25,7 @@ function MyProjectListDetail() {
 
   const history = useHistory();
 
-  //하나의 기술 문자열을 담기 위한 샅애
+  //하나의 기술 문자열을 담기 위한 상태
   const [eachSkill, setEachSkill] = useState("");
 
   //이미지를 업로드 하기 위한 상태들
@@ -132,82 +132,70 @@ function MyProjectListDetail() {
         <span>
           <p>프로젝트 이름 :{projectData[0].name}</p>
 
-          <div style={{ marginTop: "10px" }}>
+          <div style={{ marginTop: "10px"}}>
             <img src={projectData[0].image} style={{ width: "40vh" }} />
           </div>
         </span>
 
         <span>
           <p>
-            모집인원 :{projectData[0].party}
+            모집 인원 : {" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="number"
               value={party}
+              placeholder = {projectData[0].party}
               onChange={(e) => setParty(e.target.value)}
-            ></input>
+            ></input>{" "}명
           </p>
-          <p>현재 등록 인원 :{projectData[0].signed}</p>
-          <p>
-            프로젝트 기간 :{projectData[0].term}
+          <p>등록 인원 :{projectData[0].signed}명</p>
+          <p>예상 기간 :{" "}
             <input
+              style={{ border: "3px solid black", fontWeight: "bold" }}
               type="date"
               value={term}
+              placeholder = {projectData[0].term}
               onChange={(e) => setTerm(e.target.value)}
             ></input>
           </p>
 
           <div>
-            기술 스택 :
-            {projectData[0].skill.map((el, idx) => {
-              return (
-                <div>
-                  <div className={styles.skill}>{el}</div>
-                  <input
-                    type="text"
-                    value={eachSkill}
-                    onChange={(e) => setEachSkill(e.target.value)}
-                  ></input>
-                  <button>변경</button>
-                </div>
-              );
-            })}
-            <input
-              type="text"
-              value={eachSkill}
-              onChange={(e) => setEachSkill(e.target.value)}
-            ></input>
-            <button onClick={skillbutton}>추가</button>
-            <div className={styles.teckstack}>
-              <li>
-                기술스택1 : <div style={{ width: "50%" }}>{skill[0]}</div>
-              </li>
-              <li>
-                기술스택2 : <div style={{ width: "50%" }}>{skill[1]}</div>
-              </li>
-              <li>
-                기술스택3 : <div style={{ width: "50%" }}>{skill[2]}</div>
-              </li>
-            </div>
+            사용 언어 :
+                <div className={styles.teckstack}>
+                <li>
+                사용 언어① : <div style={{ width: "50%" }}>{skill[0]}</div>
+                </li>
+                <li>
+                사용 언어② : <div style={{ width: "50%" }}>{skill[1]}</div>
+                </li>
+                <li>
+                사용 언어③ : <div style={{ width: "50%" }}>{skill[2]}</div>
+                </li>
+              </div> 
           </div>
         </span>
       </div>
 
+      <div style={{ marginLeft: "0%", marginTop: "10vh" }}>
       <p>
-        프로젝트 개요 :{projectData[0].comment}
+        프로젝트 개요 :{" "}
         <div style={{ paddingTop: "20px" }}>
           <textarea
+            placeholder = {projectData[0].comment} 
             type="text"
             value={comment}
             onChange={(e) => setComment(e.target.value)}
-            style={{ width: "50vh", height: "15vh" }}
+            style={{ width: "50vh", height: "15vh", border: "3px solid black",
+            fontWeight: "bold" }}
           ></textarea>
         </div>
       </p>
+      </div>
       <div className={styles.registbtn}>
         <span>
           <button onClick={updateDatabase}>수정하기</button>
         </span>
-        <span style={{ paddingLeft: "20px" }}>
+        <span style={{ paddingLeft: "6vh" }}>
           <button onClick={deleteProjectData}>삭제하기</button>
         </span>
       </div>

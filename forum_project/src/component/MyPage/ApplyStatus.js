@@ -1,10 +1,14 @@
 import React from "react";
 import styles from "../../css/MyPage/ApplyStatus.module.css";
+
+
 import auth from "firebase/auth";
+
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import { useEffect } from "react";
 import { useState } from "react";
+
 
 const ApplyStatus = (props) => {
 
@@ -53,6 +57,7 @@ const ApplyStatus = (props) => {
       });
   };
 
+
   return (
     <div className={styles.header}>
       <div className={styles.table}>
@@ -67,6 +72,5 @@ const ApplyStatus = (props) => {
       </div>
     </div>
   );
-};
-
+  };
 export default ApplyStatus;

@@ -20,8 +20,8 @@ function FirstBlock() {
             alt="아이디어"
           ></img>
           <div className="s_text">
-            여러분의 멋진 아이디어를 사람들에게 공개하세요 팀원을 모으고 최고의
-            팀을 만들어 보세요
+            여러분의 멋진 아이디어를 사람들에게 공개하세요
+            팀원을 모으고 최고의 팀을 만들어 보세요
           </div>
         </div>
         <div className="summary_block">
