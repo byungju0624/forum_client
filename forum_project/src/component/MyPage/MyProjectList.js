@@ -36,6 +36,7 @@ const MyProjectList = (props) => {
 
   let joinProject = ["test4", "test2"];
   let myJoinedProject = dataFire.filter((el) => {
+    console.log("data:", el);
     for (let i = 0; i < joinProject.length; i++) {
       if (el.name === joinProject[i]) return el;
     }
@@ -134,6 +135,7 @@ const MyProjectList = (props) => {
       <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
       <div className={styles.secondContainer}>
         {myJoinedProject.map((eachData) => {
+          console.log(eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>

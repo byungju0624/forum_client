@@ -15,8 +15,6 @@ function ProjectDetail() {
   let lang = location.state.lang;
   let applied = null;
   let account = undefined;
-  //현재지원자 카운트
-  const [count, setCount] = useState(0);
 
   let history = useHistory();
 
@@ -29,6 +27,7 @@ function ProjectDetail() {
   let term = dataFire[0].term;
   let party = dataFire[0].party;
   let comment = dataFire[0].comment;
+  let signed = dataFire[0].signed;
   let host = dataFire[0].host; //프로젝트 주인장 아이디
   console.log("프로젝트의 이름은 다음과 같습니다 : " + name);
   console.log("프로젝트를 등록한 유저의 아이디는 다음과 같습니다 : " + host);
@@ -114,7 +113,7 @@ function ProjectDetail() {
           <div className={styles.text}>
             <div>예상기간: {term}</div>
             <div style={{ marginTop: "2vh" }}>예상인원: {party}명</div>
-            <div style={{ marginTop: "2vh" }}>현재지원: {count}명</div>
+            <div style={{ marginTop: "2vh" }}>현재지원: {signed}명</div>
             <div style={{ marginTop: "2vh" }}>
               사용언어:{" "}
               {dataFire.map((eachData) => {

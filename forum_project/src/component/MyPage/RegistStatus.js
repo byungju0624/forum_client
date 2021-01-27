@@ -6,19 +6,13 @@ import { firestore } from "../../firebase";
 import auth from "firebase/auth";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 let submittedData = undefined;
 let name, email, photoUrl, uid, emailVerified;
 
 const RegistStatus = (props) => {
-  const settings = {
-    dots: true,
-    infinite: true,
-    slidesToShow: 2,
-    slidesToScroll: 2,
-    arrow: true,
-    className: "slides",
-  };
+  const history = useHistory();
 
   const [submittedProjectData, setSubmittedProjectData] = useState([]);
 
@@ -141,6 +135,9 @@ const RegistStatus = (props) => {
         message: firebase.firestore.FieldValue.arrayUnion(
           `프로젝트 ${projectName}에 참가가 승인 되었습니다`
         ),
+      })
+      .then(() => {
+        return history.push("/mypage/profile");
       });
   };
 
@@ -174,6 +171,9 @@ const RegistStatus = (props) => {
         message: firebase.firestore.FieldValue.arrayUnion(
           `프로젝트 ${projectName}에 참가가 거절 되었습니다`
         ),
+      })
+      .then(() => {
+        return history.push("/mypage/profile");
       });
   };
 
