@@ -17,7 +17,6 @@
   display: flex;
   justify-content: space-between;
   margin-top: 5vh;
-  height: 50vh;
 }
 
 .cardwraper {
@@ -60,6 +59,7 @@
   width: 30vh;
   height: 30vh;
   object-fit: cover;
+  border-radius: 16px;
 }
 
 li {

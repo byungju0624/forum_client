@@ -63,7 +63,6 @@ const ApplyStatus = (props) => {
       });
   };
 
-
   let getMessage = async (email) => {
     firebase
       .firestore()
@@ -80,8 +79,7 @@ const ApplyStatus = (props) => {
       .catch(function (error) {
         console.log(error);
       });
-	};
-	
+  };
 
 	//------------------------------------------------------------------------------------------------------취소하기
 	
@@ -130,9 +128,7 @@ const ApplyStatus = (props) => {
       });
   };
 
-
 	//------------------------------------------------------------------------------------------------------
-
 
   return (
     <div className={styles.header}>
@@ -173,5 +169,6 @@ const ApplyStatus = (props) => {
       </div>
     </div>
   );
-  };
+};
+
 export default ApplyStatus;
