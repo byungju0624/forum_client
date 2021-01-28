@@ -1,21 +1,18 @@
 import React from "react";
 import styles from "../../css/MyPage/ApplyStatus.module.css";
-
-
 import auth from "firebase/auth";
-
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import { useEffect } from "react";
 import { useState } from "react";
 
-
 const ApplyStatus = (props) => {
 
-  let appliedData;
+  let appliedData, messageData;
   let name, email, photoUrl, uid, emailVerified;
 
   const [appliedProjectData, setAppliedProjectData] = useState([]);
+  const [myMessageData, setMyMessageData] = useState([]);
 
   useEffect(async () => {
     let user = firebase.auth().currentUser;
@@ -28,9 +25,11 @@ const ApplyStatus = (props) => {
     }
 
     await getMyAppliedProject(email);
+    await getMessage(email);
     await delay(1000);
     console.log('등록된 프로젝트', appliedData)
     setAppliedProjectData(appliedData);
+    setMyMessageData(messageData);
   }, []);
 
   function delay(ms) {
@@ -57,6 +56,23 @@ const ApplyStatus = (props) => {
       });
   };
 
+  let getMessage = async (email) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(email)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          messageData = doc.data().message;
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <div className={styles.header}>
@@ -69,8 +85,12 @@ const ApplyStatus = (props) => {
         <div>{appliedProjectData.map(el => {
           return <div>{el}</div>
         })}</div>
-      </div>
+        <div>{myMessageData.map(el => {
+          return <div>{el}</div>
+        })}</div>
+        </div>
     </div>
   );
-  };
+};
+
 export default ApplyStatus;
