@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "../../css/MyPage/RegistStatus.module.css";
-import Slider from "react-slick";
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import auth from "firebase/auth";

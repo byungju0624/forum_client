@@ -14,7 +14,7 @@ function MyProjectListDetail() {
   let projectData = dataFire.filter((el) => {
     if (el.name === projectName) return el;
   });
-  console.log("읽어온 현재 프로젝트 데이터", projectData[0]);
+
   const [comment, setComment] = useState(projectData[0].comment);
   const [host, setHost] = useState("");
   const [party, setParty] = useState(projectData[0].party);
@@ -36,30 +36,7 @@ function MyProjectListDetail() {
       console.log("유저 없는 뎁쇼");
     }
   });
-  // let getFirestoreData = async () => {
-  //   let eachStore = []
-  //   let result = await firestore.collection("project").get().then(function (querySnapshot) {               //result는 await를 하기 위해서 만들어낸 변수
-  //     querySnapshot.forEach(async function(doc) {
-  //       // doc.data() is never undefined for query doc snapshots
-  //       //console.log(doc.id, " => ", doc.data())
-  //       console.log("요청하는 이미지는 다음과 같습니다 :" + doc.data().image)
-  //       let image = await getFireBaseImage(doc.data().image)
-  //       let eachData = {
-  //         'comment' : doc.data().comment,
-  //         'finish' : doc.data().finish,
-  //         'host' : doc.data().host,
-  //         'image' : image,
-  //         'name' : doc.data().name,
-  //         'party' : doc.data().party,
-  //         'signed' : doc.data().signed,
-  //         'skill' : doc.data().skill,
-  //         'term' : doc.data().term
-  //       }
-  //       eachStore.push(eachData)
-  //     });
-  //   })
-  //   return eachStore
-  // }
+
   let updateDatabase = async () => {
     console.log(
       "수정되는 데이터:",

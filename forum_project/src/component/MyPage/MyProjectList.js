@@ -4,10 +4,12 @@ import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 import auth from "firebase/auth";
 import { useHistory } from "react-router-dom";
+
 // import Slider from "react-slick";
 let joinedData = undefined;
 const MyProjectList = (props) => {
   const history = useHistory();
+
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
 
@@ -24,6 +26,7 @@ const MyProjectList = (props) => {
   }
 
   let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
+
   let myRegistedProject = dataFire.filter((el) => {
     if (el.host === email) return el;
   });
@@ -53,8 +56,10 @@ const MyProjectList = (props) => {
 
     getMyJoinedProject();
     await delay(1000);
-    //console.log(JSON.stringify(submittedData))
+
     setJoinedProject(joinedData);
+    console.log(joinedData);
+    console.log(joinedProject);
     await delay(1000);
   }, []);
 
@@ -64,18 +69,19 @@ const MyProjectList = (props) => {
     });
   }
 
-  let getMyJoinedProject = () => {
+  let getMyJoinedProject = async () => {
     firestore
       .collection("project")
-      .doc()
       .get()
-      .then(function (doc) {
-        if (doc.exists) {
-          console.log(doc.data());
-          joinedData = doc.data();
-        } else {
-          console.log("문서가 존재하지 않습니다");
-        }
+      .then(function (querySnapshot) {
+        console.log(querySnapshot);
+        querySnapshot.forEach(function (doc) {
+          if (doc.exists) {
+            return console.log((joinedData = doc.data()));
+          } else {
+            console.log("문서가 존재하지 않습니다");
+          }
+        });
       })
       .catch(function (error) {
         console.log(error);
