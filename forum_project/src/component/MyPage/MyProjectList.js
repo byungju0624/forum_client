@@ -1,22 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../css/MyPage/MyProjectList.module.css";
 import firebase from "firebase/app";
+import { firestore } from "../../firebase";
 import auth from "firebase/auth";
 import { useHistory } from "react-router-dom";
 // import Slider from "react-slick";
-
+let joinedData = undefined;
 const MyProjectList = (props) => {
-  // const settings = {
-  //   dots: true,
-  //   infinite: true,
-  //   slidesToShow: 3,
-  //   slidesToScroll: 3,
-  //   arrow: true,
-  //   className: "slides",
-  // };
   const history = useHistory();
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
+
+  const [joinedProject, setJoinedProject] = useState([]);
   console.log("유저 정보", user);
   if (user != null) {
     name = user.displayName;
@@ -34,23 +29,60 @@ const MyProjectList = (props) => {
   });
   console.log("파이어베이스 데이터(전체):", dataFire);
 
-  let joinProject = ["test4", "test2"];
-  let myJoinedProject = dataFire.filter((el) => {
-    console.log("data:", el);
-    for (let i = 0; i < joinProject.length; i++) {
-      if (el.name === joinProject[i]) return el;
-    }
-  });
-  console.log("myJoinedProject:", myJoinedProject);
+  //------------------------------------------------------------------------------
 
-  // for (let i = 0; i < joinProject.length; i++) {
-  //   let temp = dataFire.filter((el) => {
-  //     if (el.name === joinProject[i]) return el;
-  //   })
-  //   console.log('temp 값:', temp)
-  //   myJoinedProject.push(temp)
-  //   console.log('myJoinedProject:', myJoinedProject)
-  // }
+  let myJoinedProject = dataFire.filter((el) => {
+    let people = el.people;
+
+    if (String(people) === email && el.host !== email) return el;
+    // for (let i = 0; i < people.length; i++) {
+    //   if (String(el.people) === email && el.host !== email) return el;
+    // }
+  });
+
+  useEffect(async () => {
+    let user = firebase.auth().currentUser;
+    await delay(100);
+    if (user != null) {
+      name = user.displayName;
+      email = user.email;
+      photoUrl = user.photoURL;
+      emailVerified = user.emailVerified;
+      uid = user.uid;
+    }
+
+    getMyJoinedProject();
+    await delay(1000);
+    //console.log(JSON.stringify(submittedData))
+    setJoinedProject(joinedData);
+    await delay(1000);
+  }, []);
+
+  function delay(ms) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  let getMyJoinedProject = () => {
+    firestore
+      .collection("project")
+      .doc()
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          console.log(doc.data());
+          joinedData = doc.data();
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  //-------------------------------------------------------------------------------
 
   let photo = null;
   let projectName = null;
@@ -91,13 +123,6 @@ const MyProjectList = (props) => {
 
   return (
     <div className={styles.header}>
-      {/* <Slider {...settings}>
-        <div>위시리스트1</div>
-        <div>위시리스트2</div>
-        <div>위시리스트3</div>
-        <div>위시리스트4</div>
-        <div>위시리스트5</div>
-      </Slider> */}
       <div>내가 등록한 프로젝트</div>
       <div className={styles.firstContainer}>
         {myRegistedProject.map((eachData) => {
@@ -107,10 +132,6 @@ const MyProjectList = (props) => {
                 <div className={styles.card_img}>
                   <img
                     src={eachData.image}
-                    name={eachData.name}
-                    period={eachData.term}
-                    person={eachData.party}
-                    lang={eachData.skill}
                     className={styles.photo}
                     onClick={handleClick}
                   ></img>
@@ -140,21 +161,19 @@ const MyProjectList = (props) => {
             <div className={styles.cardwraper}>
               <div className={styles.card}>
                 <div className={styles.card_img}>
-                  <img
-                    src={eachData.image}
-                    name={eachData.name}
-                    period={eachData.term}
-                    person={eachData.party}
-                    lang={eachData.skill}
-                    className={styles.photo}
-                  ></img>
+                  <img src={eachData.image} className={styles.photo}></img>
                 </div>
               </div>
               <ul>
-                <li>프로젝트 이름:{eachData.name}</li>
+                <li>프로젝트 이름: {eachData.name}</li>
                 <li>예상 기간: {eachData.term}</li>
                 <li>현재 인원: {eachData.party}</li>
-                <li>사용 언어: {eachData.skill}</li>
+                <li>
+                  사용언어 :{" "}
+                  {eachData.skill.map((el) => {
+                    return <span className={styles.skill}>{el}</span>;
+                  })}
+                </li>
               </ul>
             </div>
           );

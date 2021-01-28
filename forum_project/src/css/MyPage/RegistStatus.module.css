@@ -5,7 +5,7 @@
   width: 70vh;
   justify-content: center;
   align-items: center;
-  margin-left: 5vh;
+
   margin-top: 5vh;
 }
 .table {
@@ -16,7 +16,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
   margin-top: 5vh;
-  margin-left: 5vh;
+  margin-left: 2vh;
 }
 .title {
   padding-bottom: 10px;

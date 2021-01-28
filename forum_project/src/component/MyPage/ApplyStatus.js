@@ -44,6 +44,7 @@ const ApplyStatus = (props) => {
       .get()
       .then(function (doc) {
         if (doc.exists) {
+          console.log(doc.data());
           appliedData = doc.data().appliedProject;
         } else {
           console.log("문서가 존재하지 않습니다");
