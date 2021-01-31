@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "../../css/MyPage/MyProjectList.module.css";
-import firebase from "firebase/app";
-import { firestore } from "../../firebase";
-import auth from "firebase/auth";
+import { useEffect } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import firebase from "firebase/app";
+import { storage } from "../../firebase";
+import auth from "firebase/auth";
+import { firestore } from "../../firebase";
 
-// import Slider from "react-slick";
-let joinedData = undefined;
 const MyProjectList = (props) => {
   const history = useHistory();
 
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
-
-  const [joinedProject, setJoinedProject] = useState([]);
   console.log("유저 정보", user);
   if (user != null) {
     name = user.displayName;
@@ -25,23 +24,19 @@ const MyProjectList = (props) => {
     // you have one. Use User.getToken() instead.
   }
 
-  let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
+  //--------------------------------------------------------
 
-  let myRegistedProject = dataFire.filter((el) => {
-    if (el.host === email) return el;
-  });
-  console.log("파이어베이스 데이터(전체):", dataFire);
+  let hostProjectData,
+    joinedProjectData,
+    myRegistedProjectData,
+    myJoinedProjectData;
 
-  //------------------------------------------------------------------------------
-
-  let myJoinedProject = dataFire.filter((el) => {
-    let people = el.people;
-
-    if (String(people) === email && el.host !== email) return el;
-    // for (let i = 0; i < people.length; i++) {
-    //   if (String(el.people) === email && el.host !== email) return el;
-    // }
-  });
+  // const [myRegisted, setMyRegisted] = useState([]);
+  // const [myJoined, setMyJoined] = useState([]);
+  let myRegisted = [];
+  let myJoined = [];
+  const [myRegistedProject, setMyRegistedProject] = useState([]);
+  const [myJoinedProject, setMyJoinedProject] = useState([]);
 
   useEffect(async () => {
     let user = firebase.auth().currentUser;
@@ -54,12 +49,21 @@ const MyProjectList = (props) => {
       uid = user.uid;
     }
 
-    getMyJoinedProject();
+    await getMyHostData(email);
+    await getMyJoinedData(email);
     await delay(1000);
+    //console.log(JSON.stringify(submittedData))
+    // await setMyRegisted(hostProjectData);
+    // await setMyJoined(joinedProjectData);
 
-    setJoinedProject(joinedData);
-    console.log(joinedData);
-    console.log(joinedProject);
+    // console.log('내가 참가한 프로젝트:', myJoinedProject);
+    // await getMyRegistedProject(myRegisted);
+    // await getMyJoinedProject(myJoined);
+    // await setMyRegistedProject(myRegistedProjectData);
+    // await setMyJoinedProject(myJoinedProjectData);
+    setMyRegistedProject(myRegisted);
+    await delay(1000);
+    setMyJoinedProject(myJoined);
     await delay(1000);
   }, []);
 
@@ -69,26 +73,129 @@ const MyProjectList = (props) => {
     });
   }
 
-  let getMyJoinedProject = async () => {
-    firestore
-      .collection("project")
+  let getMyHostData = async (email) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(email)
       .get()
-      .then(function (querySnapshot) {
-        console.log(querySnapshot);
-        querySnapshot.forEach(function (doc) {
-          if (doc.exists) {
-            return console.log((joinedData = doc.data()));
-          } else {
-            console.log("문서가 존재하지 않습니다");
-          }
-        });
+      .then(function (doc) {
+        if (doc.exists) {
+          hostProjectData = doc.data().hostProject;
+          getMyRegistedProject(hostProjectData);
+          // setMyRegisted(hostProjectData);
+          console.log("hostProjectData:", hostProjectData);
+          console.log("내가 등록한 프로젝트:", myRegistedProject);
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  //-------------------------------------------------------------------------------
+  let getMyJoinedData = async (email) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(email)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          joinedProjectData = doc.data().joinProject;
+          getMyJoinedProject(joinedProjectData);
+          console.log("joinedProjectData:", joinedProjectData);
+          console.log("내가 참가한 프로젝트:", myJoinedProject);
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  let getMyRegistedProject = async (data) => {
+    data.map((el) => {
+      firebase
+        .firestore()
+        .collection("project")
+        .doc(el)
+        .get()
+        .then((doc) => {
+          let docData = doc.data();
+          let imageUrl = getFireBaseImage(docData.image).then((url) => {
+            docData.image = url;
+          });
+
+          console.log("다시 docData:", docData);
+          myRegisted.push(docData);
+        });
+    });
+    // for (let i = 0; i < arr.length; i++) {
+    //   firebase.firestore().collection('project').doc(arr[i]).get().then((doc) => {
+    //     myRegistedProjectData.push(doc.data())
+    //   })
+    // }
+    // console.log('나의 등록 프로젝트 데이터:', myRegistedProject)
+  };
+
+  let getMyJoinedProject = async (data) => {
+    data.map((el) => {
+      firebase
+        .firestore()
+        .collection("project")
+        .doc(el)
+        .get()
+        .then((doc) => {
+          let docData = doc.data();
+          getFireBaseImage(docData.image).then((url) => {
+            docData.image = url;
+            console.log("참가 프로젝트 데이터, 다시 docData:", docData);
+          });
+          myJoined.push(docData);
+        });
+    });
+  };
+  //---------------------------------------------------------
+
+  // let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
+  // let myRegistedProject = dataFire.filter((el) => {
+  //   if (el.host === email) return el;
+  // });
+  // console.log("파이어베이스 데이터(전체):", dataFire);
+
+  // let joinProject = ["test4", "test2"];
+  // let myJoinedProject = dataFire.filter((el) => {
+  //   console.log("data:", el);
+  //   for (let i = 0; i < joinProject.length; i++) {
+  //     if (el.name === joinProject[i]) return el;
+  //   }
+  // });
+  // console.log("myJoinedProject:", myJoinedProject);
+
+  // for (let i = 0; i < joinProject.length; i++) {
+  //   let temp = dataFire.filter((el) => {
+  //     if (el.name === joinProject[i]) return el;
+  //   })
+  //   console.log('temp 값:', temp)
+  //   myJoinedProject.push(temp)
+  //   console.log('myJoinedProject:', myJoinedProject)
+  // }
+
+  let getFireBaseImage = async (image) => {
+    return storage
+      .ref("project")
+      .child(image)
+      .getDownloadURL()
+      .then((url) => {
+        return url;
+      })
+      .catch((error) => {
+        console.log("이미지를 받아오지 못했습니다." + error);
+      });
+  };
 
   let photo = null;
   let projectName = null;
@@ -138,6 +245,10 @@ const MyProjectList = (props) => {
                 <div className={styles.card_img}>
                   <img
                     src={eachData.image}
+                    name={eachData.name}
+                    period={eachData.term}
+                    person={eachData.party}
+                    lang={eachData.skill}
                     className={styles.photo}
                     onClick={handleClick}
                   ></img>
@@ -162,16 +273,23 @@ const MyProjectList = (props) => {
       <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
       <div className={styles.secondContainer}>
         {myJoinedProject.map((eachData) => {
-          console.log(eachData);
+          console.log("리턴의 참가 프로젝트:", eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>
                 <div className={styles.card_img}>
-                  <img src={eachData.image} className={styles.photo}></img>
+                  <img
+                    src={eachData.image}
+                    name={eachData.name}
+                    period={eachData.term}
+                    person={eachData.party}
+                    lang={eachData.skill}
+                    className={styles.photo}
+                  ></img>
                 </div>
               </div>
               <ul>
-                <li>프로젝트 이름: {eachData.name}</li>
+                <li>프로젝트 이름:{eachData.name}</li>
                 <li>예상 기간: {eachData.term}</li>
                 <li>현재 인원: {eachData.party}</li>
                 <li>

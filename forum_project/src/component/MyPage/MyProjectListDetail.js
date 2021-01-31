@@ -6,6 +6,12 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
+let submittedData;
+let appliedUser = [];
+let joinUser = [];
+let submittedApplyObject = [];
+
 function MyProjectListDetail() {
   //넘어온 프로젝트 이름을 통해 데이터베이스에서 검색
   const location = useLocation();
@@ -27,6 +33,13 @@ function MyProjectListDetail() {
   let allInputs = { imgUrl: "" };
   const [imageAsFile, setImageAsFile] = useState("");
   const [imageAsUrl, setImageAsUrl] = useState(allInputs);
+
+  function delay(ms) {
+    return new Promise((resolve, reject) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       //console.log(user.displayName);
@@ -68,7 +81,31 @@ function MyProjectListDetail() {
         console.error("다음과 같은 에러가 발생했습니다 : " + error);
       });
   };
+
+  //------------------------------------------------------------------------------------------------------------------------프로젝트 지우기
+
   let deleteProjectData = async () => {
+    await getMySubmittedProject(host);
+    await delay(500);
+    console.log(
+      "받아오는 데이터는 다음과 같음" + JSON.stringify(submittedData)
+    );
+    await findUserApplyDeleteProject(projectName);
+    await delay(200);
+    console.log(
+      "해당 프로젝트에 지원한 유저 아이디를 받은 배열은" + appliedUser
+    );
+    await delay(200);
+    await deleteProjectAppliedUser(projectName);
+    await delay(200);
+    await findJoinProjectUser(host, projectName);
+    await delay(200);
+    await deleteUserJoinProject(joinUser, projectName);
+    await delay(200);
+    await deleteHostProject(host, projectName);
+    await delay(200);
+    await submittedDataInHostDelete(host);
+    await delay(200);
     firestore
       .collection("project")
       .doc(projectName)
@@ -81,17 +118,110 @@ function MyProjectListDetail() {
         console.error("다음과 같은 에러가 발생했습니다 : " + error);
       });
   };
-  let skillbutton = () => {
-    if (skill.length > 2) {
-      alert("기술 스택은 3개까지만 넣을 수 있어용~");
-    } else {
-      if (skill.includes(eachSkill.toLowerCase()) === false) {
-        setSkilled(skill.concat(eachSkill.toLowerCase()));
-      } else {
-        alert("중복된 기술이에용~");
-      }
+
+  let deleteHostProject = (host, projectName) => {
+    firestore
+      .collection("users")
+      .doc(host)
+      .update({
+        hostProject: firebase.firestore.FieldValue.arrayRemove(projectName),
+      });
+  };
+
+  let findJoinProjectUser = (host, projectName) => {
+    firebase
+      .firestore()
+      .collection("project")
+      .doc(projectName)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          for (let i = 0; i < doc.data().people.length; i++) {
+            console.log(doc.data().people[i]);
+            if (doc.data().people[i] !== host) {
+              joinUser.push(doc.data().people[i]);
+            }
+          }
+        } else {
+          console.log("문서가 존재하지 않음");
+        }
+      });
+  };
+
+  let deleteUserJoinProject = (joinUser, projectName) => {
+    joinUser.map((index) => {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(index)
+        .update({
+          joinProject: firebase.firestore.FieldValue.arrayRemove(projectName),
+        });
+    });
+  };
+
+  let submittedDataInHostDelete = (host) => {
+    submittedApplyObject.map((index) => {
+      console.log("host : " + host);
+      console.log("지울거 : " + JSON.stringify(index));
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(host)
+        .update({
+          submittedProject: firebase.firestore.FieldValue.arrayRemove(index),
+        });
+    });
+  };
+
+  let getMySubmittedProject = (host) => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(host)
+      .get()
+      .then(function (doc) {
+        if (doc.exists) {
+          //console.log(doc.data().submittedProject)
+          submittedData = doc.data().submittedProject;
+        } else {
+          console.log("문서가 존재하지 않습니다");
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  let findUserApplyDeleteProject = (projectName) => {
+    if (appliedUser.length === 0) {
+      //안해주면 반복해서 들어감
+      console.log(submittedData);
+      submittedData.map((index) => {
+        if (index["project"] === projectName) {
+          submittedApplyObject.push(index);
+          appliedUser.push(index["applicant"]);
+        }
+      });
     }
   };
+
+  let deleteProjectAppliedUser = async (projectName) => {
+    appliedUser.map((index) => {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(index)
+        .update({
+          appliedProject: firebase.firestore.FieldValue.arrayRemove(
+            projectName
+          ),
+        });
+    });
+  };
+
+  //------------------------------------------------------------------------------------------------------------------------프로젝트 지우기
+
   return (
     <div className={styles.regist}>
       <div className={styles.projectint}>
