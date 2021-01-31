@@ -1,11 +1,11 @@
 .header {
   margin-left: 20%;
   margin-right: 20%;
-  height: 125vh;
+  height: 130vh;
   color: black;
   background: white;
   font-weight: bold;
-  font-size: 130%;
+  font-size: 90%;
   /* border-bottom: 2px solid black; */
   display: flex;
   flex-direction: column;

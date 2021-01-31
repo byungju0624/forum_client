@@ -1,6 +1,6 @@
 header {
   margin-left: 20%;
-  margin-right: 20%;
+  margin-right: 15%;
   height: 10vh;
   color: black;
   background: white;
@@ -16,18 +16,18 @@ header {
 }
 
 .logo:hover {
-  transform: scale(1.1);
+  transform: scale(0.9);
 }
 
 .nav {
   margin-left: 16%;
   margin-right: 7%;
   /*margin-right: ;*/
-  width: 60%;
+  width: 55%;
 }
 
 .menu {
-  font-size: 20px;
+  font-size: 18px;
   margin-right: 8%;
 }
 
