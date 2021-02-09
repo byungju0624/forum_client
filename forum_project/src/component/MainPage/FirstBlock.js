@@ -11,6 +11,7 @@ function FirstBlock() {
         </div>
         <img
           style={{ marginLeft: "1rem" }}
+          className="slogan_img"
           src="image/slogan.png"
           alt="슬로건"
         ></img>

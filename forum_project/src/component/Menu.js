@@ -108,7 +108,14 @@ function Menu(props) {
     <Router>
       <div className="App">
         <header className="App-header">
-          <Link to="/" style={{ textDecoration: "none", color: "black" }}>
+          <Link
+            to="/"
+            style={{
+              width: "30%",
+              textDecoration: "none",
+              color: "black",
+            }}
+          >
             <h1 className="logo">플젝하쉴?!</h1>
           </Link>
           <nav className="nav">

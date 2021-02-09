@@ -103,9 +103,9 @@ function Project(props) {
                     <div>사용언어: </div>
                     {eachData.skill.map((skill) => {
                       return (
-                        <>
+                        <div className={styles.item}>
                           <div className={styles.skill}>{skill}</div>
-                        </>
+                        </div>
                       );
                     })}
                   </div>

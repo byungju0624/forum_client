@@ -2,6 +2,8 @@
   margin-left: 23%;
   margin-right: 18%;
   height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .slogan {
@@ -10,10 +12,15 @@
   color: black;
   background: white;
   font-weight: bold;
-  font-size: 4.2em;
+  font-size: 4.2rem;
 }
 
 .slogan_text {
+}
+@media screen and (max-width: 768px) {
+  .slogan_img {
+    display: none;
+  }
 }
 
 .summary {
@@ -55,5 +62,5 @@
   margin-top: 1em;
   color: black;
   background: white;
-  font-size: 1.5em;
+  font-size: 1.5rem;
 }
