@@ -9,7 +9,6 @@ import auth from "firebase/auth";
 import { firestore } from "../../firebase";
 
 const MyProjectList = (props) => {
-  
   const history = useHistory();
 
   let user = firebase.auth().currentUser;
@@ -27,7 +26,10 @@ const MyProjectList = (props) => {
 
   //--------------------------------------------------------
 
-  let hostProjectData, joinedProjectData, myRegistedProjectData, myJoinedProjectData;
+  let hostProjectData,
+    joinedProjectData,
+    myRegistedProjectData,
+    myJoinedProjectData;
 
   // const [myRegisted, setMyRegisted] = useState([]);
   // const [myJoined, setMyJoined] = useState([]);
@@ -53,7 +55,7 @@ const MyProjectList = (props) => {
     //console.log(JSON.stringify(submittedData))
     // await setMyRegisted(hostProjectData);
     // await setMyJoined(joinedProjectData);
-    
+
     // console.log('내가 참가한 프로젝트:', myJoinedProject);
     // await getMyRegistedProject(myRegisted);
     // await getMyJoinedProject(myJoined);
@@ -82,8 +84,8 @@ const MyProjectList = (props) => {
           hostProjectData = doc.data().hostProject;
           getMyRegistedProject(hostProjectData);
           // setMyRegisted(hostProjectData);
-          console.log('hostProjectData:', hostProjectData)
-          console.log('내가 등록한 프로젝트:', myRegistedProject);
+          console.log("hostProjectData:", hostProjectData);
+          console.log("내가 등록한 프로젝트:", myRegistedProject);
         } else {
           console.log("문서가 존재하지 않습니다");
         }
@@ -102,9 +104,9 @@ const MyProjectList = (props) => {
       .then(function (doc) {
         if (doc.exists) {
           joinedProjectData = doc.data().joinProject;
-          getMyJoinedProject(joinedProjectData)
-          console.log('joinedProjectData:', joinedProjectData)
-          console.log('내가 참가한 프로젝트:', myJoinedProject);
+          getMyJoinedProject(joinedProjectData);
+          console.log("joinedProjectData:", joinedProjectData);
+          console.log("내가 참가한 프로젝트:", myJoinedProject);
         } else {
           console.log("문서가 존재하지 않습니다");
         }
@@ -116,37 +118,47 @@ const MyProjectList = (props) => {
 
   let getMyRegistedProject = async (data) => {
     data.map((el) => {
-      firebase.firestore().collection('project').doc(el).get().then((doc) => {
-        let docData = doc.data();
-        let imageUrl = getFireBaseImage(docData.image).then((url) => {
-          docData.image = url
-        })
+      firebase
+        .firestore()
+        .collection("project")
+        .doc(el)
+        .get()
+        .then((doc) => {
+          let docData = doc.data();
+          let imageUrl = getFireBaseImage(docData.image).then((url) => {
+            docData.image = url;
+          });
 
-        console.log('다시 docData:', docData)
-        myRegisted.push(docData);
-      })
-    })
+          console.log("다시 docData:", docData);
+          myRegisted.push(docData);
+        });
+    });
     // for (let i = 0; i < arr.length; i++) {
     //   firebase.firestore().collection('project').doc(arr[i]).get().then((doc) => {
     //     myRegistedProjectData.push(doc.data())
     //   })
     // }
     // console.log('나의 등록 프로젝트 데이터:', myRegistedProject)
-  }
+  };
 
   let getMyJoinedProject = async (data) => {
     data.map((el) => {
-      firebase.firestore().collection('project').doc(el).get().then((doc) => {
-        let docData = doc.data();
-        getFireBaseImage(docData.image).then((url) => {
-          docData.image = url
-          console.log('참가 프로젝트 데이터, 다시 docData:', docData);
-        })
-        myJoined.push(docData);
-      })
-    })
-  }
-//---------------------------------------------------------
+      firebase
+        .firestore()
+        .collection("project")
+        .doc(el)
+        .get()
+        .then((doc) => {
+          let docData = doc.data();
+          getFireBaseImage(docData.image).then((url) => {
+            docData.image = url;
+            console.log("참가 프로젝트 데이터, 다시 docData:", docData);
+          });
+          myJoined.push(docData);
+        });
+    });
+  };
+  //---------------------------------------------------------
 
   // let dataFire = JSON.parse(localStorage.getItem("fireStoreData"));
   // let myRegistedProject = dataFire.filter((el) => {
@@ -173,12 +185,17 @@ const MyProjectList = (props) => {
   // }
 
   let getFireBaseImage = async (image) => {
-		return storage.ref('project').child(image).getDownloadURL().then((url) => {
-			return url
-		}).catch((error) => {
-			console.log('이미지를 받아오지 못했습니다.'+error)
-		})
-	}
+    return storage
+      .ref("project")
+      .child(image)
+      .getDownloadURL()
+      .then((url) => {
+        return url;
+      })
+      .catch((error) => {
+        console.log("이미지를 받아오지 못했습니다." + error);
+      });
+  };
 
   let photo = null;
   let projectName = null;
@@ -219,7 +236,6 @@ const MyProjectList = (props) => {
 
   return (
     <div className={styles.header}>
-      
       <div>내가 등록한 프로젝트</div>
       <div className={styles.firstContainer}>
         {myRegistedProject.map((eachData) => {
@@ -257,7 +273,7 @@ const MyProjectList = (props) => {
       <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
       <div className={styles.secondContainer}>
         {myJoinedProject.map((eachData) => {
-          console.log('리턴의 참가 프로젝트:', eachData);
+          console.log("리턴의 참가 프로젝트:", eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>
@@ -276,10 +292,12 @@ const MyProjectList = (props) => {
                 <li>프로젝트 이름:{eachData.name}</li>
                 <li>예상 기간: {eachData.term}</li>
                 <li>현재 인원: {eachData.party}</li>
-                <li>사용언어 :{" "}
+                <li>
+                  사용언어 :{" "}
                   {eachData.skill.map((el) => {
                     return <span className={styles.skill}>{el}</span>;
-                  })}</li>
+                  })}
+                </li>
               </ul>
             </div>
           );

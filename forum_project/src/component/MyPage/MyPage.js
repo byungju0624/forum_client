@@ -7,9 +7,6 @@ import ApplyStatus from "./ApplyStatus";
 import MyProjectListDetail from "./MyProjectListDetail";
 
 function MyPage() {
-
-
-
   return (
     <div className={styles.header}>
       <Router>

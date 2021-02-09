@@ -9,7 +9,11 @@ function FirstBlock() {
           <p>그대들이 잃을 것은 빈 이력서요</p>
           <p>얻을 것은 경력이다</p>
         </div>
-        <img src="image/slogan.png" alt="슬로건"></img>
+        <img
+          style={{ marginLeft: "1rem" }}
+          src="image/slogan.png"
+          alt="슬로건"
+        ></img>
       </div>
       <div className="summary_text">프로젝트를 찾는 개발자를 위한 안내서</div>
       <div className="summary">
@@ -20,8 +24,8 @@ function FirstBlock() {
             alt="아이디어"
           ></img>
           <div className="s_text">
-            여러분의 멋진 아이디어를 사람들에게 공개하세요
-            팀원을 모으고 최고의 팀을 만들어 보세요
+            여러분의 멋진 아이디어를 사람들에게 공개하세요 팀원을 모으고 최고의
+            팀을 만들어 보세요
           </div>
         </div>
         <div className="summary_block">

@@ -253,7 +253,8 @@ function Regist() {
               type="number"
               value={party}
               onChange={(e) => setParty(e.target.value)}
-            ></input>{" "}명
+            ></input>{" "}
+            명
           </p>
           {/* <p>
             등록 인원 :{" "}
@@ -307,7 +308,7 @@ function Regist() {
           </div>
         </span>
       </div>
-      
+
       <div style={{ marginLeft: "12vh", marginTop: "10vh" }}>
         <p>
           프로젝트 개요 :{" "}
