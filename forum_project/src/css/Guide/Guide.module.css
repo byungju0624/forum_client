@@ -1,7 +1,7 @@
 .header {
   margin-left: 20%;
   margin-right: 20%;
-  height: 130vh;
+
   color: black;
   background: white;
   font-weight: bold;
@@ -10,19 +10,27 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  margin-top: 15vh;
+  margin-top: 0;
+}
+.title {
+  font-size: 2.5em;
+  margin: 1em 0;
 }
 .first {
   border-bottom: 2px dotted gray;
-  padding-left: 20px;
+  padding-left: 5em;
 }
 .second {
   border-bottom: 2px dotted gray;
-  padding-left: 20px;
+  padding-left: 5em;
 }
 .third {
-  padding-left: 20px;
+  padding-left: 5em;
 }
-.header > div > video {
-  width: 70vh;
+.description {
+  font-size: 2em;
+  margin: 2em 0;
+}
+.video {
+  width: 20em;
 }
