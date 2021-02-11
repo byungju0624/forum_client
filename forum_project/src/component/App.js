@@ -13,7 +13,7 @@ let dataFire = null;
 
 function App() {
   const [login, setLogin] = useState(false);
-
+  const [isClick, setIsClick] = useState(false);
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       setLogin(true);
@@ -83,7 +83,12 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <Menu login={login} setLogin={setLogin}></Menu>
+        <Menu
+          login={login}
+          setLogin={setLogin}
+          isClick={isClick}
+          setIsClick={setIsClick}
+        ></Menu>
       </Router>
     </div>
   );

@@ -11,6 +11,9 @@ import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
 import firebase from "firebase/app";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import auth from "firebase/auth"; //이게 있어야 오류가 안난다
 import { firestore } from "../firebase";
 
@@ -107,83 +110,69 @@ function Menu(props) {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <Link
-            to="/"
-            style={{
-              width: "30%",
-              textDecoration: "none",
-              color: "black",
-            }}
-          >
-            <h1 className="logo">플젝하쉴?!</h1>
-          </Link>
-          <nav className="nav">
-            <Link
-              to="/guide"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <span className="menu">가이드</span>
+        <nav className="navbar">
+          <div className="navbar_logo">
+            <Link to="/">
+              <h1 className="logo">플젝하쉴?!</h1>
             </Link>
-            <Link
-              to="/project"
-              style={{ textDecoration: "none", color: "black" }}
-            >
-              <span className="menu">프로젝트 열람</span>
+          </div>
+
+          <ul className="navbar_menu">
+            <Link to="/guide">
+              <li className="menu">가이드</li>
+            </Link>
+            <Link to="/project">
+              <li className="menu">프로젝트 열람</li>
             </Link>
 
             {props.login === true ? (
-              <Link
-                to="/regist"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <span className="menu">프로젝트 등록</span>
+              <Link to="/regist">
+                <li className="menu">프로젝트 등록</li>
               </Link>
             ) : (
-              <span
+              <li
                 className="menu"
                 onClick={() => {
                   alert("먼저 로그인을 해주세요");
                 }}
               >
                 프로젝트 등록
-              </span>
+              </li>
             )}
 
             {props.login === true ? (
-              <Link
-                to="/mypage/profile"
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                <span className="menu">프로젝트 관리</span>
+              <Link to="/mypage/profile">
+                <li className="menu">프로젝트 관리</li>
               </Link>
             ) : (
-              <span
+              <li
                 className="menu"
                 onClick={() => {
                   alert("먼저 로그인을 해주세요");
                 }}
               >
                 프로젝트 관리
-              </span>
+              </li>
             )}
-          </nav>
-          {props.login === false ? (
-            <img
-              className="login_image"
-              src="image/login.png"
-              onClick={googleLogin}
-            ></img>
-          ) : (
-            <Link to="/">
+          </ul>
+          <div className="navbar_login">
+            {props.login === false ? (
               <img
                 className="login_image"
-                src="image/signed.png"
-                onClick={googleLogout}
+                src="image/login.png"
+                onClick={googleLogin}
               ></img>
-            </Link>
-          )}
-        </header>
+            ) : (
+              <Link to="/">
+                <img
+                  className="login_image"
+                  src="image/signed.png"
+                  onClick={googleLogout}
+                ></img>
+              </Link>
+            )}
+          </div>
+        </nav>
         <Link to="/projectdetail"></Link>
 
         <Switch>
