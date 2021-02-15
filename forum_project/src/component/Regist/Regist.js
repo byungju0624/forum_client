@@ -309,7 +309,7 @@ function Regist() {
         </span>
       </div>
 
-      <div style={{ marginLeft: "12vh", marginTop: "10vh" }}>
+      <div style={{ marginLeft: "12%", marginTop: "10vh" }}>
         <p>
           프로젝트 개요 :{" "}
           <div style={{ paddingTop: "20px" }}>
@@ -318,7 +318,7 @@ function Regist() {
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               style={{
-                width: "50vh",
+                width: "80%",
                 height: "15vh",
                 border: "3px solid black",
                 fontWeight: "bold",

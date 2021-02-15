@@ -49,3 +49,15 @@
   background-color: black;
   color: white;
 }
+@media screen and (max-width: 73rem) {
+  .regist {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .projectint {
+    display: flex;
+    justify-content: space-around;
+    margin-right: 10%;
+    margin-left: 7%;
+  }
+}

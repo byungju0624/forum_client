@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import "../css/Menu.css";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import React from "react";
@@ -11,7 +11,7 @@ import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
 import firebase from "firebase/app";
-
+import Hamburger from "hamburger-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import auth from "firebase/auth"; //이게 있어야 오류가 안난다
@@ -106,7 +106,14 @@ function Menu(props) {
         // An error happened.
       });
   };
-
+  let menuRef = React.createRef();
+  let loginRef = React.createRef();
+  let hamburgerClick = () => {
+    return (
+      menuRef.current.classList.toggle("active"),
+      loginRef.current.classList.toggle("active")
+    );
+  };
   return (
     <Router>
       <div className="App">
@@ -117,7 +124,7 @@ function Menu(props) {
             </Link>
           </div>
 
-          <ul className="navbar_menu">
+          <ul className="navbar_menu" ref={menuRef}>
             <Link to="/guide">
               <li className="menu">가이드</li>
             </Link>
@@ -155,7 +162,7 @@ function Menu(props) {
               </li>
             )}
           </ul>
-          <div className="navbar_login">
+          <div className="navbar_login" ref={loginRef}>
             {props.login === false ? (
               <img
                 className="login_image"
@@ -171,6 +178,9 @@ function Menu(props) {
                 ></img>
               </Link>
             )}
+          </div>
+          <div className="hamburger">
+            <FontAwesomeIcon icon={faHamburger} onClick={hamburgerClick} />
           </div>
         </nav>
         <Link to="/projectdetail"></Link>
