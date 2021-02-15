@@ -72,6 +72,15 @@ a {
     position: absolute;
     right: 32px;
     font-size: 2em;
+    transition: transform 100ms ease-in;
+  }
+  .hamburger:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+  .login_image {
+    width: 3em;
+    height: 3em;
   }
   .navbar_login {
     display: none;
