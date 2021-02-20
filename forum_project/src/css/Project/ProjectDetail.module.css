@@ -1,12 +1,14 @@
 .projectDetail {
   margin-left: 20%;
   margin-right: 20%;
-  height: 90vh;
+  height: 120vh;
   color: black;
   background: white;
   font-weight: bold;
   font-size: 130%;
   margin-top: 6vh;
+  display: flex;
+  flex-direction: column;
   /* border-bottom: 2px solid black; */
 }
 .header {
@@ -18,21 +20,24 @@
   padding-bottom: 20px;
   font-size: 2em;
 }
-
-.projectEx {
-  display: flex;
-}
-.projectEx > .text {
-  padding-top: 0;
-  padding-left: 20px;
-  font-size: 1.5em;
-}
-.projectEx > img {
-  width: 50%;
+.img {
+  margin-top: 2vh;
+  margin-left: 5em;
+  margin-bottom: 2vh;
+  width: 80%;
+  height: 30em;
   border-radius: 16px;
 }
+
+.text {
+  position: relative;
+  padding-top: 0;
+
+  font-size: 1.5em;
+}
+
 .explain {
-  height: 25vh;
+  height: 40vh;
   font-size: 1.5em;
 }
 .btn {
@@ -58,4 +63,20 @@
   padding: 4px 10px 4px 10px;
   border-radius: 16px;
   margin-left: 3px;
+}
+
+@media screen and (max-width: 73rem) {
+  .projectDetail {
+    margin-left: 0;
+    margin-right: 0;
+    height: 90vh;
+    color: black;
+    background: white;
+    font-weight: bold;
+    font-size: 130%;
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    /* border-bottom: 2px solid black; */
+  }
 }

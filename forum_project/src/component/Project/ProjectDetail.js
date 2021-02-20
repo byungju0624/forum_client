@@ -107,28 +107,33 @@ function ProjectDetail() {
         <div className={styles.header}>
           <h2>프로젝트명: {name}</h2>
         </div>
-        <div className={styles.projectEx}>
-          <img src={photo}></img>
 
-          <div className={styles.text}>
-            <div>예상기간: {term}</div>
-            <div style={{ marginTop: "2vh" }}>예상인원: {party}명</div>
-            <div style={{ marginTop: "2vh" }}>현재지원: {signed}명</div>
-            <div style={{ marginTop: "2vh" }}>
-              사용언어:{" "}
-              {dataFire.map((eachData) => {
-                {
-                  return eachData.skill.map((skill) => {
-                    console.log(skill);
-                    return <span className={styles.skill}>{skill}</span>;
-                  });
-                }
-              })}
-            </div>
+        <div>
+          <img className={styles.img} src={photo}></img>
+        </div>
+        <div className={styles.text}>
+          <div>예상기간: {term}</div>
+          <div style={{ marginTop: "2vh" }}>예상인원: {party}명</div>
+          <div style={{ marginTop: "2vh" }}>현재지원: {signed}명</div>
+          <div style={{ marginTop: "2vh" }}>
+            사용언어:{" "}
+            {dataFire.map((eachData) => {
+              {
+                return eachData.skill.map((skill) => {
+                  console.log(skill);
+                  return <span className={styles.skill}>{skill}</span>;
+                });
+              }
+            })}
           </div>
         </div>
+
         <div className={styles.explain}>
-          <h3>개요:{comment}</h3>
+          <h3>
+            프로젝트 설명
+            <br />
+            {comment}
+          </h3>
         </div>
         <div className={styles.btn}>
           <span>
