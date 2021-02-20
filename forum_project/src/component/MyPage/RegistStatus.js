@@ -207,8 +207,8 @@ const RegistStatus = (props) => {
             let projectName = Object.keys(el)[0];
             return (
               <div className={styles.tableInt}>
-                <div style={{ marginLeft: "3vh" }}>{projectName}</div>
-                <div style={{ width: "30%" }}>
+                <div style={{ marginLeft: "2vh" }}>{projectName}</div>
+                <div style={{ marginLeft: "3vh" }}>
                   {el[projectName].map((data) => {
                     return <div>{data}</div>;
                   })}

@@ -5,7 +5,6 @@
   width: 65vh;
   justify-content: center;
   align-items: center;
-  margin-left: 5vh;
 
   flex-direction: column;
 }
@@ -14,7 +13,7 @@
   border: gray 3px solid;
   border-radius: 16px;
   height: 40vh;
-  width: 80vh;
+  width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
 
@@ -46,4 +45,18 @@
 .message {
   width: 100vh;
   text-align: center;
+}
+
+@media screen and (max-width: 73rem) {
+  .header {
+    display: flex;
+    position: relative;
+    height: 75vh;
+    width: 65vh;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5vh;
+
+    flex-direction: column;
+  }
 }
