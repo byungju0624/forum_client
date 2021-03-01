@@ -32,7 +32,7 @@ const ApplyStatus = (props) => {
     await getMyAppliedProject(email);
     await getMessage(email);
     await delay(1000);
-    console.log("등록된 프로젝트", appliedData);
+
     setAppliedProjectData(appliedData);
     setMyMessageData(messageData);
   }, []);
@@ -51,7 +51,6 @@ const ApplyStatus = (props) => {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          console.log(doc.data());
           appliedData = doc.data().appliedProject;
         } else {
           console.log("문서가 존재하지 않습니다");
@@ -85,9 +84,7 @@ const ApplyStatus = (props) => {
   let cancelApply = async (projectName, myEmail) => {
     await findHostEmail(projectName);
     await delay(500);
-    console.log(host);
-    console.log(projectName);
-    console.log(myEmail);
+
     await deleteSubmmitRejectData(host, myEmail, projectName);
     await delay(500);
     await rejectUserDataApprovedUpdate(projectName, myEmail);

@@ -1,18 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { useLocation } from "react-router";
 import styles from "../../css/Project/ProjectDetail.module.css";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
-import auth from "firebase/auth";
 
 function ProjectDetail() {
   let location = useLocation();
   let photo = location.state.photo;
   let name = location.state.name;
-  let period = location.state.period;
-  let person = location.state.person;
-  let lang = location.state.lang;
+
   let applied = null;
   let account = undefined;
 
@@ -23,18 +20,15 @@ function ProjectDetail() {
       if (eachData.name === name) return eachData;
     }
   );
-  console.log("파이어베이스 데이터(필터링):", dataFire);
+
   let term = dataFire[0].term;
   let party = dataFire[0].party;
   let signed = dataFire[0].signed;
   let comment = dataFire[0].comment;
   let host = dataFire[0].host; //프로젝트 주인장 아이디
-  console.log("프로젝트의 이름은 다음과 같습니다 : " + name);
-  console.log("프로젝트를 등록한 유저의 아이디는 다음과 같습니다 : " + host);
 
   function delay(ms) {
     return new Promise((resolve, reject) => {
-      //promise 객체 반환, async도 promise를 다루는 기술이란 것을 잊지 말것
       setTimeout(resolve, ms);
     });
   }
@@ -42,7 +36,6 @@ function ProjectDetail() {
   let checkLogInUser = () => {
     firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
-        console.log("머리 뜨겁네" + user.email);
         account = user.email;
       } else {
         console.log("위에서 반환이 되지 않으면 undefined가 나감");
@@ -58,7 +51,6 @@ function ProjectDetail() {
       .then(async function (doc) {
         if (doc.exists) {
           applied = doc.data().appliedProject;
-          console.log("가져온 친구는 다음과 같습니다" + applied);
         } else {
           console.log("문서가 존재하지 않습니다");
         }
@@ -71,8 +63,7 @@ function ProjectDetail() {
     await delay(800);
     readProjectData(account);
     await delay(800);
-    console.log("account는 다음과 같음" + account);
-    console.log("applied는 다음과 같음" + applied);
+
     if (account === undefined) {
       alert("로그인을 하셔야 프로젝트에 지원 하실 수 있으세요");
     } else if (account === host) {

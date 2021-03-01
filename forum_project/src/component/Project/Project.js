@@ -1,11 +1,8 @@
 import styles from "../../css/Project/Project.module.css";
-import { withRouter, Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Slider from "react-slick";
-import firebase from "firebase/app";
-import { firestore } from "../../firebase";
-import { storage } from "../../firebase";
+
 import React, { useState } from "react";
-import { useEffect } from "react";
 
 let photo = null;
 let name = null;
@@ -18,17 +15,6 @@ function Project(props) {
   let localData = JSON.parse(json) || [];
   let [dataFire, setDataFire] = useState(localData);
 
-  /*function delay(ms){
-		return new Promise((resolve, reject) =>{
-			setTimeout(resolve, ms)
-		})
-	}*/
-
-  /*useEffect(async ()=> {
-		await delay(2000)
-		console.log("루삥뽕"+JSON.stringify(dataFire))
-	},[])*/
-
   let history = useHistory();
 
   let handleClick = (e) => {
@@ -38,18 +24,7 @@ function Project(props) {
     period = e.target.period;
     person = e.target.person;
     lang = e.target.lang;
-    console.log(
-      "이미지:",
-      photo,
-      "이름:",
-      name,
-      "기간:",
-      period,
-      "인원:",
-      person,
-      "스킬",
-      lang
-    );
+
     history.push({
       pathname: "/projectdetail",
       state: {
@@ -76,7 +51,6 @@ function Project(props) {
       <h2>프로젝트 열람</h2>
       <Slider {...settings}>
         {dataFire.map((eachData) => {
-          console.log("개별 프로젝트 데이터:", eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>

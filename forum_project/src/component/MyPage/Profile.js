@@ -5,15 +5,13 @@ import auth from "firebase/auth";
 const Profile = (props) => {
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
-  console.log("유저 정보", user);
+
   if (user != null) {
     name = user.displayName;
     email = user.email;
     photoUrl = user.photoURL;
     emailVerified = user.emailVerified;
-    uid = user.uid; // The user's ID, unique to the Firebase project. Do NOT use
-    // this value to authenticate with your backend server, if
-    // you have one. Use User.getToken() instead.
+    uid = user.uid;
   }
   return (
     <div className={styles.header}>

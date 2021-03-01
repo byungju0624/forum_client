@@ -47,7 +47,6 @@ function Regist() {
     await delay(2500);
     if (result === false) {
       //2차 안전장치
-      console.log("이미지를 올리지 않아서 아무 일도 안생길 거임");
     } else if (!comment || finish || !name || !party || !eachSkill) {
       alert("모든 항목은 필수입니다");
       window.location.reload();
@@ -95,12 +94,12 @@ function Regist() {
 
   let skillbutton = () => {
     if (skill.length > 2) {
-      alert("기술 스택은 3개까지만 넣을 수 있어용~");
+      alert("기술 스택은 3개까지만 넣을 수 있습니다.");
     } else {
       if (skill.includes(eachSkill.toLowerCase()) === false) {
         setSkilled(skill.concat(eachSkill.toLowerCase()));
       } else {
-        alert("중복된 기술이에용~");
+        alert("중복된 기술입니다.");
       }
     }
   };
@@ -121,8 +120,6 @@ function Regist() {
       alert(`이미지 파일을 올려 주세요!!!`);
       return false;
     } else {
-      console.log("이미지 업로드를 시작합니다");
-      console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
       const uploadTask = storage
         .ref(`/project/${imageAsFile.name}`)
         .put(imageAsFile);
@@ -144,8 +141,7 @@ function Regist() {
                 ...prevObject,
                 imgUrl: fireBaseUrl,
               }));
-              console.log("유알엘이 뭔지 확인해볼거야" + fireBaseUrl);
-              console.log("사진이름이 뭔지 확인해볼거야" + imageAsFile.name);
+
               firestore
                 .collection("project")
                 .doc(imageAsFile.name)
@@ -168,18 +164,16 @@ function Regist() {
   };
 
   let howManyRegist = async (host) => {
-    console.log("-------------------------------------");
     await firestore
       .collection("users")
       .doc(host)
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          console.log("Document data:", doc.data());
           let document = doc.data();
           if (document.hostProject.length > 2) {
             alert(
-              "프로젝트를 3개 이상 등록하실려면 프라이빗 계정으로 전환하세요"
+              "프로젝트를 3개 이상 등록하실려면 프라이빗 계정으로 전환하세요."
             );
             window.location.reload();
           } else {
@@ -196,7 +190,6 @@ function Regist() {
   };
 
   let addAppliedProject = async (host, name) => {
-    console.log("여기에 들어와 지는지 알고 싶어요!" + host + " / " + name);
     firestore
       .collection("users")
       .doc(host)
@@ -256,16 +249,7 @@ function Regist() {
             ></input>{" "}
             명
           </p>
-          {/* <p>
-            등록 인원 :{" "}
-            <input
-              style={{ border: "3px solid black", fontWeight: "bold" }}
-              type="number"
-              value={signed}
-              onChange={(e) => setSigned(e.target.value)}
-            ></input>{" "}
-            명
-          </p> */}
+
           <p>
             예상 기간 :{" "}
             <input

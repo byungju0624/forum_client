@@ -28,7 +28,7 @@ const RegistStatus = (props) => {
 
     getMySubmittedProject(email);
     await delay(1000);
-    //console.log(JSON.stringify(submittedData))
+
     setSubmittedProjectData(submittedDataProcessingProjectName(submittedData));
     await delay(1000);
   }, []);
@@ -49,7 +49,6 @@ const RegistStatus = (props) => {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          //console.log(doc.data().submittedProject)
           submittedData = doc.data().submittedProject;
         } else {
           console.log("문서가 존재하지 않습니다");
@@ -72,18 +71,12 @@ const RegistStatus = (props) => {
         resultArray.push(object);
       }
     }
-    //여기까지 진행된 resultArray [{프로젝트1 : []}, {프로젝트2 : []}]
-    console.log(resultArray);
-    console.log(dataArray.length);
+
     for (let j = 0; j < resultArray.length; j++) {
       for (let k = 0; k < dataArray.length; k++) {
         let key = String(Object.keys(resultArray[j]));
-        //console.log("일단 여기까지만 보자"+typeof(key))
-        //console.log(typeof(dataArray[k].project))
-        //console.log(resultArray[j][key])
-        //console.log(dataArray[k].applicant)
+
         if (key === dataArray[k].project) {
-          console.log("체크");
           resultArray[j][key].push(dataArray[k].applicant);
         }
       }
@@ -94,13 +87,6 @@ const RegistStatus = (props) => {
   //----------------------------------------------------------------------------------------------승인
 
   let getApprovedSubmmit = async (projectName, user) => {
-    console.log(
-      "버튼을 눌렀을 때 들어오는 유저 아이디 값은 다음과 같다 : " + user
-    );
-    console.log(
-      "버튼을 눌렀을 때 들어오는 프로젝트 이름 값은 다음과 같다 : " +
-        projectName
-    );
     await ProjectDataUpdate(projectName, user);
     await applyUserDataApprovedUpdate(projectName, user);
     await deleteSubmmitApprovedData(email, user, projectName);
@@ -200,10 +186,6 @@ const RegistStatus = (props) => {
             <li>상태</li>
           </div>
           {submittedProjectData.map((el) => {
-            console.log(
-              "상태체크를 해보고 싶어요 : " +
-                JSON.stringify(submittedProjectData)
-            );
             let projectName = Object.keys(el)[0];
             return (
               <div className={styles.tableInt}>

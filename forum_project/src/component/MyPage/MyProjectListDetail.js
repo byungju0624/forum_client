@@ -42,8 +42,6 @@ function MyProjectListDetail() {
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      //console.log(user.displayName);
-      //console.log(user.email);
       setHost(user.email);
     } else {
       console.log("유저 없는 뎁쇼");
@@ -51,18 +49,6 @@ function MyProjectListDetail() {
   });
 
   let updateDatabase = async () => {
-    console.log(
-      "수정되는 데이터:",
-      "개요:",
-      comment,
-      "인원:",
-      party,
-      "스킬:",
-      skill,
-      "기간",
-      term
-    );
-    console.log("현재 데이터:", projectData[0]);
     firestore
       .collection("project")
       .doc(projectData[0].name)
@@ -87,14 +73,10 @@ function MyProjectListDetail() {
   let deleteProjectData = async () => {
     await getMySubmittedProject(host);
     await delay(500);
-    console.log(
-      "받아오는 데이터는 다음과 같음" + JSON.stringify(submittedData)
-    );
+
     await findUserApplyDeleteProject(projectName);
     await delay(200);
-    console.log(
-      "해당 프로젝트에 지원한 유저 아이디를 받은 배열은" + appliedUser
-    );
+
     await delay(200);
     await deleteProjectAppliedUser(projectName);
     await delay(200);
@@ -137,7 +119,6 @@ function MyProjectListDetail() {
       .then(function (doc) {
         if (doc.exists) {
           for (let i = 0; i < doc.data().people.length; i++) {
-            console.log(doc.data().people[i]);
             if (doc.data().people[i] !== host) {
               joinUser.push(doc.data().people[i]);
             }
@@ -162,9 +143,7 @@ function MyProjectListDetail() {
 
   let submittedDataInHostDelete = (host) => {
     submittedApplyObject.map((index) => {
-      console.log("host : " + host);
-      console.log("지울거 : " + JSON.stringify(index));
-      firebase
+      firebase //
         .firestore()
         .collection("users")
         .doc(host)
@@ -182,7 +161,6 @@ function MyProjectListDetail() {
       .get()
       .then(function (doc) {
         if (doc.exists) {
-          //console.log(doc.data().submittedProject)
           submittedData = doc.data().submittedProject;
         } else {
           console.log("문서가 존재하지 않습니다");
@@ -195,8 +173,6 @@ function MyProjectListDetail() {
 
   let findUserApplyDeleteProject = (projectName) => {
     if (appliedUser.length === 0) {
-      //안해주면 반복해서 들어감
-      console.log(submittedData);
       submittedData.map((index) => {
         if (index["project"] === projectName) {
           submittedApplyObject.push(index);

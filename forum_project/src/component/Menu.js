@@ -1,9 +1,7 @@
-import { useContext, useState } from "react";
 import "../css/Menu.css";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import React from "react";
-import login from "../component/App";
-import selected from "../component/App";
+
 import MainPage from "../component/MainPage/MainPage";
 import Guide from "../component/Guide/Guide";
 import Project from "../component/Project/Project";
@@ -11,7 +9,7 @@ import Regist from "../component/Regist/Regist";
 import MyPage from "../component/MyPage/MyPage";
 import ProjectDetail from "../component/Project/ProjectDetail";
 import firebase from "firebase/app";
-import Hamburger from "hamburger-react";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
 import auth from "firebase/auth"; //이게 있어야 오류가 안난다
@@ -24,8 +22,6 @@ function Menu(props) {
     });
   }
 
-  let provider = new firebase.auth.GoogleAuthProvider();
-
   let googleLogin = () => {
     firebase
       .auth()
@@ -34,16 +30,13 @@ function Menu(props) {
         let provider = new firebase.auth.GoogleAuthProvider();
         firebase.auth().onAuthStateChanged(async (user) => {
           if (user) {
-            console.log("로그인이 되어 있습니다" + user.email);
             await checkMemberShip(user.email);
           } else {
             firebase
               .auth()
               .signInWithPopup(provider)
               .then(async () => {
-                //console.log('-----------------------------------------------------------'+JSON.stringify(provider))
                 props.setLogin(true);
-                //console.log("로그인");
               })
               .catch((error) => {
                 let errorCode = error.code;
@@ -57,7 +50,6 @@ function Menu(props) {
   };
 
   let checkMemberShip = (userEmail) => {
-    //console.log("여리고 뭐가 들어오는지 보고 판단하자 : "+JSON.stringify(userEmail))
     firestore
       .collection("users")
       .doc(userEmail)
@@ -85,9 +77,7 @@ function Menu(props) {
         submittedProject: [],
         appliedProject: [],
       })
-      .then(function () {
-        //console.log("Document successfully written!");
-      })
+      .then(function () {})
       .catch(function (error) {
         console.error("Error writing document: ", error);
       });
@@ -99,12 +89,9 @@ function Menu(props) {
       .signOut()
       .then(function () {
         props.setLogin(false);
-        console.log("로그아웃을 성공적으로 실시함");
         window.location.reload();
       })
-      .catch(function (error) {
-        // An error happened.
-      });
+      .catch(function (error) {});
   };
   let menuRef = React.createRef();
   let loginRef = React.createRef();

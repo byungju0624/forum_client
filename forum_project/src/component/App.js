@@ -1,7 +1,7 @@
 import "../css/App.css";
 import React, { useState } from "react";
 import Menu from "../component/Menu";
-import Mypage from "../component/MyPage/MyPage";
+
 import firebase from "firebase/app";
 import "firebase/auth";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -47,7 +47,6 @@ function App() {
     let resultString = JSON.stringify(result); //로컬스토리지에는 문자열만 넣을 수 있음
     localStorage.setItem("fireStoreData", resultString);
     dataFire = localStorage.getItem("fireStoreData");
-    console.log(dataFire);
   }, []);
 
   let getFirestoreData = async () => {
@@ -58,9 +57,6 @@ function App() {
       .then(function (querySnapshot) {
         //result는 await를 하기 위해서 만들어낸 변수
         querySnapshot.forEach(async function (doc) {
-          // doc.data() is never undefined for query doc snapshots
-          //console.log(doc.id, " => ", doc.data())
-          console.log("요청하는 이미지는 다음과 같습니다 :" + doc.data().image);
           let image = await getFireBaseImage(doc.data().image);
           let eachData = {
             comment: doc.data().comment,
