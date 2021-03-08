@@ -1,18 +1,19 @@
 import styles from "../../css/MyPage/MyProjectListDetail.module.css";
-import { useState, useRef, useCallback } from "react";
+import { useState } from "react";
 import { firestore } from "../../firebase";
-import { storage } from "../../firebase";
+
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { memo } from "react";
 
 let submittedData;
 let appliedUser = [];
 let joinUser = [];
 let submittedApplyObject = [];
 
-function MyProjectListDetail() {
+const MyProjectListDetail = memo(() => {
   //넘어온 프로젝트 이름을 통해 데이터베이스에서 검색
   const location = useLocation();
   const projectName = location.state.name;
@@ -27,15 +28,9 @@ function MyProjectListDetail() {
   const [skill, setSkilled] = useState(projectData[0].skill);
   const [term, setTerm] = useState(projectData[0].term);
   const history = useHistory();
-  //하나의 기술 문자열을 담기 위한 상태
-  const [eachSkill, setEachSkill] = useState("");
-  //이미지를 업로드 하기 위한 상태들
-  let allInputs = { imgUrl: "" };
-  const [imageAsFile, setImageAsFile] = useState("");
-  const [imageAsUrl, setImageAsUrl] = useState(allInputs);
 
   function delay(ms) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
   }
@@ -196,8 +191,6 @@ function MyProjectListDetail() {
     });
   };
 
-  //------------------------------------------------------------------------------------------------------------------------프로젝트 지우기
-
   return (
     <div className={styles.regist}>
       <div className={styles.projectint}>
@@ -275,5 +268,5 @@ function MyProjectListDetail() {
       </div>
     </div>
   );
-}
+});
 export default MyProjectListDetail;

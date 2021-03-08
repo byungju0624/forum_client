@@ -2,18 +2,19 @@ import React from "react";
 import styles from "../../css/MyPage/ApplyStatus.module.css";
 
 import { firestore } from "../../firebase";
-import auth from "firebase/auth";
+
 import firebase from "firebase/app";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import { memo } from "react";
 
 let appliedData = undefined;
 let messageData = undefined;
 let name, email, photoUrl, uid, emailVerified;
 let host;
 
-const ApplyStatus = (props) => {
+const ApplyStatus = memo((props) => {
   const history = useHistory();
   let appliedData;
   const [appliedProjectData, setAppliedProjectData] = useState([]);
@@ -174,5 +175,5 @@ const ApplyStatus = (props) => {
       </div>
     </div>
   );
-};
+});
 export default ApplyStatus;

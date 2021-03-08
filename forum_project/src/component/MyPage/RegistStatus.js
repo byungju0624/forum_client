@@ -1,8 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import styles from "../../css/MyPage/RegistStatus.module.css";
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
-import auth from "firebase/auth";
+
 import { useEffect } from "react";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 let submittedData = undefined;
 let name, email, photoUrl, uid, emailVerified;
 
-const RegistStatus = (props) => {
+const RegistStatus = memo((props) => {
   const history = useHistory();
 
   const [submittedProjectData, setSubmittedProjectData] = useState([]);
@@ -198,7 +198,7 @@ const RegistStatus = (props) => {
                 <div className={styles.btn}>
                   {el[projectName].map((data) => {
                     return (
-                      <frameElement>
+                      <>
                         <div>
                           <button
                             style={{ fontWeight: "bold" }}
@@ -217,7 +217,7 @@ const RegistStatus = (props) => {
                             거절
                           </button>
                         </div>
-                      </frameElement>
+                      </>
                     );
                   })}
                 </div>
@@ -228,6 +228,6 @@ const RegistStatus = (props) => {
       </>
     </div>
   );
-};
+});
 
 export default RegistStatus;

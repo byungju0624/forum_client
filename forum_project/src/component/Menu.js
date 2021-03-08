@@ -1,4 +1,4 @@
-import "../css/Menu.css";
+import styles from "../css/Menu.module.css";
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import React from "react";
 
@@ -12,16 +12,10 @@ import firebase from "firebase/app";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHamburger } from "@fortawesome/free-solid-svg-icons";
-import auth from "firebase/auth"; //이게 있어야 오류가 안난다
+
 import { firestore } from "../firebase";
 
-function Menu(props) {
-  function delay(ms) {
-    return new Promise((resolve, reject) => {
-      setTimeout(resolve, ms);
-    });
-  }
-
+const Menu = (props) => {
   let googleLogin = () => {
     firebase
       .auth()
@@ -91,41 +85,41 @@ function Menu(props) {
         props.setLogin(false);
         window.location.reload();
       })
-      .catch(function (error) {});
+      .catch(new Error());
   };
   let menuRef = React.createRef();
   let loginRef = React.createRef();
   let hamburgerClick = () => {
     return (
-      menuRef.current.classList.toggle("active"),
-      loginRef.current.classList.toggle("active")
+      menuRef.current.classList.toggle(styles.active),
+      loginRef.current.classList.toggle(styles.active)
     );
   };
   return (
     <Router>
-      <div className="App">
-        <nav className="navbar">
-          <div className="navbar_logo">
+      <div className={styles.App}>
+        <nav className={styles.navbar}>
+          <div className={styles.navbar_logo}>
             <Link to="/">
-              <h1 className="logo">플젝하쉴?!</h1>
+              <h1 className={styles.logo}>플젝하쉴?!</h1>
             </Link>
           </div>
 
-          <ul className="navbar_menu" ref={menuRef}>
+          <ul className={styles.navbar_menu} ref={menuRef}>
             <Link to="/guide">
-              <li className="menu">가이드</li>
+              <li className={styles.menu}>가이드</li>
             </Link>
             <Link to="/project">
-              <li className="menu">프로젝트 열람</li>
+              <li className={styles.menu}>프로젝트 열람</li>
             </Link>
 
             {props.login === true ? (
               <Link to="/regist">
-                <li className="menu">프로젝트 등록</li>
+                <li className={styles.menu}>프로젝트 등록</li>
               </Link>
             ) : (
               <li
-                className="menu"
+                className={styles.menu}
                 onClick={() => {
                   alert("먼저 로그인을 해주세요");
                 }}
@@ -136,11 +130,11 @@ function Menu(props) {
 
             {props.login === true ? (
               <Link to="/mypage/profile">
-                <li className="menu">프로젝트 관리</li>
+                <li className={styles.menu}>프로젝트 관리</li>
               </Link>
             ) : (
               <li
-                className="menu"
+                className={styles.menu}
                 onClick={() => {
                   alert("먼저 로그인을 해주세요");
                 }}
@@ -149,24 +143,24 @@ function Menu(props) {
               </li>
             )}
           </ul>
-          <div className="navbar_login" ref={loginRef}>
+          <div className={styles.navbar_login} ref={loginRef}>
             {props.login === false ? (
               <img
-                className="login_image"
+                className={styles.login_image}
                 src="image/login.png"
                 onClick={googleLogin}
               ></img>
             ) : (
               <Link to="/">
                 <img
-                  className="login_image"
+                  className={styles.login_image}
                   src="image/signed.png"
                   onClick={googleLogout}
                 ></img>
               </Link>
             )}
           </div>
-          <div className="hamburger">
+          <div className={styles.hamburger}>
             <FontAwesomeIcon icon={faHamburger} onClick={hamburgerClick} />
           </div>
         </nav>
@@ -183,6 +177,6 @@ function Menu(props) {
       </div>
     </Router>
   );
-}
+};
 
 export default React.memo(Menu);

@@ -1,0 +1,94 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid gray;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.logo {
+  color: black;
+  margin: 0;
+  transition: transform 100ms ease-in;
+}
+.logo:hover {
+  transform: scale(1.2);
+}
+.navbar_menu {
+  display: flex;
+  padding-left: 0;
+  font-weight: bold;
+  font-size: 1.2em;
+  width: 70%;
+  justify-content: space-around;
+}
+.menu {
+  padding: 8px 12px;
+  transition: transform 100ms ease-in;
+}
+
+.menu:hover {
+  text-decoration: overline underline;
+  text-underline-position: under;
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.login_image {
+  width: 64px;
+  height: 64px;
+}
+
+.login_image:hover {
+  transform: rotate(30deg);
+  cursor: pointer;
+}
+.hamburger {
+  display: none;
+}
+
+@media screen and (max-width: 73rem) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 0;
+    margin-right: 0;
+    padding-bottom: 20px;
+  }
+  .navbar_menu {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+  .hamburger {
+    display: block;
+    position: absolute;
+    right: 32px;
+    font-size: 2em;
+    transition: transform 100ms ease-in;
+  }
+  .hamburger:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+  }
+  .login_image {
+    width: 3em;
+    height: 3em;
+  }
+  .navbar_login {
+    display: none;
+    justify-content: center;
+    width: 100%;
+  }
+  .navbar_menu.active,
+  .navbar_login.active {
+    display: flex;
+  }
+}

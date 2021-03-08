@@ -1,7 +1,8 @@
 import styles from "../../css/Guide/Guide.module.css";
 import ReactPlayer from "react-player";
+import { memo } from "react";
 
-function Guide() {
+const Guide = memo(() => {
   return (
     <div className={styles.header}>
       <div className={styles.first}>
@@ -45,6 +46,6 @@ function Guide() {
       </div>
     </div>
   );
-}
+});
 
 export default Guide;

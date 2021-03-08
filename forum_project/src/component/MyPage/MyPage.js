@@ -5,8 +5,9 @@ import MyProjectList from "./MyProjectList";
 import RegistStatus from "./RegistStatus";
 import ApplyStatus from "./ApplyStatus";
 import MyProjectListDetail from "./MyProjectListDetail";
+import { memo } from "react";
 
-function MyPage() {
+const MyPage = memo(() => {
   return (
     <div className={styles.header}>
       <Router>
@@ -72,6 +73,5 @@ function MyPage() {
       </Router>
     </div>
   );
-}
-
+});
 export default MyPage;

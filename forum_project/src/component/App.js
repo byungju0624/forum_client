@@ -77,7 +77,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div>
       <Router>
         <Menu
           login={login}

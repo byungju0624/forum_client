@@ -5,10 +5,9 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import { storage } from "../../firebase";
-import auth from "firebase/auth";
-import { firestore } from "../../firebase";
+import { memo } from "react";
 
-const MyProjectList = (props) => {
+const MyProjectList = memo((props) => {
   const history = useHistory();
 
   let user = firebase.auth().currentUser;
@@ -207,12 +206,12 @@ const MyProjectList = (props) => {
       <div style={{ marginTop: "5vh" }}>내가 참가 중인 프로젝트</div>
       <div className={styles.secondContainer}>
         {myJoinedProject.map((eachData) => {
-          console.log("리턴의 참가 프로젝트:", eachData);
           return (
             <div className={styles.cardwraper}>
               <div className={styles.card}>
                 <div className={styles.card_img}>
                   <img
+                    key={Date.now()}
                     src={eachData.image}
                     name={eachData.name}
                     period={eachData.term}
@@ -239,6 +238,6 @@ const MyProjectList = (props) => {
       </div>
     </div>
   );
-};
+});
 
 export default MyProjectList;

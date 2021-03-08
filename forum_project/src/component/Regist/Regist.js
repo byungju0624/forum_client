@@ -1,12 +1,12 @@
 import styles from "../../css/Regist/Regist.module.css";
-import { useState, useRef, useCallback } from "react";
+import { useState, memo } from "react";
 import { firestore } from "../../firebase";
 import { storage } from "../../firebase";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { useHistory } from "react-router-dom";
 
-function Regist() {
+const Regist = memo(() => {
   const [comment, setComment] = useState("");
   const [finish, setFinish] = useState(false);
   const [host, setHost] = useState("");
@@ -208,7 +208,7 @@ function Regist() {
     <div className={styles.regist}>
       <div className={styles.projectint}>
         <span>
-          <p>
+          <div>
             프로젝트 이름 :{" "}
             <input
               style={{ border: "3px solid black", fontWeight: "bold" }}
@@ -216,9 +216,9 @@ function Regist() {
               value={name}
               onChange={(e) => setName(e.target.value)}
             ></input>
-          </p>
+          </div>
           <div>
-            <form onSubmit={handleFireBaseUpload}>
+            <form onSubmit={handleFireBaseUpload} className={styles.img}>
               <input
                 type="file"
                 accept="image/png"
@@ -239,7 +239,7 @@ function Regist() {
           </div>
         </span>
         <span>
-          <p>
+          <div>
             모집 인원 :{" "}
             <input
               style={{ border: "3px solid black", fontWeight: "bold" }}
@@ -248,9 +248,9 @@ function Regist() {
               onChange={(e) => setParty(e.target.value)}
             ></input>{" "}
             명
-          </p>
+          </div>
 
-          <p>
+          <div className={styles.date}>
             예상 기간 :{" "}
             <input
               style={{ border: "3px solid black", fontWeight: "bold" }}
@@ -258,9 +258,9 @@ function Regist() {
               value={term}
               onChange={(e) => setTerm(e.target.value)}
             ></input>
-          </p>
+          </div>
 
-          <div>
+          <div className={styles.lang}>
             사용 언어 :{" "}
             <input
               style={{ border: "3px solid black" }}
@@ -294,7 +294,7 @@ function Regist() {
       </div>
 
       <div style={{ marginLeft: "12%", marginTop: "10vh" }}>
-        <p>
+        <div className={styles.explain}>
           프로젝트 개요 :{" "}
           <div style={{ paddingTop: "20px" }}>
             <textarea
@@ -309,7 +309,7 @@ function Regist() {
               }}
             ></textarea>
           </div>
-        </p>
+        </div>
       </div>
       <div className={styles.registbtn}>
         <span>
@@ -321,6 +321,6 @@ function Regist() {
       </div>
     </div>
   );
-}
+});
 
 export default Regist;

@@ -2,7 +2,7 @@ import styles from "../../css/Project/Project.module.css";
 import { useHistory } from "react-router-dom";
 import Slider from "react-slick";
 
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 
 let photo = null;
 let name = null;
@@ -10,7 +10,7 @@ let period = null;
 let person = null;
 let lang = null;
 
-function Project(props) {
+const Project = memo((props) => {
   let json = localStorage.getItem("fireStoreData");
   let localData = JSON.parse(json) || [];
   let [dataFire, setDataFire] = useState(localData);
@@ -56,6 +56,7 @@ function Project(props) {
               <div className={styles.card}>
                 <div className={styles.card_img}>
                   <img
+                    key={name}
                     src={eachData.image}
                     name={eachData.name}
                     period={eachData.term}
@@ -78,7 +79,9 @@ function Project(props) {
                     {eachData.skill.map((skill) => {
                       return (
                         <div className={styles.item}>
-                          <div className={styles.skill}>{skill}</div>
+                          <div className={styles.skill} key={skill}>
+                            {skill}
+                          </div>
                         </div>
                       );
                     })}
@@ -91,6 +94,6 @@ function Project(props) {
       </Slider>
     </div>
   );
-}
+});
 
 export default Project;

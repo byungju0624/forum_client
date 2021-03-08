@@ -1,11 +1,11 @@
-import React from "react";
+import React, { memo } from "react";
 import { useLocation } from "react-router";
 import styles from "../../css/Project/ProjectDetail.module.css";
 import { useHistory } from "react-router-dom";
 import firebase from "firebase/app";
 import { firestore } from "../../firebase";
 
-function ProjectDetail() {
+const ProjectDetail = memo(() => {
   let location = useLocation();
   let photo = location.state.photo;
   let name = location.state.name;
@@ -67,7 +67,7 @@ function ProjectDetail() {
     if (account === undefined) {
       alert("로그인을 하셔야 프로젝트에 지원 하실 수 있으세요");
     } else if (account === host) {
-      alert("자기 프로젝트에는 지원하실 수 없어요ㅠㅠ");
+      alert("자기 프로젝트에는 지원하실 수 없어요");
     } else if (applied.includes(name) === true) {
       alert("이미 지원하신 프로젝트입니다");
     } else {
@@ -100,7 +100,7 @@ function ProjectDetail() {
         </div>
 
         <div>
-          <img className={styles.img} src={photo}></img>
+          <img className={styles.img} src={photo} alt="project"></img>
         </div>
         <div className={styles.text}>
           <div>예상기간: {term}</div>
@@ -111,8 +111,11 @@ function ProjectDetail() {
             {dataFire.map((eachData) => {
               {
                 return eachData.skill.map((skill) => {
-                  console.log(skill);
-                  return <span className={styles.skill}>{skill}</span>;
+                  return (
+                    <span className={styles.skill} key={skill}>
+                      {skill}
+                    </span>
+                  );
                 });
               }
             })}
@@ -142,6 +145,6 @@ function ProjectDetail() {
       </div>
     </>
   );
-}
+});
 
 export default ProjectDetail;

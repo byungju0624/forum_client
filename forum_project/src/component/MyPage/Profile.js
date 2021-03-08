@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "../../css/MyPage/Profile.module.css";
 import firebase from "firebase/app";
-import auth from "firebase/auth";
-const Profile = (props) => {
+import { memo } from "react";
+
+const Profile = memo((props) => {
   let user = firebase.auth().currentUser;
   let name, email, photoUrl, uid, emailVerified;
 
@@ -24,6 +25,6 @@ const Profile = (props) => {
       <div>이메일: {email}</div>
     </div>
   );
-};
+});
 
 export default Profile;
