@@ -18,7 +18,6 @@ const Project = memo((props) => {
   let history = useHistory();
 
   let handleClick = (e) => {
-    console.log("e.target:", e.target);
     photo = e.target.src;
     name = e.target.name;
     period = e.target.period;

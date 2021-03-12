@@ -4,7 +4,7 @@ import Menu from "../component/Menu";
 
 import firebase from "firebase/app";
 import "firebase/auth";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { firestore } from "../firebase";
 import { storage } from "../firebase";
 import { useEffect } from "react";
@@ -28,17 +28,13 @@ function App() {
     });
   }
 
-  let getFireBaseImage = (image) => {
-    return storage
-      .ref("project")
-      .child(image)
-      .getDownloadURL()
-      .then((url) => {
-        return url;
-      })
-      .catch((error) => {
-        console.log("이미지를 받아오지 못했습니다." + error);
-      });
+  let getFireBaseImage = async (image) => {
+    try {
+      const url = await storage.ref("project").child(image).getDownloadURL();
+      return url;
+    } catch (error) {
+      console.log("이미지를 받아오지 못했습니다." + error);
+    }
   };
 
   useEffect(async () => {

@@ -14,6 +14,7 @@ const Profile = memo((props) => {
     emailVerified = user.emailVerified;
     uid = user.uid;
   }
+
   return (
     <div className={styles.header}>
       <div>

@@ -43,7 +43,7 @@ const Regist = memo(() => {
   }
 
   let createDatabase = async () => {
-    let result = await handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
+    let result = handleFireBaseUpload(); //여기서 일단 이미지를 올린다.
     await delay(2500);
     if (result === false) {
       //2차 안전장치
@@ -91,8 +91,13 @@ const Regist = memo(() => {
         });
     }
   };
+  let enterPress = (e) => {
+    if (e.key === "Enter") {
+      skillbutton();
+    }
+  };
 
-  let skillbutton = () => {
+  let skillbutton = (e) => {
     if (skill.length > 2) {
       alert("기술 스택은 3개까지만 넣을 수 있습니다.");
     } else {
@@ -214,6 +219,7 @@ const Regist = memo(() => {
               style={{ border: "3px solid black", fontWeight: "bold" }}
               type="text"
               value={name}
+              placeholder="파일이름과 같아야합니다."
               onChange={(e) => setName(e.target.value)}
             ></input>
           </div>
@@ -265,7 +271,9 @@ const Regist = memo(() => {
             <input
               style={{ border: "3px solid black" }}
               type="text"
+              placeholder="한가지씩 작성해 주세요."
               value={eachSkill}
+              onKeyPress={enterPress}
               onChange={(e) => setEachSkill(e.target.value)}
             ></input>
             <button
